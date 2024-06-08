@@ -32,6 +32,10 @@ localize({
     }
   },
 });
+
+// Establecer idioma por defecto a español
+localize('es');
+
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);

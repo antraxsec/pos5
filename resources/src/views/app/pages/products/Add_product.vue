@@ -206,38 +206,40 @@
                     :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="$t('ProductPrice') + ' ' + '*'">
+                    <b-form-group :label="$t('ProductPrice') + ' ' + '*'" label-size="lg">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="ProductPrice-feedback"
                         label="Price"
                         :placeholder="$t('Enter_Product_Price')"
                         v-model="product.price"
+                        class="form-control-lg" 
+                        autocomplete="off"
                       ></b-form-input>
-
                       <b-form-invalid-feedback
                         id="ProductPrice-feedback"
+                        style="color: #dc3545;"
                       >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
                 </b-col>
                 
                 <!-- Type  -->
-                <b-col md="6" class="mb-2">
+                <b-col md="6" class="mb-2 d-none">
                   <validation-provider name="Type" :rules="{ required: true}">
-                    <b-form-group slot-scope="{ valid, errors }" :label="$t('type') + ' ' + '*'">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('type') + ' ' + '*'"  label-size="lg">
                       <v-select
                         :class="{'is-invalid': !!errors.length}"
                         :state="errors[0] ? false : (valid ? true : null)"
                         v-model="product.type"
                         :reduce="label => label.value"
                         :placeholder="$t('type')"
-                        :options="
-                            [
-                            {label: 'Producto normal', value: 'is_single'},
-                            {label: 'Producto variación', value: 'is_variant'},
-                            {label: 'Servicio', value: 'is_service'}
-                            ]"
+                        :options="[
+                          {label: 'Producto normal', value: 'is_single'},
+                          {label: 'Producto variación', value: 'is_variant'},
+                          {label: 'Servicio', value: 'is_service'}
+                        ]"
+                        class="custom-lg"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
@@ -245,19 +247,20 @@
                 </b-col>
 
                 <!-- Product Cost -->
-                <b-col md="6" class="mb-2" v-if="product.type == 'is_single'">
+                <b-col md="6" class="mb-2 d-none" v-if="product.type == 'is_single'">
                   <validation-provider
                     name="Product Cost"
                     :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="$t('ProductCost') + ' ' + '*'">
+                    <b-form-group :label="$t('ProductCost') + ' ' + '*'" label-size="lg">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="ProductCost-feedback"
                         label="Cost"
                         :placeholder="$t('Enter_Product_Cost')"
                         v-model="product.cost"
+                        class="form-control-lg"
                       ></b-form-input>
                       <b-form-invalid-feedback
                         id="ProductCost-feedback"
@@ -267,22 +270,18 @@
                 </b-col>
 
 
-                
-
-                
-
                 <!-- Unit Product -->
                 <b-col md="6" class="mb-2" v-if="product.type != 'is_service'">
                   <validation-provider name="Unit Product" :rules="{ required: true}">
                     <b-form-group
                       slot-scope="{ valid, errors }"
                       :label="$t('UnitProduct') + ' ' + '*'"
-                    >
+                      label-size="lg">
                       <v-select
                         :class="{'is-invalid': !!errors.length}"
                         :state="errors[0] ? false : (valid ? true : null)"
                         v-model="product.unit_id"
-                        class="required"
+                        class="required custom-lg"
                         required
                         @input="Selected_Unit"
                         :placeholder="$t('Choose_Unit_Product')"
@@ -295,12 +294,12 @@
                 </b-col>
 
                 <!-- Unit Sale -->
-                <b-col md="6" class="mb-2" v-if="product.type != 'is_service'">
+                <b-col md="6" class="mb-2 d-none" v-if="product.type != 'is_service'">
                   <validation-provider name="Unit Sale" :rules="{ required: true}">
                     <b-form-group
                       slot-scope="{ valid, errors }"
                       :label="$t('UnitSale') + ' ' + '*'"
-                    >
+                    label-size="lg">
                       <v-select
                         :class="{'is-invalid': !!errors.length}"
                         :state="errors[0] ? false : (valid ? true : null)"
@@ -308,6 +307,8 @@
                         :placeholder="$t('Choose_Unit_Sale')"
                         :reduce="label => label.value"
                         :options="units_sub.map(units_sub => ({label: units_sub.name, value: units_sub.id}))"
+                        disabled="disabled"
+                        class="custom-lg"
                       />
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
@@ -315,12 +316,12 @@
                 </b-col>
 
                 <!-- Unit Purchase -->
-                <b-col md="6" class="mb-2" v-if="product.type != 'is_service'">
+                <b-col md="6" class="mb-2 d-none" v-if="product.type != 'is_service'">
                   <validation-provider name="Unit Purchase" :rules="{ required: true}">
                     <b-form-group
                       slot-scope="{ valid, errors }"
                       :label="$t('UnitPurchase') + ' ' + '*'"
-                    >
+                    label-size="lg">
                       <v-select
                         :class="{'is-invalid': !!errors.length}"
                         :state="errors[0] ? false : (valid ? true : null)"
@@ -328,6 +329,8 @@
                         :placeholder="$t('Choose_Unit_Purchase')"
                         :reduce="label => label.value"
                         :options="units_sub.map(units_sub => ({label: units_sub.name, value: units_sub.id}))"
+                        disabled="disabled"
+                        class="custom-lg"
                       />
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
@@ -341,13 +344,14 @@
                     :rules="{ regex: /^\d*\.?\d*$/}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="$t('StockAlert')">
+                    <b-form-group :label="$t('StockAlert')" label-size="lg">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="StockAlert-feedback"
                         label="Stock alert"
                         :placeholder="$t('Enter_Stock_alert')"
                         v-model="product.stock_alert"
+                        class="form-control-lg"
                       ></b-form-input>
                       <b-form-invalid-feedback
                         id="StockAlert-feedback"
@@ -528,7 +532,7 @@ export default {
         name: "",
         code: "",
         Type_barcode: "CODE128",
-        cost: "",
+        cost: 0,
         price: "",
         brand_id: "",
         category_id: "",
@@ -687,8 +691,8 @@ export default {
     //---------------------- Event Select Unit Product ------------------------------\\
     Selected_Unit(value) {
       this.units_sub = [];
-      this.product.unit_sale_id = "";
-      this.product.unit_purchase_id = "";
+      this.product.unit_sale_id = 1;
+      this.product.unit_purchase_id = 1;
       this.Get_Units_SubBase(value);
     },
 
@@ -758,6 +762,22 @@ export default {
     }
   }, //end Methods
 
+  // watch: {
+  //   'product.unit_id'(newUnitId) {
+  //     // Suponiendo que las unidades de venta y compra deben ser las mismas que la unidad principal
+  //     this.product.unit_sale_id = newUnitId;
+  //     this.product.unit_purchase_id = newUnitId;
+
+  //     // O si necesitas una lógica más compleja para determinar las unidades dependientes
+  //     if (newUnitId === 1) {
+  //       this.product.unit_sale_id = '1';
+  //       this.product.unit_purchase_id = '1';
+  //     } else {
+  //       // Define otros casos según necesidad
+  //     }
+  //   }
+  // },
+
   //-----------------------------Created function-------------------
 
   created: function() {
@@ -765,3 +785,13 @@ export default {
   }
 };
 </script>
+<style>
+.custom-lg .vs__dropdown-toggle {
+  height: calc(2.875rem + 2px);
+  font-size: 1rem;
+  padding: .5rem 0rem;
+}
+/* .custom-lg .vs__selected {
+  line-height: 1.5;
+} */
+</style>

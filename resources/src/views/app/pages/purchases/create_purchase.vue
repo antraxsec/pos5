@@ -96,8 +96,8 @@
                           <th scope="col">{{$t('Net_Unit_Cost')}}</th>
                           <th scope="col">{{$t('Current_stock')}}</th>
                           <th scope="col">{{$t('Qty')}}</th>
-                          <th scope="col">{{$t('Discount')}}</th>
-                          <th scope="col">{{$t('Tax')}}</th>
+                          <!-- <th scope="col">{{$t('Discount')}}</th>
+                          <th scope="col">{{$t('Tax')}}</th> -->
                           <th scope="col">{{$t('SubTotal')}}</th>
                           <th scope="col" class="text-center">
                             <i class="fa fa-trash"></i>
@@ -111,16 +111,16 @@
                         <tr v-for="detail in details">
                           <td>{{detail.detail_id}}</td>
                           <td>
-                            <span>{{detail.code}}</span>
+                            <span>{{detail.name}}</span>
                             <br>
-                            <span class="badge badge-success">{{detail.name}}</span>
+                            <span class="badge badge-success">{{detail.code}}</span>
                             
                           </td>
                           <td
                           >{{currentUser.currency}} {{formatNumber(detail.Net_cost, 3)}}</td>
                           <td>
                             <span
-                              class="badge badge-outline-warning"
+                              class="badge badge-outline-dark"
                             >{{detail.stock}} {{detail.unitPurchase}}</span>
                           </td>
                           <td>
@@ -147,8 +147,8 @@
                               </b-input-group>
                             </div>
                           </td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity, 2)}}</td>
+                          <!-- <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
+                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity, 2)}}</td> -->
                           <td>{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
                           <td>
                             <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_purchase')"
@@ -193,7 +193,7 @@
                 </div>
 
                  <!-- Order Tax  -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
                   <validation-provider
                     name="Order Tax"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -217,7 +217,7 @@
                 </b-col>
 
                 <!-- Discount -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
                   <validation-provider
                     name="Discount"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -241,7 +241,7 @@
                 </b-col>
 
                 <!-- Shipping  -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')">
                   <validation-provider
                     name="Shipping"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -276,9 +276,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                             [
-                              {label: 'received', value: 'received'},
-                              {label: 'pending', value: 'pending'},
-                               {label: 'ordered', value: 'ordered'}
+                              {label: 'Recibido', value: 'received'},
+                              {label: 'Pendiente', value: 'pending'},
+                               {label: 'Pedido', value: 'ordered'}
                             ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
@@ -390,8 +390,8 @@
                     :state="errors[0] ? false : (valid ? true : null)"
                     :options="
                            [
-                            {label: 'Percent %', value: '1'},
-                            {label: 'Fixed', value: '2'}
+                            {label: 'Porcentaje %', value: '1'},
+                            {label: 'Fijo', value: '2'}
                            ]"
                   ></v-select>
                   <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>

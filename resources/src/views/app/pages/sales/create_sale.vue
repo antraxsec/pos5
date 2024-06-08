@@ -195,7 +195,7 @@
                 </div>
 
                 <!-- Order Tax  -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                   <validation-provider
                     name="Order Tax"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -219,7 +219,7 @@
                 </b-col>
 
                 <!-- Discount -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                   <validation-provider
                     name="Discount"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -243,7 +243,7 @@
                 </b-col>
 
                 <!-- Shipping  -->
-                <b-col lg="4" md="4" sm="12" class="mb-3" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                <b-col lg="4" md="4" sm="12" class="mb-3 d-none" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                   <validation-provider
                     name="Shipping"
                     :rules="{ regex: /^\d*\.?\d*$/}"
@@ -280,9 +280,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                         [
-                          {label: 'Completado', value: 'completed'},
+                          {label: 'Venta completada', value: 'completed'},
                           {label: 'Pendiente', value: 'pending'},
-                          {label: 'Ordenado', value: 'ordered'}
+                          {label: 'Pedido', value: 'ordered'}
                         ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
@@ -301,9 +301,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                                 [
-                          {label: 'Pagado', value: 'paid'},
-                          {label: 'Parcial', value: 'partial'},
-                          {label: 'Pendiente', value: 'pending'}
+                          {label: 'Pago completo', value: 'paid'},
+                          {label: 'Pago parcial', value: 'partial'},
+                          {label: 'No pago', value: 'pending'}
                         ]
 "
                       ></v-select>
@@ -322,54 +322,53 @@
                         @input="Selected_PaymentMethod"
                         v-model="payment.Reglement"
                         :placeholder="$t('PleaseSelect')"
-                        :options="
-                                  [
-                                  {label: 'Cash', value: 'Cash'},
-                                  {label: 'credit card', value: 'credit card'},
-                                  {label: 'TPE', value: 'tpe'},
-                                  {label: 'cheque', value: 'cheque'},
-                                  {label: 'Western Union', value: 'Western Union'},
-                                  {label: 'bank transfer', value: 'bank transfer'},
-                                  {label: 'other', value: 'other'},
-                                  ]"
+                        :options="[
+                            {label: 'Efectivo', value: 'Cash'},
+                            {label: 'Transferencia bancaria', value: 'bank transfer'},
+                            {label: 'Tarjeta de crédito/debito', value: 'credit card'},
+                            {label: 'POS (Terminal Punto de Venta)', value: 'tpe'},
+                            {label: 'Cheque', value: 'cheque'},
+                            {label: 'Western Union', value: 'Western Union'},
+                            {label: 'Otro', value: 'other'},
+                        ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
                 </b-col>
 
-                  <!-- Received  Amount  -->
-                  <b-col md="4" v-if="payment.status != 'pending' && sale.statut == 'completed'">
-                      <validation-provider
-                        name="Received Amount"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
-                        <b-form-group :label="$t('Received_Amount') + ' ' + '*'">
-                          <b-form-input
-                            @keyup="Verified_Received_Amount(payment.received_amount)"
-                            label="Received_Amount"
-                            :placeholder="$t('Received_Amount')"
-                            v-model.number="payment.received_amount"
-                            :state="getValidationState(validationContext)"
-                            aria-describedby="Received_Amount-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Received_Amount-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                        </b-form-group>
-                      </validation-provider>
-                    </b-col>
+                <!-- Received Amount -->
+                <b-col md="4" v-if="payment.status != 'pending' && sale.statut == 'completed'">
+                  <validation-provider
+                    name="Received Amount"
+                    :rules="{ required: true, regex: /^\d*\.?\d*$/ }"
+                    v-slot="validationContext"
+                  >
+                    <b-form-group :label="$t('Received_Amount') + ' ' + '*'" class="font-weight-400" style="font-size: 1.25rem;">
+                      <b-form-input
+                        @keyup="handleReceivedAmountKeyup(payment.received_amount)"
+                        :placeholder="$t('Received_Amount')"
+                        v-model.number="payment.received_amount"
+                        :state="getValidationState(validationContext)"
+                        class="form-control-lg"
+                        style="font-weight: bold;"
+                      ></b-form-input>
+                      <b-form-invalid-feedback
+                        id="Received_Amount-feedback"
+                        style="font-size: 1rem; font-weight: bold;"
+                      >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                    </b-form-group>
+                  </validation-provider>
+                </b-col>
 
-
-                <!-- Amount  -->
+                <!-- Amount -->
                 <b-col md="4" v-if="payment.status != 'pending' && sale.statut == 'completed'">
                   <validation-provider
                     name="Amount"
                     :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="$t('Paying_Amount') + ' ' + '*'">
+                    <b-form-group :label="$t('Paying_Amount') + ' ' + '*'" class="font-weight-bold" style="font-size: 1.25rem;">
                       <b-form-input
                         :disabled="payment.status == 'paid'"
                         label="Amount"
@@ -378,9 +377,12 @@
                         @keyup="Verified_paidAmount(payment.amount)"
                         :state="getValidationState(validationContext)"
                         aria-describedby="Amount-feedback"
+                        class="form-control-lg"
+                        style="font-weight: bold;" 
                       ></b-form-input>
                       <b-form-invalid-feedback
                         id="Amount-feedback"
+                        style="font-size: 1rem; font-weight: bold;"
                       >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
@@ -388,11 +390,13 @@
 
                 <!-- change  Amount  -->
                 <b-col md="4" v-if="payment.status != 'pending' && sale.statut == 'completed'">
-                  <label>{{$t('Change')}} :</label>
+                  <label style="font-size: 1.25rem; font-weight: bold;">{{$t('Change')}} :</label>
                   <p
                     class="change_amount"
+                    style="font-size: 1.2rem; font-weight: bold; color: #4CAF50;"
                   >{{parseFloat(payment.received_amount - payment.amount).toFixed(2)}}</p>
                 </b-col>
+
 
                 <b-col md="12" class="mt-3"
                     v-if="payment.status != 'pending' && payment.Reglement == 'credit card' && sale.statut == 'completed'">
@@ -457,24 +461,24 @@
                           </form>
                         </div>
                      </b-card>
-                  </b-col>
+                </b-col>
 
-                   <!-- Account -->
-                  <b-col lg="4" md="4" sm="12" v-if="payment.status != 'pending' && sale.statut == 'completed'">
-                    <validation-provider name="Account">
-                      <b-form-group slot-scope="{ valid, errors }" :label="$t('Account')">
-                        <v-select
-                          :class="{'is-invalid': !!errors.length}"
-                          :state="errors[0] ? false : (valid ? true : null)"
-                          v-model="payment.account_id"
-                          :reduce="label => label.value"
-                          :placeholder="$t('Choose_Account')"
-                          :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))"
-                        />
-                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                      </b-form-group>
-                    </validation-provider>
-                  </b-col>
+                <!-- Account -->
+                <b-col lg="4" md="4" sm="12" v-if="payment.status != 'pending' && sale.statut == 'completed'">
+                  <validation-provider name="Account">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('Account')">
+                      <v-select
+                        :class="{'is-invalid': !!errors.length}"
+                        :state="errors[0] ? false : (valid ? true : null)"
+                        v-model="payment.account_id"
+                        :reduce="label => label.value"
+                        :placeholder="$t('Choose_Account')"
+                        :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))"
+                      />
+                      <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-form-group>
+                  </validation-provider>
+                </b-col>
 
                 <b-col md="12" class="mt-3">
                   <b-form-group :label="$t('Note')">
@@ -526,8 +530,26 @@
               </validation-provider>
             </b-col>
 
+            <!-- Unit Sale -->
+            <b-col lg="6" md="6" sm="12" v-if="detail.product_type != 'is_service'">
+                <validation-provider name="Unit Sale" :rules="{ required: true }">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
+                        <v-select
+                            :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)"
+                            v-model="detail.sale_unit_id"
+                            :disabled="!detail.isEditable"
+                            :placeholder="$t('Choose_Unit_Sale')"
+                            :reduce="label => label.value"
+                            :options="units.map(units => ({label: units.name, value: units.id}))"
+                        />
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-form-group>
+                </validation-provider>
+            </b-col>
+
             <!-- Tax Method -->
-            <b-col lg="6" md="6" sm="12">
+            <b-col lg="6" md="6" sm="12" class="d-none">
               <validation-provider name="Tax Method" :rules="{ required: true}">
                 <b-form-group slot-scope="{ valid, errors }" :label="$t('TaxMethod') + ' ' + '*'">
                   <v-select
@@ -548,7 +570,7 @@
             </b-col>
 
             <!-- Tax Rate -->
-            <b-col lg="6" md="6" sm="12">
+            <b-col lg="6" md="6" sm="12" class="d-none">
               <validation-provider
                 name="Order Tax"
                 :rules="{ required: true , regex: /^\d*\.?\d*$/}"
@@ -569,7 +591,7 @@
             </b-col>
 
             <!-- Discount Method -->
-             <b-col lg="6" md="6" sm="12">
+             <b-col lg="6" md="6" sm="12" class="d-none">
               <validation-provider name="Discount Method" :rules="{ required: true}">
                 <b-form-group slot-scope="{ valid, errors }" :label="$t('Discount_Method') + ' ' + '*'">
                   <v-select
@@ -590,7 +612,7 @@
             </b-col>
 
             <!-- Discount Rate -->
-           <b-col lg="6" md="6" sm="12">
+           <b-col lg="6" md="6" sm="12" class="d-none">
               <validation-provider
                 name="Discount Rate"
                 :rules="{ required: true , regex: /^\d*\.?\d*$/}"
@@ -608,25 +630,8 @@
               </validation-provider>
             </b-col>
 
-            <!-- Unit Sale -->
-            <b-col lg="6" md="6" sm="12" v-if="detail.product_type != 'is_service'">
-              <validation-provider name="Unit Sale" :rules="{ required: true}">
-                <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
-                  <v-select
-                    :class="{'is-invalid': !!errors.length}"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                    v-model="detail.sale_unit_id"
-                    :placeholder="$t('Choose_Unit_Sale')"
-                    :reduce="label => label.value"
-                    :options="units.map(units => ({label: units.name, value: units.id}))"
-                  />
-                  <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                </b-form-group>
-              </validation-provider>
-            </b-col>
-
-             <!-- Imei or serial numbers -->
-              <b-col lg="12" md="12" sm="12" v-show="detail.is_imei">
+            <!-- Imei or serial numbers -->
+            <b-col lg="12" md="12" sm="12" v-show="detail.is_imei">
                 <b-form-group :label="$t('Add_product_IMEI_Serial_number')">
                   <b-form-input
                     label="Add_product_IMEI_Serial_number"
@@ -636,18 +641,22 @@
                 </b-form-group>
             </b-col>
 
-            <b-col md="12">
+            <b-col md="12" class="text-center pt-3 pb-2" >
               <b-form-group>
                 <b-button
                   variant="primary"
                   type="submit"
                   :disabled="Submit_Processing_detail"
-                ><i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}</b-button>
+                  class="btn-lg"
+                >
+                  <i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}
+                </b-button>
                 <div v-once class="typo__p" v-if="Submit_Processing_detail">
                   <div class="spinner sm spinner-primary mt-3"></div>
                 </div>
               </b-form-group>
             </b-col>
+
           </b-row>
         </b-form>
       </b-modal>
@@ -775,8 +784,7 @@ export default {
  
 
   methods: {
-
-
+    
     async loadStripe_payment() {
       this.stripe = await loadStripe(`${this.stripe_key}`);
       const elements = this.stripe.elements();
@@ -789,6 +797,13 @@ export default {
       });
 
       this.cardElement.mount("#card-element");
+    },
+
+    handleReceivedAmountKeyup(receivedAmount) {
+      if (this.payment.status === 'partial') {
+        this.payment.amount = receivedAmount;
+      }
+      this.Verified_Received_Amount(receivedAmount);
     },
 
      handleFocus() {

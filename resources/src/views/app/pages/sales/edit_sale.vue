@@ -96,8 +96,8 @@
                           <th scope="col">{{$t('Net_Unit_Price')}}</th>
                           <th scope="col">{{$t('CurrentStock')}}</th>
                           <th scope="col">{{$t('Qty')}}</th>
-                          <th scope="col">{{$t('Discount')}}</th>
-                          <th scope="col">{{$t('Tax')}}</th>
+                          <!-- <th scope="col">{{$t('Discount')}}</th>
+                          <th scope="col">{{$t('Tax')}}</th> -->
                           <th scope="col">{{$t('SubTotal')}}</th>
                           <th scope="col" class="text-center">
                             <i class="fa fa-trash"></i>
@@ -152,8 +152,8 @@
                               </b-input-group>
                             </div>
                           </td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity , 2)}}</td>
+                          <!-- <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
+                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity , 2)}}</td> -->
                           <td>{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
                           <td v-show="detail.no_unit !== 0 || detail.product_type == 'is_service'">
                             <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')"
@@ -281,9 +281,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                                 [
-                                  {label: 'completed', value: 'completed'},
-                                  {label: 'Pending', value: 'pending'},
-                                  {label: 'ordered', value: 'ordered'}
+                                  {label: 'Completado', value: 'completed'},
+                                  {label: 'Pendiente', value: 'pending'},
+                                  {label: 'Pedido', value: 'ordered'}
                                 ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>

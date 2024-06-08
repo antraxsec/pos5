@@ -22,7 +22,7 @@
                 ></i>
                 <!-- Grid menu Dropdown -->
 
-                <div class="dropdown">
+                <!-- <div class="dropdown">
                   <b-dropdown
                     id="dropdown"
                     text="Dropdown Button"
@@ -129,7 +129,7 @@
             </div>
                     </vue-perfect-scrollbar>
                   </b-dropdown>
-                </div>
+                </div> -->
 
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
@@ -239,9 +239,9 @@
                               </tr>
                               <tr v-for="(detail, index) in details" :key="index">
                                 <td>
-                                  <span>{{detail.code}}</span>
+                                  <span>{{detail.name}}</span>
                                   <br>
-                                  <span class="badge badge-success">{{detail.name}}</span>
+                                  <span class="badge badge-success">{{detail.code}}</span>
                                   <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')" 
                                     @click="Modal_Updat_Detail(detail)" class="i-Edit text-success cursor-pointer"></i>
                                 </td>
@@ -298,7 +298,7 @@
                       </b-col>
 
                       <!-- Order Tax  -->
-                      <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                      <!-- <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                         <validation-provider
                           name="Order Tax"
                           :rules="{ regex: /^\d*\.?\d*$/}"
@@ -319,10 +319,10 @@
                             >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                           </b-form-group>
                         </validation-provider>
-                      </b-col>
+                      </b-col> -->
 
                       <!-- Discount -->
-                      <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                      <!-- <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                         <validation-provider
                           name="Discount"
                           :rules="{ regex: /^\d*\.?\d*$/}"
@@ -343,10 +343,10 @@
                             >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                           </b-form-group>
                         </validation-provider>
-                      </b-col>
+                      </b-col> -->
 
                       <!-- Shipping  -->
-                      <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
+                      <!-- <b-col lg="4" md="4" sm="12" v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')">
                         <validation-provider
                           name="Shipping"
                           :rules="{ regex: /^\d*\.?\d*$/}"
@@ -368,7 +368,7 @@
                             >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                           </b-form-group>
                         </validation-provider>
-                      </b-col>
+                      </b-col> -->
 
                       <!-- <b-col md="6" sm="12">
                         <b-button
@@ -414,15 +414,31 @@
                             :state="getValidationState(validationContext)"
                             aria-describedby="Price-feedback"
                           ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Price-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                          <b-form-invalid-feedback id="Price-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
+                    <!-- Unit Sale -->
+                    <b-col lg="6" md="6" sm="12" v-if="detail.product_type != 'is_service'">
+                        <validation-provider name="Unit Sale" :rules="{ required: true }">
+                            <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
+                                <v-select
+                                    :class="{'is-invalid': !!errors.length}"
+                                    :state="errors[0] ? false : (valid ? true : null)"
+                                    v-model="detail.sale_unit_id"
+                                    :disabled="!detail.isEditable"
+                                    :placeholder="$t('Choose_Unit_Sale')"
+                                    :reduce="label => label.value"
+                                    :options="units.map(units => ({label: units.name, value: units.id}))"
+                                />
+                                <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                        </validation-provider>
+                    </b-col>
+
                     <!-- Tax Method -->
-                   <b-col lg="6" md="6" sm="12">
+                    <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider name="Tax Method" :rules="{ required: true}">
                         <b-form-group slot-scope="{ valid, errors }" :label="$t('TaxMethod') + ' ' + '*'">
                           <v-select
@@ -432,41 +448,39 @@
                             :reduce="label => label.value"
                             :placeholder="$t('Choose_Method')"
                             :options="
-                           [
-                            {label: 'No incluido', value: '1'},
-                            {label: 'Incluido', value: '2'}
-                           ]"
+                                  [
+                                    {label: 'No incluido', value: '1'},
+                                    {label: 'Incluido', value: '2'}
+                                  ]"
                           ></v-select>
                           <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
-                    <!-- Tax -->
-                    <b-col lg="6" md="6" sm="12">
+                    <!-- Tax Rate -->
+                    <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider
-                        name="Tax"
+                        name="Order Tax"
                         :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                         v-slot="validationContext"
                       >
-                        <b-form-group :label="$t('Tax') + ' ' + '*'">
+                        <b-form-group :label="$t('OrderTax') + ' ' + '*'">
                           <b-input-group append="%">
                             <b-form-input
-                              label="Tax"
+                              label="Order Tax"
                               v-model="detail.tax_percent"
                               :state="getValidationState(validationContext)"
-                              aria-describedby="Tax-feedback"
+                              aria-describedby="OrderTax-feedback"
                             ></b-form-input>
                           </b-input-group>
-                          <b-form-invalid-feedback
-                            id="Tax-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                          <b-form-invalid-feedback id="OrderTax-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
                     <!-- Discount Method -->
-                   <b-col lg="6" md="6" sm="12">
+                    <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider name="Discount Method" :rules="{ required: true}">
                         <b-form-group slot-scope="{ valid, errors }" :label="$t('Discount_Method') + ' ' + '*'">
                           <v-select
@@ -487,7 +501,7 @@
                     </b-col>
 
                     <!-- Discount Rate -->
-                    <b-col lg="6" md="6" sm="12">
+                  <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider
                         name="Discount Rate"
                         :rules="{ required: true , regex: /^\d*\.?\d*$/}"
@@ -496,50 +510,42 @@
                         <b-form-group :label="$t('Discount') + ' ' + '*'">
                           <b-form-input
                             label="Discount"
-                            v-model="detail.discount"
+                            v-model.number="detail.discount"
                             :state="getValidationState(validationContext)"
                             aria-describedby="Discount-feedback"
                           ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Discount-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                          <b-form-invalid-feedback id="Discount-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
-                    <!-- Unit Sale -->
-                   <b-col lg="6" md="6" sm="12" v-if="detail.product_type != 'is_service'">
-                      <validation-provider name="Unit Sale" :rules="{ required: true}">
-                        <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
-                          <v-select
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            v-model="detail.sale_unit_id"
-                            :placeholder="$t('Choose_Unit_Sale')"
-                            :reduce="label => label.value"
-                            :options="units.map(units => ({label: units.name, value: units.id}))"
-                          />
-                          <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                        </b-form-group>
-                      </validation-provider>
-                    </b-col>
-
-                     <!-- Imei or serial numbers -->
+                    <!-- Imei or serial numbers -->
                     <b-col lg="12" md="12" sm="12" v-show="detail.is_imei">
-                      <b-form-group :label="$t('Add_product_IMEI_Serial_number')">
-                        <b-form-input
-                          label="Add_product_IMEI_Serial_number"
-                          v-model="detail.imei_number"
-                          :placeholder="$t('Add_product_IMEI_Serial_number')"
-                        ></b-form-input>
-                      </b-form-group>
-                  </b-col>
+                        <b-form-group :label="$t('Add_product_IMEI_Serial_number')">
+                          <b-form-input
+                            label="Add_product_IMEI_Serial_number"
+                            v-model="detail.imei_number"
+                            :placeholder="$t('Add_product_IMEI_Serial_number')"
+                          ></b-form-input>
+                        </b-form-group>
+                    </b-col>
 
-                    <b-col md="12">
+                    <b-col md="12" class="text-center pt-3 pb-2" >
                       <b-form-group>
-                        <b-button variant="primary" type="submit">{{$t('submit')}}</b-button>
+                        <b-button
+                          variant="primary"
+                          type="submit"
+                          :disabled="Submit_Processing_detail"
+                          class="btn-lg"
+                        >
+                          <i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}
+                        </b-button>
+                        <div v-once class="typo__p" v-if="Submit_Processing_detail">
+                          <div class="spinner sm spinner-primary mt-3"></div>
+                        </div>
                       </b-form-group>
                     </b-col>
+
                   </b-row>
                 </b-form>
               </b-modal>
@@ -939,7 +945,7 @@
                         :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                         v-slot="validationContext"
                       >
-                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'">
+                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'" class="font-weight-bold" style="font-size: 1.25rem; color: #007BFF;">
                           <b-form-input
                             label="Paying_Amount"
                             @keyup="Verified_paidAmount(payment.amount)"
@@ -947,13 +953,17 @@
                             v-model.number="payment.amount"
                             :state="getValidationState(validationContext)"
                             aria-describedby="Paying_Amount-feedback"
+                            class="form-control-lg"
+                            style="font-weight: 600; background-color: #E8F0FE;"
                           ></b-form-input>
                           <b-form-invalid-feedback
                             id="Paying_Amount-feedback"
+                            style="font-size: 1rem; font-weight: bold; color: #DC3545;"
                           >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
+
 
                     <!-- change  Amount  -->
                     <b-col lg="12" md="12" sm="12">
@@ -974,7 +984,7 @@
                           <b-badge variant="primary" pill>{{details.length}}</b-badge>
                         </b-list-group-item>
 
-                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                        <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
                           {{$t('OrderTax')}}
                           <span
                             class="font-weight-bold"
@@ -992,7 +1002,7 @@
                           <span
                             class="font-weight-bold"
                           >{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</span>
-                        </b-list-group-item>
+                        </b-list-group-item> -->
 
                         <b-list-group-item class="d-flex justify-content-between align-items-center">
                           {{$t('Total_Payable')}}
@@ -1017,16 +1027,16 @@
                           @input="Selected_PaymentMethod"
                           :reduce="label => label.value"
                           :placeholder="$t('PleaseSelect')"
-                          :options="
-                            [
-                            {label: 'Cash', value: 'Cash'},
-                            {label: 'credit card', value: 'credit card'},
+                          :options="[
+                            {label: 'Efectivo', value: 'Cash'},
+                            {label: 'Transferencia bancaria', value: 'bank transfer'},
+                            {label: 'Tarjeta de crédito/Debito', value: 'credit card'},
                             {label: 'TPE', value: 'tpe'},
-                            {label: 'cheque', value: 'cheque'},
+                            {label: 'Cheque', value: 'cheque'},
                             {label: 'Western Union', value: 'Western Union'},
-                            {label: 'bank transfer', value: 'bank transfer'},
-                            {label: 'other', value: 'other'},
-                            ]"
+                            {label: 'Otro', value: 'other'},
+                          ]"
+
                         ></v-select>
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                       </b-form-group>
@@ -1160,7 +1170,7 @@
         <validation-observer ref="Create_Customer">
           <b-modal hide-footer size="lg" id="New_Customer" :title="$t('Add')">
             <b-form @submit.prevent="Submit_Customer">
-              <b-row>
+              <b-row class="my-3">
                 <!-- Customer Name -->
                 <b-col md="6" sm="12">
                   <validation-provider
@@ -1168,92 +1178,100 @@
                     :rules="{ required: true}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="$t('CustomerName') + ' ' + '*'">
+                    <b-form-group :label="$t('CustomerName') + ' ' + '*'" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="name-feedback"
                         label="name"
                         v-model="client.name"
-                        :placeholder="$t('CustomerName')"
+                        
+                        class="form-control-lg"
                       ></b-form-input>
-                      <b-form-invalid-feedback id="name-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                      <b-form-invalid-feedback id="name-feedback" style="font-size: 0.8rem; color: #dc3545;">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
                 </b-col>
 
-                <!-- Customer Email -->
+                <!-- Customer Tax Number -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Email')">
+                    <b-form-group :label="$t('Tax_Number')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <b-form-input
-                        label="email"
-                        v-model="client.email"
-                        :placeholder="$t('Email')"
+                        label="Tax Number"
+                        v-model="client.tax_number"
+                        
+                        class="form-control-lg"
                       ></b-form-input>
                     </b-form-group>
                 </b-col>
 
                 <!-- Customer Phone -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Phone')">
+                    <b-form-group :label="$t('Phone')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <b-form-input
                         label="Phone"
                         v-model="client.phone"
-                        :placeholder="$t('Phone')"
+                        
+                        class="form-control-lg"
                       ></b-form-input>
                     </b-form-group>
                 </b-col>
 
+                <!-- Customer Email -->
+                <b-col md="6" sm="12">
+                    <b-form-group :label="$t('Email')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                      <b-form-input
+                        label="email"
+                        v-model="client.email"
+                        
+                        class="form-control-lg"
+                      ></b-form-input>
+                    </b-form-group>
+                </b-col>                
+
                 <!-- Customer Country -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Country')">
+                    <b-form-group :label="$t('Country')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <b-form-input
                         label="Country"
                         v-model="client.country"
-                        :placeholder="$t('Country')"
+                        
+                        class="form-control-lg"
                       ></b-form-input>
                     </b-form-group>
                 </b-col>
 
                 <!-- Customer City -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('City')">
+                    <b-form-group :label="$t('City')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <b-form-input
                         label="City"
                         v-model="client.city"
-                        :placeholder="$t('City')"
+                        
+                        class="form-control-lg"
                       ></b-form-input>
                     </b-form-group>
                 </b-col>
 
-                 <!-- Customer Tax Number -->
-                <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Tax_Number')">
-                      <b-form-input
-                        label="Tax Number"
-                        v-model="client.tax_number"
-                        :placeholder="$t('Tax_Number')"
-                      ></b-form-input>
-                    </b-form-group>
-                </b-col>
-
-
-                  <!-- Customer Adress -->
+                <!-- Customer Address -->
                 <b-col md="12" sm="12">
-                    <b-form-group :label="$t('Adress')">
+                    <b-form-group :label="$t('Adress')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
                       <textarea
                         label="Adress"
-                        class="form-control"
+                        class="form-control form-control-lg"
                         rows="4"
                         v-model="client.adresse"
-                        :placeholder="$t('Adress')"
+                        
                     ></textarea>
                     </b-form-group>
                 </b-col>
 
-                <b-col md="12" class="mt-3">
-                  <b-button variant="primary" type="submit"><i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}</b-button>
+                <!-- Submit Button -->
+                <b-col md="12" class="mt-3 d-flex justify-content-center">
+                  <b-button variant="primary" type="submit" size="lg"><i class="i-Yes me-2"></i> {{$t('submit')}}</b-button>
                 </b-col>
-              </b-row>
+            </b-row>
+
+
             </b-form>
           </b-modal>
         </validation-observer>
@@ -1262,7 +1280,7 @@
           hide-footer
           size="lg"
           id="show_draft_sales"
-          title="Draft Sales"
+          title="Ventas en espera"
         >
 
         <vue-good-table
@@ -1484,7 +1502,7 @@ export default {
         code: "",
         email: "",
         phone: "",
-        country: "",
+        country: "Bolivia",
         tax_number: "",
         city: "",
         adresse: ""
@@ -2089,8 +2107,8 @@ export default {
         email: "",
         phone: "",
         tax_number: "",
-        country: "",
-        city: "",
+        country: "Bolivia",
+        city: "La Paz",
         adresse: ""
       };
     },

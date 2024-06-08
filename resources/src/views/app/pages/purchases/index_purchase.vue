@@ -410,16 +410,16 @@
                     @input="Selected_PaymentMethod"
                     :reduce="label => label.value"
                     :placeholder="$t('PleaseSelect')"
-                    :options="
-                          [
-                          {label: 'Cash', value: 'Cash'},
-                          {label: 'credit card', value: 'credit card'},
-                           {label: 'TPE', value: 'tpe'},
-                          {label: 'cheque', value: 'cheque'},
-                          {label: 'Western Union', value: 'Western Union'},
-                          {label: 'bank transfer', value: 'bank transfer'},
-                          {label: 'other', value: 'other'},
-                          ]"
+                    :options="[
+                      {label: 'Efectivo', value: 'Cash'},
+                      {label: 'Tarjeta de crédito', value: 'credit card'},
+                      {label: 'POS', value: 'tpe'},
+                      {label: 'Cheque', value: 'cheque'},
+                      {label: 'Western Union', value: 'Western Union'},
+                      {label: 'Transferencia bancaria', value: 'bank transfer'},
+                      {label: 'Otro', value: 'other'},
+                    ]"
+
                   ></v-select>
                   <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </b-form-group>

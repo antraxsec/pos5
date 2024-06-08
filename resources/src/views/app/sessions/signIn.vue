@@ -75,7 +75,7 @@
               <div class="auth-logo text-center mb-30">
                 <img :src="'/images/logo.png'">
               </div>
-              <h1 class="mb-3 text-18">Ingresar</h1>
+              <h1 class="mb-3 text-18">Ingresar 2</h1>
               <validation-observer ref="submit_login">
                 <b-form @submit.prevent="Submit_Login">
                   <validation-provider
@@ -83,7 +83,7 @@
                     :rules="{ required: true}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="Correo" class="text-12">
+                    <b-form-group :label="$t('Email_Address')" class="text-12">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="Email-feedback"
@@ -101,7 +101,7 @@
                     :rules="{ required: true}"
                     v-slot="validationContext"
                   >
-                    <b-form-group :label="Contraseña" class="text-12">
+                    <b-form-group :label="$t('password')" class="text-12">
                       <b-form-input
                         :state="getValidationState(validationContext)"
                         aria-describedby="Password-feedback"
@@ -121,7 +121,7 @@
                     class="btn-rounded btn-block mt-2"
                     variant="primary mt-2"
                     :disabled="loading"
-                  >Ingresar</b-button>
+                  >{{$t('SignIn')}}</b-button>
                   <div v-once class="typo__p" v-if="loading">
                     <div class="spinner sm spinner-primary mt-3"></div>
                   </div>
@@ -129,8 +129,8 @@
               </validation-observer>
 
               <div class="mt-3 text-center">
-                <a href="/password/reset"  class="text-muted disabled">
-                  <u>Olvide mi contraseña</u>
+                <a href="/password/reset"  class="text-muted">
+                  <u>{{$t('Forgot_Password')}}</u>
                 </a>
               </div>
             </div>

@@ -95,8 +95,8 @@
                           <th scope="col">{{$t('ProductName')}}</th>
                           <th scope="col">{{$t('Net_Unit_Price')}}</th>
                           <th scope="col">{{$t('CurrentStock')}}</th>
-                          <th scope="col">{{$t('Qty')}}</th>
-                          <th scope="col">{{$t('Discount')}}</th>
+                          <!-- <th scope="col">{{$t('Qty')}}</th>
+                          <th scope="col">{{$t('Discount')}}</th> -->
                           <th scope="col">{{$t('Tax')}}</th>
                           <th scope="col">{{$t('SubTotal')}}</th>
                           <th scope="col" class="text-center">
@@ -146,8 +146,8 @@
                               </b-input-group>
                             </div>
                           </td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
-                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity, 2)}}</td>
+                          <!-- <td>{{currentUser.currency}} {{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
+                          <td>{{currentUser.currency}} {{formatNumber(detail.taxe * detail.quantity, 2)}}</td> -->
                           <td>{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
                           <td>
                             <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')"
@@ -277,9 +277,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                                 [
-                                  {label: 'completed', value: 'completed'},
-                                  {label: 'Pending', value: 'pending'},
-                                  {label: 'ordered', value: 'ordered'}
+                                  {label: 'Completado', value: 'completed'},
+                                  {label: 'Pendiente', value: 'pending'},
+                                  {label: 'Pedido', value: 'ordered'}
                                 ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
@@ -298,9 +298,9 @@
                         :placeholder="$t('Choose_Status')"
                         :options="
                                 [
-                                  {label: 'Paid', value: 'paid'},
-                                  {label: 'partial', value: 'partial'},
-                                  {label: 'Pending', value: 'pending'},
+                                  {label: 'Pagado', value: 'paid'},
+                                  {label: 'Pago parcial', value: 'partial'},
+                                  {label: 'Pendiente', value: 'pending'},
                                 ]"
                       ></v-select>
                     </b-form-group>
@@ -318,15 +318,15 @@
                         v-model="payment.Reglement"
                         :placeholder="$t('PleaseSelect')"
                         :options="
-                                  [
-                                  {label: 'Cash', value: 'Cash'},
-                                  {label: 'cheque', value: 'cheque'},
-                                  {label: 'TPE', value: 'tpe'},
-                                  {label: 'Western Union', value: 'Western Union'},
-                                  {label: 'bank transfer', value: 'bank transfer'},
-                                  {label: 'credit card', value: 'credit card'},
-                                  {label: 'other', value: 'other'},
-                                  ]"
+                          [
+                          {label: 'Efectivo', value: 'Cash'},
+                          {label: 'Tarjeta de crédito', value: 'credit card'},
+                          {label: 'TPE (Terminal Punto de Venta)', value: 'tpe'},
+                          {label: 'Cheque', value: 'cheque'},
+                          {label: 'Western Union', value: 'Western Union'},
+                          {label: 'Transferencia bancaria', value: 'bank transfer'},
+                          {label: 'Otro', value: 'other'},
+                          ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>

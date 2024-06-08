@@ -44,7 +44,7 @@
               class="btn btn-sm btn-outline-danger ripple m-1"
               :data="sales"
               :columns="columns"
-              :file-name="'sales'"
+              :file-name="'ventas'"
               :file-type="'xlsx'"
               :sheet-name="'sales'"
               >
@@ -279,9 +279,9 @@
                 :placeholder="$t('Choose_Status')"
                 :options="
                       [
-                        {label: 'completed', value: 'completed'},
-                        {label: 'Pending', value: 'pending'},
-                        {label: 'Ordered', value: 'ordered'},
+                        {label: 'Completado', value: 'completed'},
+                        {label: 'Pendiente', value: 'pending'},
+                        {label: 'Pedido', value: 'ordered'},
                       ]"
               ></v-select>
             </b-form-group>
@@ -296,9 +296,9 @@
                 :placeholder="$t('Choose_Status')"
                 :options="
                       [
-                        {label: 'Paid', value: 'paid'},
-                        {label: 'partial', value: 'partial'},
-                        {label: 'UnPaid', value: 'unpaid'},
+                        {label: 'Pago completo', value: 'paid'},
+                        {label: 'Pago parcial', value: 'partial'},
+                        {label: 'No pagado', value: 'unpaid'},
                       ]"
               ></v-select>
             </b-form-group>
@@ -310,14 +310,14 @@
               <v-select
                 v-model="Filter_shipping"
                 :reduce="label => label.value"
-                :placeholder="$t('Choose_Status')"
+                :placeholder="$t('Seleccione_Estado')"
                 :options="
                       [
-                        {label: 'Ordered', value: 'ordered'},
-                        {label: 'Packed', value: 'packed'},
-                        {label: 'Shipped', value: 'shipped'},
-                        {label: 'Delivered', value: 'delivered'},
-                        {label: 'Cancelled', value: 'cancelled'},
+                        {label: 'Ordenado', value: 'ordered'},
+                        {label: 'Empaquetado', value: 'packed'},
+                        {label: 'Enviado', value: 'shipped'},
+                        {label: 'Entregado', value: 'delivered'},
+                        {label: 'Cancelado', value: 'cancelled'},
                       ]"
               ></v-select>
             </b-form-group>
@@ -460,32 +460,33 @@
             </b-col>
 
              <!-- Payment choice -->
-            <b-col lg="4" md="12" sm="12">
-              <validation-provider name="Payment choice" :rules="{ required: true}">
-                <b-form-group slot-scope="{ valid, errors }" :label="$t('Paymentchoice')">
-                  <v-select
-                    :class="{'is-invalid': !!errors.length}"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                    v-model="payment.Reglement"
-                    @input="Selected_PaymentMethod"
-                    :disabled="EditPaiementMode"
-                    :reduce="label => label.value"
-                    :placeholder="$t('PleaseSelect')"
-                    :options="
-                          [
-                          {label: 'Cash', value: 'Cash'},
-                          {label: 'credit card', value: 'credit card'},
-                          {label: 'TPE', value: 'tpe'},
-                          {label: 'cheque', value: 'cheque'},
-                          {label: 'Western Union', value: 'Western Union'},
-                          {label: 'bank transfer', value: 'bank transfer'},
-                          {label: 'other', value: 'other'},
-                          ]"
-                  ></v-select>
-                  <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                </b-form-group>
-              </validation-provider>
-            </b-col>
+           <b-col lg="4" md="12" sm="12">
+            <validation-provider name="Opción de Pago" :rules="{ required: true}">
+              <b-form-group slot-scope="{ valid, errors }" :label="$t('OpciónDePago')">
+                <v-select
+                  :class="{'is-invalid': !!errors.length}"
+                  :state="errors[0] ? false : (valid ? true : null)"
+                  v-model="payment.Reglement"
+                  @input="Selected_PaymentMethod"
+                  :disabled="EditPaiementMode"
+                  :reduce="label => label.value"
+                  :placeholder="$t('Seleccione')"
+                  :options="
+                        [
+                        {label: 'Efectivo', value: 'Cash'},
+                        {label: 'Transferencia bancaria', value: 'bank transfer'},
+                        {label: 'Tarjeta de crédito/Debito', value: 'credit card'},
+                        {label: 'POS (Terminal Punto de Venta)', value: 'tpe'},
+                        {label: 'Cheque', value: 'cheque'},
+                        {label: 'Western Union', value: 'Western Union'},
+                        {label: 'Otro', value: 'other'},
+                        ]"
+                ></v-select>
+                <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
+          </b-col>
+
 
             <!-- Received  Amount  -->
             <b-col lg="4" md="12" sm="12">
@@ -1048,13 +1049,13 @@ export default {
           tdClass: "text-left",
           thClass: "text-left"
         },
-        {
-          label: this.$t("Shipping_status"),
-          field: "shipping_status",
-          html: true,
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
+        // {
+        //   label: this.$t("Shipping_status"),
+        //   field: "shipping_status",
+        //   html: true,
+        //   tdClass: "text-left",
+        //   thClass: "text-left"
+        // },
         {
           label: this.$t("Action"),
           field: "actions",
@@ -1328,21 +1329,41 @@ export default {
       var self = this;
       let pdf = new jsPDF("p", "pt");
       let columns = [
-        { title: "Ref", dataKey: "Ref" },
-        { title: "Client", dataKey: "client_name" },
-        { title: "Warehouse", dataKey: "warehouse_name" },
-        { title: "Created_by", dataKey: "created_by" },
-        { title: "Status", dataKey: "statut" },
+        { title: "Referencia", dataKey: "Ref" },
+        { title: "Cliente", dataKey: "client_name" },
+        { title: "Sucursal", dataKey: "warehouse_name" },
+        { title: "Creado por", dataKey: "created_by" },
+        { title: "Estado", dataKey: "statut" },
         { title: "Total", dataKey: "GrandTotal" },
-        { title: "Paid", dataKey: "paid_amount" },
-        { title: "Due", dataKey: "due" },
-        { title: "Status Payment", dataKey: "payment_status" },
-        { title: "Shipping Status", dataKey: "shipping_status" }
+        { title: "Pagado", dataKey: "paid_amount" },
+        { title: "Pendiente", dataKey: "due" },
+        { title: "Estado del Pago", dataKey: "payment_status" }
       ];
+
+      // Traducir los estados de pago justo antes de enviarlos a autoTable
+      self.sales.forEach(sale => {
+        sale.payment_status = translatePaymentStatus(sale.payment_status);
+      });
+
+      // Función auxiliar para traducir el estado del pago
+      function translatePaymentStatus(status) {
+        switch (status) {
+          case 'unpaid':
+            return 'No pagado';
+          case 'partial':
+            return 'Pago parcial';
+          case 'paid':
+            return 'Pagado';
+          default:
+            return status; // Retorna el estado original si no coincide con los casos anteriores
+        }
+      }
+
       pdf.autoTable(columns, self.sales);
-      pdf.text("Sale List", 40, 25);
-      pdf.save("Sale_List.pdf");
+      pdf.text("Lista de Ventas", 40, 25);
+      pdf.save("ListaVentas.pdf");
     },
+
     //-------------------------------- Invoice POS ------------------------------\\
     Invoice_POS(id) {
       // Start the progress bar.

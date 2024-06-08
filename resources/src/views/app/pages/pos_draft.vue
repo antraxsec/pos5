@@ -924,7 +924,7 @@
                         :rules="{ required: true , regex: /^\d*\.?\d*$/}"
                         v-slot="validationContext"
                       >
-                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'">
+                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'" class="font-weight-bold" style="font-size: 1.25rem; color: #007BFF;">
                           <b-form-input
                             label="Paying_Amount"
                             @keyup="Verified_paidAmount(payment.amount)"
@@ -932,9 +932,12 @@
                             v-model.number="payment.amount"
                             :state="getValidationState(validationContext)"
                             aria-describedby="Paying_Amount-feedback"
+                            class="form-control-lg"
+                            style="font-weight: 600; background-color: #E8F0FE;"
                           ></b-form-input>
                           <b-form-invalid-feedback
                             id="Paying_Amount-feedback"
+                            style="font-size: 1rem; font-weight: bold; color: #DC3545;"
                           >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
@@ -959,7 +962,7 @@
                           <b-badge variant="primary" pill>{{details.length}}</b-badge>
                         </b-list-group-item>
 
-                        <b-list-group-item class="d-flex justify-content-between align-items-center">
+                        <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
                           {{$t('OrderTax')}}
                           <span
                             class="font-weight-bold"
@@ -977,7 +980,7 @@
                           <span
                             class="font-weight-bold"
                           >{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</span>
-                        </b-list-group-item>
+                        </b-list-group-item> -->
 
                         <b-list-group-item class="d-flex justify-content-between align-items-center">
                           {{$t('Total_Payable')}}
@@ -1002,16 +1005,15 @@
                           @input="Selected_PaymentMethod"
                           :reduce="label => label.value"
                           :placeholder="$t('PleaseSelect')"
-                          :options="
-                            [
-                            {label: 'Cash', value: 'Cash'},
-                            {label: 'credit card', value: 'credit card'},
+                          :options="[
+                            {label: 'Efectivo', value: 'Cash'},
+                            {label: 'Transferencia bancaria', value: 'bank transfer'},
+                            {label: 'Tarjeta de crédito/Debito', value: 'credit card'},
                             {label: 'TPE', value: 'tpe'},
-                            {label: 'cheque', value: 'cheque'},
+                            {label: 'Cheque', value: 'cheque'},
                             {label: 'Western Union', value: 'Western Union'},
-                            {label: 'bank transfer', value: 'bank transfer'},
-                            {label: 'other', value: 'other'},
-                            ]"
+                            {label: 'Otro', value: 'other'},
+                          ]"
                         ></v-select>
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                       </b-form-group>
