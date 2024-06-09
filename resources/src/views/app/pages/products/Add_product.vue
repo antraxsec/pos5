@@ -425,14 +425,14 @@
               </b-row>
             </b-card>
            
-            <b-card class="mt-3">
+            <b-card class="mt-3 d-none">
               <b-row>
                 <!-- Product_Has_Imei_Serial_number -->
                 <b-col md="12 mb-2">
                   <ValidationProvider rules vid="product" v-slot="x">
                     <div class="form-check">
                       <label class="checkbox checkbox-outline-primary">
-                        <input type="checkbox" v-model="product.is_imei">
+                        <input type="checkbox" v-model="product.is_imei" disabled>
                         <h5>{{$t('Product_Has_Imei_Serial_number')}}</h5>
                         <span class="checkmark"></span>
                       </label>
@@ -445,7 +445,7 @@
                   <ValidationProvider rules vid="product" v-slot="x">
                     <div class="form-check">
                       <label class="checkbox checkbox-outline-primary">
-                        <input type="checkbox" v-model="product.not_selling">
+                        <input type="checkbox" v-model="product.not_selling" disabled>
                         <h5>{{$t('This_Product_Not_For_Selling')}}</h5>
                         <span class="checkmark"></span>
                       </label>
@@ -472,9 +472,9 @@
                       <vue-upload-multiple-image
                       @upload-success="uploadImageSuccess"
                       @before-remove="beforeRemove"
-                      dragText="Drag & Drop Multiple images For product"
-                      dropText="Drag & Drop image"
-                      browseText="(or) Select"
+                      dragText="Arrastra las imagenes"
+                      dropText="Arrastra las imagenes"
+                      browseText="Recuerda solo JPG"
                       accept=image/gif,image/jpeg,image/png,image/bmp,image/jpg
                       primaryText='success'
                       markIsPrimaryText='success'

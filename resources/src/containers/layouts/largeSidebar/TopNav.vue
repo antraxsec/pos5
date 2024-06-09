@@ -15,6 +15,10 @@
     <div style="margin: auto"></div>
 
     <div class="header-part-right">
+      <!-- Botón para borrar la caché -->
+      <button @click="clearCache" class="btn btn-outline-danger tn-sm btn-rounded">
+        <span class="ul-btn__text ml-1">Borrar Caché</span>
+      </button>
       <router-link 
         v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
         class="btn btn-outline-primary tn-sm btn-rounded"
@@ -343,6 +347,17 @@ export default {
 
         this.changeSidebarProperties();
         this.changeSecondarySidebarProperties();
+      }
+    },
+    clearCache() {
+      if (confirm("¿Estás seguro de que deseas borrar la caché?")) {
+        // Intenta borrar la caché del navegador
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
+        });
+
+        // Recarga la página para efectos inmediatos
+        window.location.reload(true);
       }
     }
   }

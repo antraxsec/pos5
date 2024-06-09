@@ -68,7 +68,7 @@ export default {
     code_must_be_not_exist_already: 'El código no debe existir ya',
     You_will_find_your_backup_on: 'Encontrarás tu copia de seguridad en',
     and_save_it_to_your_pc: 'y guárdalo en tu PC',
-    Scan_your_barcode_and_select_the_correct_symbology_below: 'Escanea tu código de barras y selecciona la simbología correcta a continuación',
+    Scan_your_barcode_and_select_the_correct_symbology_below: 'Escanea el código de barras P/N',
     Scan_Search_Product_by_Code_Name: 'Escanear / Buscar producto por código o nombre',
     Paper_size: 'Tamaño de papel',
     Clear_Cache: 'Limpiar caché',

@@ -115,14 +115,14 @@
                         >
                           <td>{{detail.detail_id}}</td>
                           <td>
-                            <span>{{detail.code}}</span>
+                            <span>{{detail.name}}</span>
                             <br>
-                            <span class="badge badge-success">{{detail.name}}</span>
+                            <span class="badge badge-success">{{detail.code}}</span>
                           </td>
                           <td>{{currentUser.currency}} {{formatNumber(detail.Net_cost, 3)}}</td>
                           <td>
                             <span
-                              class="badge badge-outline-warning"
+                              class="badge badge-outline-dark"
                             >{{detail.stock}} {{detail.unitPurchase}}</span>
                           </td>
                           <td>
