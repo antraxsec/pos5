@@ -306,7 +306,7 @@ import "jspdf-autotable";
 
 export default {
   metaInfo: {
-    title: "Products"
+    title: "Productos"
   },
 
   data() {
@@ -327,7 +327,7 @@ export default {
       totalRows: "",
       isLoading: true,
       spinner: false,
-      limit: "10",
+      limit: "50",
       Filter_brand: "",
       Filter_code: "",
       Filter_name: "",
@@ -351,6 +351,18 @@ export default {
           tdClass: "text-left",
           thClass: "text-left"
         },
+        {
+          label: this.$t("Categorie"),
+          field: "category",
+          tdClass: "text-left",
+          thClass: "text-left"
+        },
+        {
+          label: this.$t("Brand"),
+          field: "brand",
+          tdClass: "text-left",
+          thClass: "text-left"
+        },
         // {
         //   label: this.$t("type"),
         //   field: "type",
@@ -363,31 +375,10 @@ export default {
           html: true,
           tdClass: "text-left",
           thClass: "text-left"
-        },
+        },        
         {
-          label: this.$t("Code"),
-          field: "code",
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
-
-        {
-          label: this.$t("Brand"),
-          field: "brand",
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
-        {
-          label: this.$t("Categorie"),
-          field: "category",
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
-       
-        {
-          label: this.$t("Cost"),
-          field: "cost",
-          html: true,
+          label: this.$t("Quantity"),
+          field: "quantity",
           tdClass: "text-left",
           thClass: "text-left"
         },
@@ -398,18 +389,7 @@ export default {
           tdClass: "text-left",
           thClass: "text-left"
         },
-        {
-          label: this.$t("Unit"),
-          field: "unit",
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
-        {
-          label: this.$t("Quantity"),
-          field: "quantity",
-          tdClass: "text-left",
-          thClass: "text-left"
-        },
+
         {
           label: this.$t("Action"),
           field: "actions",
@@ -655,6 +635,8 @@ export default {
           this.brands = response.data.brands;
           this.totalRows = response.data.totalRows;
 
+          this.capturarProductos(response.data.products);
+
           // Complete the animation of theprogress bar.
           NProgress.done();
           this.isLoading = false;
@@ -748,7 +730,12 @@ export default {
             });
         }
       });
-    }
+    },
+
+    capturarProductos(page) {
+      // Aquí puedes manejar los productos
+      console.log("Productos recibidos:", page);
+    },
   }, //end Methods
 
   //-----------------------------Created function-------------------
@@ -769,5 +756,7 @@ export default {
       }, 500);
     });
   }
+  
 };
+
 </script>

@@ -81,7 +81,9 @@ class ProductsController extends BaseController
         foreach ($products as $product) {
             $item['id'] = $product->id;
             $item['code'] = $product->code;
+            $item['id_category'] = $product['category']->id;
             $item['category'] = $product['category']->name;
+            $item['id_brand'] = $product['brand'] ? $product['brand']->id : 'N/D';
             $item['brand'] = $product['brand'] ? $product['brand']->name : 'N/D';
            
 
@@ -97,11 +99,26 @@ class ProductsController extends BaseController
                 $item['price'] = number_format($product->price, 2, '.', ',');
                 $item['unit']  = $product['unit']->ShortName;
 
-              $product_warehouse_total_qty = product_warehouse::where('product_id', $product->id)
-              ->where('deleted_at', '=', null)
-              ->sum('qte');
-             
-              $item['quantity'] = $product_warehouse_total_qty .' '.$product['unit']->ShortName;
+                $product_warehouse_total_qty = product_warehouse::where('product_id', $product->id)
+                ->where('deleted_at', '=', null)
+                ->sum('qte');
+                
+                $item['quantity'] = $product_warehouse_total_qty .' '.$product['unit']->ShortName;
+                $item['cantidad'] = $product_warehouse_total_qty;
+                
+                $warehouses = Warehouse::where('deleted_at', null)->get();
+                foreach ($warehouses as $warehouse) {
+                    $quantity = product_warehouse::where('product_id', $product->id)
+                                                ->where('warehouse_id', $warehouse->id)
+                                                ->where('deleted_at', null)
+                                                ->sum('qte');
+
+                    $item['warehouse'][] = [
+                        'warehouse_id' => $warehouse->id,
+                        'warehouse_name' => $warehouse->name,
+                        'quantity' => $quantity
+                    ];
+                }
 
             }elseif($product->type == 'is_variant'){
 

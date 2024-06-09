@@ -7,7 +7,7 @@
     <main>
       <div
         :class="{ 'sidenav-open': getSideBarToggleProperties.isSideNavOpen }"
-        class="main-content-wrap d-flex flex-column flex-grow-1"
+        class="main-content-wrap d-flex flex-column flex-grow-1 p-1 p-md-4"
       >
         <transition name="page" mode="out-in">
           <router-view />

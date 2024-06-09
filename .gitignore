@@ -1,23 +1,31 @@
-/public/hot
-
-/public/js/bundle
-/public/images/vendor
-/public/js/main.js
-/node_modules
-/public/hot
-/public/storage
+# Ignorar directorios específicos
+/node_modules/
+/vendor/
+/public/hot/
+/public/storage/
+/storage/
 /storage/*.key
-/storage/framework/sessions
-/vendor
-.env
-.env.backup
-composer.lock
-.phpunit.result.cache
-docker-compose.override.yml
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
+/storage/framework/sessions/
 
-pos5.zip
-documentation.zip
+# Ignorar archivos específicos
+/.env
+/.env.backup
+/composer.lock
+/.phpunit.result.cache
+/docker-compose.override.yml
+/Homestead.json
+/Homestead.yaml
+/npm-debug.log
+/yarn-error.log
+
+# Ignorar todos los archivos .zip en el directorio raíz
+/*.zip
+
+# Ignorar archivos .zip específicos
+/pos5.zip
+/documentation.zip
+
+# Ignorar rutas específicas de activos
+/public/js/bundle/
+/public/images/vendor/
+/public/js/main.js
