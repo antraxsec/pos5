@@ -313,18 +313,19 @@ class PaymentSaleReturnsController extends BaseController
 
     //----------- Number Order Payment Sale Return --------------\\
 
-    public function getNumberOrder()
+    Public function getNumberOrder($prefix = 'PAGO')
     {
         $last = DB::table('payment_sale_returns')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
-            $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $inMsg = (int)$nwMsg[1] + 1;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'INV/RT_1111';
+            $code = $prefix . '_1111';
         }
+
         return $code;
     }
 

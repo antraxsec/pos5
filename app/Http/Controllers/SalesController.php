@@ -632,8 +632,8 @@ class SalesController extends BaseController
 
     //------------- Remove SALE BY ID -----------\\
 
-     public function destroy(Request $request, $id)
-     {
+    public function destroy(Request $request, $id)
+    {
          $this->authorizeForUser($request->user('api'), 'delete', Sale::class);
  
          \DB::transaction(function () use ($id, $request) {
@@ -738,7 +738,7 @@ class SalesController extends BaseController
          }, 10);
  
          return response()->json(['success' => true]);
-     }
+    }
 
     //-------------- Delete by selection  ---------------\\
 
@@ -991,6 +991,8 @@ class SalesController extends BaseController
         $item['taxe'] =     number_format($sale->TaxNet, 2, '.', '');
         $item['tax_rate'] = $sale->tax_rate;
         $item['client_name'] = $sale['client']->name;
+        $item['client_telefono'] = $sale['client']->phone;
+        $item['client_cedula'] = $sale['client']->tax_number;
         $item['warehouse_name'] = $sale['warehouse']->name;
         $item['GrandTotal'] = number_format($sale->GrandTotal, 2, '.', '');
         $item['paid_amount'] = number_format($sale->paid_amount, 2, '.', '');
@@ -1088,19 +1090,19 @@ class SalesController extends BaseController
 
     //------------- Reference Number Order SALE -----------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'BOLETA')
     {
-
         $last = DB::table('sales')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
-            $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $inMsg = (int)$nwMsg[1] + 1;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'SL_1111';
+            $code = $prefix . '_1111';
         }
+
         return $code;
     }
 

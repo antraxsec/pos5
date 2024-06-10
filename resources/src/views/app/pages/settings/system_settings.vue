@@ -19,6 +19,7 @@
                         :reduce="label => label.value"
                         :placeholder="$t('Choose_Currency')"
                         :options="currencies.map(currencies => ({label: currencies.name, value: currencies.id}))"
+                        disabled
                       />
                     </b-form-group>
                   </b-col>
@@ -121,6 +122,7 @@
                           aria-describedby="developed_by-feedback"
                           v-model="setting.developed_by"
                           class="form-control"
+                          disabled
                         ></b-form-input>
                         <b-form-invalid-feedback
                           id="developed_by-feedback"
@@ -180,7 +182,8 @@
                                   {label: 'Bangla', value: 'ba'},
                                   {label: 'Portuguese', value: 'br'},
                                   {label: 'Danish', value: 'da'},
-                              ]"                     
+                              ]"    
+                        disabled                 
                       ></v-select>
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                          </b-form-group>
@@ -230,7 +233,9 @@
                      <v-select @input="Selected_Time_Zone"
                           :placeholder="$t('Time_Zone')"
                           v-model="setting.timezone" :reduce="label => label.value"
-                          :options="zones_array.map(zones_array => ({label: zones_array.label, value: zones_array.zone}))">
+                          :options="zones_array.map(zones_array => ({label: zones_array.label, value: zones_array.zone}))"
+                          disabled
+                          >
                       </v-select>
                     </b-form-group>
                   </b-col>
@@ -257,7 +262,7 @@
                     </validation-provider>
                   </b-col>
 
-                  <b-col md="2" sm="2" class="mt-4 mb-4">
+                  <b-col md="6" sm="6" class="mt-4 mb-4">
                     <label class="checkbox checkbox-primary mb-3"><input type="checkbox" v-model="setting.is_invoice_footer"><h5>{{$t('invoice_footer')}} </h5><span class="checkmark"></span></label>
                   </b-col>
 
@@ -282,8 +287,8 @@
                     </validation-provider>
                 </b-col>
 
-                 <b-col md="4" class="mt-4 mb-4">
-                    <label class="checkbox checkbox-primary mb-3"><input type="checkbox" v-model="setting.quotation_with_stock"><h5>{{$t('Create_Quotation_with_Stock')}} </h5><span class="checkmark"></span></label>
+                 <b-col md="6" class="mt-4 mb-4">
+                    <label class="checkbox checkbox-primary mb-3"><input type="checkbox" disabled v-model="setting.quotation_with_stock"><h5>{{$t('Create_Quotation_with_Stock')}} </h5><span class="checkmark"></span></label>
                 </b-col>
 
                   <b-col md="12">

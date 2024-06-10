@@ -1069,22 +1069,22 @@ class PosController extends BaseController
     }
 
 
-      //------------- Reference Number Draft -----------\\
+    //------------- Reference Number Draft -----------\\
+    public function getNumberOrderDraft($prefix = 'D-VENTA')
+    {
+        $last = DB::table('draft_sales')->latest('id')->first();
 
-      public function getNumberOrderDraft()
-      {
-  
-          $last = DB::table('draft_sales')->latest('id')->first();
-  
-          if ($last) {
-              $item = $last->Ref;
-              $nwMsg = explode("_", $item);
-              $inMsg = $nwMsg[1] + 1;
-              $code = $nwMsg[0] . '_' . $inMsg;
-          } else {
-              $code = 'DR_1111';
-          }
-          return $code;
-      }
+        if ($last) {
+            $item = $last->Ref;
+            $nwMsg = explode("_", $item);
+            $inMsg = $nwMsg[1] + 1;
+            $code = $prefix . '_' . $inMsg;
+        } else {
+            $code = $prefix . '_1111';
+        }
+
+        return $code;
+    }
+
 
 }

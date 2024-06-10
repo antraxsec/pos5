@@ -41,7 +41,7 @@
             <i class="i-File-Copy"></i> PDF
           </b-button>
           <vue-excel-xlsx
-              class="btn btn-sm btn-outline-danger ripple m-1"
+              class="btn btn-sm btn-outline-danger ripple m-1 d-none"
               :data="products"
               :columns="columns"
               :file-name="'products'"
@@ -54,13 +54,14 @@
             @click="Show_import_products()"
             size="sm"
             variant="info m-1"
+            class="d-none"
             v-if="currentUserPermissions && currentUserPermissions.includes('product_import')"
           >
             <i class="i-Download"></i>
             {{ $t("import_products") }}
           </b-button>
           <router-link
-            class="btn-sm btn btn-primary btn-icon m-1"
+            class="btn-lg btn btn-primary custom-button btn-icon m-1"
             v-if="currentUserPermissions && currentUserPermissions.includes('products_add')"
             to="/app/products/store"
           >

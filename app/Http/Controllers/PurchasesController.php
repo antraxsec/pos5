@@ -796,22 +796,22 @@ class PurchasesController extends BaseController
 
     //--------------- Reference Number of Purchase ----------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'COMPRA')
     {
-
         $last = DB::table('purchases')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'PR_1111';
+            $code = $prefix . '_1111';
         }
-        return $code;
 
+        return $code;
     }
+
 
     //-------------- purchase PDF -----------\\
 

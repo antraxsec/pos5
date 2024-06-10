@@ -32,7 +32,7 @@
 
 
                 <!-- Customer -->
-                <b-col lg="4" md="4" sm="12" class="mb-3">
+                <!-- <b-col lg="4" md="4" sm="12" class="mb-3">
                   <validation-provider name="Customer" :rules="{ required: true}">
                     <b-form-group slot-scope="{ valid, errors }" :label="$t('Customer') + ' ' + '*'">
                       <v-select
@@ -45,6 +45,33 @@
                         :options="clients.map(clients => ({label: clients.name, value: clients.id}))"
                       />
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-form-group>
+                  </validation-provider>
+                </b-col> -->
+                <b-col lg="4" md="4" sm="12" class="mb-3">
+                  <validation-provider name="Customer" :rules="{ required: true}">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('Customer') + ' ' + '*'"
+                    
+                    >
+                      <b-input-group class="d-flex align-items-center">
+                        <v-select
+                          :class="{'is-invalid': !!errors.length}"
+                          :state="errors[0] ? false : (valid ? true : null)"
+                          v-model="sale.client_id"
+                          @input="onClientSelected"
+                          :reduce="label => label.value"
+                          :placeholder="$t('Choose_Customer')"
+                          class="flex-grow-1 pb-0" 
+                          :options="clients.map(clients => ({label: clients.name, value: clients.id}))"
+                        />
+                        <b-input-group-append>
+                          <b-button variant="primary" @click="New_Client()">
+                            <i class="i-Add-User"></i>
+                          </b-button>
+                        </b-input-group-append>
+                      </b-input-group>
+                      <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                      
                     </b-form-group>
                   </validation-provider>
                 </b-col>
@@ -661,6 +688,115 @@
         </b-form>
       </b-modal>
     </validation-observer>
+
+    <validation-observer ref="Create_Customer">
+      <b-modal hide-footer size="lg" id="New_Customer" :title="$t('Add')">
+        <b-form @submit.prevent="Submit_Customer">
+          <b-row class="my-3">
+            <!-- Customer Name -->
+            <b-col md="6" sm="12">
+              <validation-provider
+                name="Name Customer"
+                :rules="{ required: true}"
+                v-slot="validationContext"
+              >
+                <b-form-group :label="$t('CustomerName') + ' ' + '*'" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    :state="getValidationState(validationContext)"
+                    aria-describedby="name-feedback"
+                    label="name"
+                    v-model="client.name"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                  <b-form-invalid-feedback id="name-feedback" style="font-size: 0.8rem; color: #dc3545;">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </b-form-group>
+              </validation-provider>
+            </b-col>
+
+            <!-- Customer Tax Number -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Tax_Number')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    label="Tax Number"
+                    v-model="client.tax_number"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Customer Phone -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Phone')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    label="Phone"
+                    v-model="client.phone"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Customer Email -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Email')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    label="email"
+                    v-model="client.email"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>                
+
+            <!-- Customer Country -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('Country')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    label="Country"
+                    v-model="client.country"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Customer City -->
+            <b-col md="6" sm="12">
+                <b-form-group :label="$t('City')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <b-form-input
+                    label="City"
+                    v-model="client.city"
+                    
+                    class="form-control-lg"
+                  ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- Customer Address -->
+            <b-col md="12" sm="12">
+                <b-form-group :label="$t('Adress')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
+                  <textarea
+                    label="Adress"
+                    class="form-control form-control-lg"
+                    rows="4"
+                    v-model="client.adresse"
+                    
+                ></textarea>
+                </b-form-group>
+            </b-col>
+
+            <!-- Submit Button -->
+            <b-col md="12" class="mt-3 d-flex justify-content-center">
+              <b-button variant="primary" type="submit" size="lg"><i class="i-Yes me-2"></i> {{$t('submit')}}</b-button>
+            </b-col>
+        </b-row>
+
+
+        </b-form>
+      </b-modal>
+    </validation-observer>
   </div>
 </template>
 
@@ -672,7 +808,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 export default {
   metaInfo: {
-    title: "Create Sale"
+    title: "Nueva venta"
   },
   data() {
     return {
@@ -721,6 +857,17 @@ export default {
         TaxNet: 0,
         shipping: 0,
         discount: 0
+      },
+      client: {
+        id: "",
+        name: "",
+        code: "",
+        email: "",
+        phone: "",
+        country: "Bolivia",
+        tax_number: "",
+        city: "",
+        adresse: ""
       },
       timer:null,
       total: 0,
@@ -806,7 +953,7 @@ export default {
       this.Verified_Received_Amount(receivedAmount);
     },
 
-     handleFocus() {
+    handleFocus() {
       this.focused = true
     },
 
@@ -830,7 +977,7 @@ export default {
 
      //---------------------- Event Select Payment Method ------------------------------\\
 
-        async Selected_PaymentMethod(value) {
+    async Selected_PaymentMethod(value) {
       if (value === 'credit card') {
         this.savedPaymentMethods = [];
         this.submit_showing_credit_card = true;
@@ -1584,7 +1731,93 @@ export default {
             this.isLoading = false;
           }, 500);
         });
+    },
+
+
+
+
+
+
+    //------------- Submit Validation Create & Edit Customer
+    Submit_Customer() {
+      // Start the progress bar.
+      NProgress.start();
+      NProgress.set(0.1);
+      this.$refs.Create_Customer.validate().then(success => {
+        if (!success) {
+          NProgress.done();
+          this.makeToast(
+            "danger",
+            this.$t("Please_fill_the_form_correctly"),
+            this.$t("Failed")
+          );
+          console.log('error aqui 22');
+        } else {
+          this.Create_Client();
+        }
+      });
+    },
+    //---------------------------------------- Create new Customer -------------------------------\\
+    Create_Client() {
+      axios
+        .post("clients", {
+          name: this.client.name,
+          email: this.client.email,
+          phone: this.client.phone,
+          tax_number: this.client.tax_number,
+          country: this.client.country,
+          city: this.client.city,
+          adresse: this.client.adresse
+        })
+        .then(response => {
+          console.log('Respuesta recibida:', response); // Imprime la respuesta en la consola
+          NProgress.done();
+          this.makeToast(
+            "success",
+            this.$t("Create.TitleCustomer"),
+            this.$t("Success")
+          );
+          this.Get_Client_Without_Paginate(true);
+          this.$bvModal.hide("New_Customer");
+        })
+        .catch(error => {
+          console.log('error aqui 11a');
+          NProgress.done();
+          this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
+        });
+    },
+    //------------------------------ New Model (create Customer) -------------------------------\\
+    New_Client() {
+      this.reset_Form_client();
+      this.$bvModal.show("New_Customer");
+    },
+    //-------------------------------- reset Form -------------------------------\\
+    reset_Form_client() {
+      this.client = {
+        id: "",
+        name: "",
+        email: "",
+        phone: "",
+        tax_number: "",
+        country: "Bolivia",
+        city: "La Paz",
+        adresse: ""
+      };
+    },
+
+    //------------------------------------ Get Clients Without Paginate -------------------------\\
+    Get_Client_Without_Paginate(selectLast = false) {
+      axios
+        .get("get_clients_without_paginate")
+        .then(({ data }) => {
+          this.clients = data;
+          if (selectLast && this.clients.length > 0) {
+            this.sale.client_id = this.clients[this.clients.length - 1].id;
+          }
+        });
     }
+
+
   },
 
   //----------------------------- Created function-------------------

@@ -16,9 +16,9 @@
 
     <div class="header-part-right">
       <!-- Botón para borrar la caché -->
-      <button @click="clearCache" class="btn btn-outline-danger tn-sm btn-rounded">
+      <!-- <button @click="clearCache" class="btn btn-outline-danger tn-sm btn-rounded">
         <span class="ul-btn__text ml-1">Borrar Caché</span>
-      </button>
+      </button> -->
       <router-link 
         v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
         class="btn btn-outline-primary tn-sm btn-rounded"

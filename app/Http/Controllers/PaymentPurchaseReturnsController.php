@@ -330,19 +330,19 @@ class PaymentPurchaseReturnsController extends BaseController
 
     //----------- Number Order Payment Purchase Return --------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'RETORNO')
     {
         $last = DB::table('payment_purchase_returns')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
-            $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
-
+            $inMsg = (int)$nwMsg[1] + 1;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'INV/RT_1111';
+            $code = $prefix . '_1111';
         }
+
         return $code;
     }
 

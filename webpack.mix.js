@@ -26,10 +26,14 @@ mix.js('resources/src/main.js', 'public').js('resources/src/login.js', 'public')
             chunkFilename: 'js/bundle/[name].[hash].js',
           },
         plugins: [
-            new MomentLocalesPlugin(),
-            new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ['./js/*']
-              }),
+          new MomentLocalesPlugin(),
+          new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ['js/*', 'css/*', 'js/bundle/*'],
+            verbose: true
+          }),
+            // new CleanWebpackPlugin({
+            //     cleanOnceBeforeBuildPatterns: ['./js/*']
+            //   }),
         ]
     });
 

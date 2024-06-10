@@ -321,18 +321,19 @@ class PaymentPurchasesController extends BaseController
 
     //----------- Reference order Payment Purchases --------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'PAGO')
     {
         $last = DB::table('payment_purchases')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
-            $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $inMsg = (int)$nwMsg[1] + 1;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'INV/PR_1111';
+            $code = $prefix . '_1111';
         }
+
         return $code;
     }
 

@@ -456,7 +456,7 @@ class PaymentSalesController extends BaseController
 
     //----------- Reference order Payment Sales --------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'PAGO')
     {
         $last = DB::table('payment_sales')->latest('id')->first();
 
@@ -464,10 +464,9 @@ class PaymentSalesController extends BaseController
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
-
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'INV/SL_1111';
+            $code = $prefix . '_1111';
         }
 
         return $code;

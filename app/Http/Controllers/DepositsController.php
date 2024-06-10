@@ -262,22 +262,22 @@ class DepositsController extends BaseController
 
     //--------------- Reference Number of Deposit ----------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'DEPOSITO')
     {
-
         $last = DB::table('deposits')->latest('id')->first();
 
         if ($last) {
             $item = $last->deposit_ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'DP_1111';
+            $code = $prefix . '_1111';
         }
-        return $code;
 
+        return $code;
     }
+
 
 
     //---------------- Show Form Create Deposit ---------------\\

@@ -671,7 +671,7 @@ class SalesReturnController extends BaseController
 
     //------------ Reference Order Of Sale Return --------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'RT')
     {
         $last = DB::table('sale_returns')->latest('id')->first();
 
@@ -679,12 +679,14 @@ class SalesReturnController extends BaseController
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'RT_1111';
+            $code = $prefix . '_1111';
         }
+
         return $code;
     }
+
 
     //---------------- Get Details Sale Return  -----------------\\
 

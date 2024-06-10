@@ -843,22 +843,22 @@ class TransferController extends BaseController
 
     //------------ Reference Number of transfers  -----------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'TRASPASO')
     {
-
         $last = DB::table('transfers')->latest('id')->first();
 
         if ($last) {
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'TR_1111';
+            $code = $prefix . '_1111';
         }
-        return $code;
 
+        return $code;
     }
+
 
     //------------- Show Form Edit Transfer-----------\\
 

@@ -949,7 +949,7 @@ class PurchasesReturnController extends BaseController
 
     //------------ Reference Number Purchase Return --------------\\
 
-    public function getNumberOrder()
+    public function getNumberOrder($prefix = 'DEV-COMPRA')
     {
         $last = DB::table('purchase_returns')->latest('id')->first();
 
@@ -957,13 +957,14 @@ class PurchasesReturnController extends BaseController
             $item = $last->Ref;
             $nwMsg = explode("_", $item);
             $inMsg = $nwMsg[1] + 1;
-            $code = $nwMsg[0] . '_' . $inMsg;
+            $code = $prefix . '_' . $inMsg;
         } else {
-            $code = 'RT_1111';
+            $code = $prefix . '_1111';
         }
-        return $code;
 
+        return $code;
     }
+
 
     //---------------- Get Details Purchase Return  -----------------\\
 
