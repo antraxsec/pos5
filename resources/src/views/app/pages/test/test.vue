@@ -15,7 +15,7 @@ export default {
     },
     data() {
       return {
-        client_store: null,  // Almacena los datos de la respuesta
+        client_store: null,  // Almacena los datos de la respuesta hola
       };
     },
     methods: {
