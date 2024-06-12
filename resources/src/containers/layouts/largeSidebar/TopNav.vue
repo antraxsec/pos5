@@ -1,9 +1,9 @@
 <template>
   <div class="main-header">
     <div class="logo">
-       <router-link to="/app/dashboard">
+      <router-link to="/app/dashboard">
         <img :src="'/images/'+currentUser.logo" alt width="60" height="60">
-       </router-link>
+      </router-link>
     </div>
 
     <div @click="sideBarToggle" class="menu-toggle">
@@ -19,12 +19,12 @@
       <!-- <button @click="clearCache" class="btn btn-outline-danger tn-sm btn-rounded">
         <span class="ul-btn__text ml-1">Borrar Caché</span>
       </button> -->
-      <router-link 
-        v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
-        class="btn btn-outline-primary tn-sm btn-rounded"
-        to="/app/pos"
-      >
-      <span class="ul-btn__text ml-1">POS</span>
+      <button @click="lista" class="btn btn-outline-danger tn-sm btn-rounded">
+        <span class="ul-btn__text ml-1">Lista</span>
+      </button>
+      <router-link v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
+        class="btn btn-outline-primary tn-sm btn-rounded" to="/app/pos">
+        <span class="ul-btn__text ml-1">POS</span>
       </router-link>
       <!-- Full screen toggle -->
       <i class="i-Full-Screen header-icon d-none d-sm-inline-block" @click="handleFullScreen"></i>
@@ -144,39 +144,30 @@
       </div> -->
       <!-- Notificaiton -->
       <div class="dropdown">
-        <b-dropdown
-          id="dropdown-1" 
-          text="Dropdown Button"
-          class="m-md-2 badge-top-container d-none  d-sm-inline-block"
-          toggle-class="text-decoration-none"
-          no-caret
-          variant="link"
-        >
-          <template slot="button-content" >
+        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2 badge-top-container d-none  d-sm-inline-block"
+          toggle-class="text-decoration-none" no-caret variant="link">
+          <template slot="button-content">
             <span class="badge badge-primary" v-if="notifs_alert > 0">1</span>
             <i class="i-Bell text-muted header-icon"></i>
           </template>
           <!-- Notification dropdown -->
-          <vue-perfect-scrollbar
-            :settings="{ suppressScrollX: true, wheelPropagation: false }"
-            :class="{ open: getSideBarToggleProperties.isSideNavOpen }"
-            ref="myData"
-            class="dropdown-menu-right rtl-ps-none notification-dropdown ps scroll"
-          >
+          <vue-perfect-scrollbar :settings="{ suppressScrollX: true, wheelPropagation: false }"
+            :class="{ open: getSideBarToggleProperties.isSideNavOpen }" ref="myData"
+            class="dropdown-menu-right rtl-ps-none notification-dropdown ps scroll">
             <div class="dropdown-item d-flex" v-if="notifs_alert > 0">
               <div class="notification-icon">
                 <i class="i-Bell text-primary mr-1"></i>
               </div>
               <div class="notification-details flex-grow-1"
-              v-if="currentUserPermissions && currentUserPermissions.includes('Reports_quantity_alerts')">
-               <router-link  tag="a" to="/app/reports/quantity_alerts" >
-                <p class="text-small text-muted m-0">
-                  {{notifs_alert}} {{$t('ProductQuantityAlerts')}}
+                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_quantity_alerts')">
+                <router-link tag="a" to="/app/reports/quantity_alerts">
+                  <p class="text-small text-muted m-0">
+                    {{notifs_alert}} {{$t('ProductQuantityAlerts')}}
                   </p>
-               </router-link>
+                </router-link>
               </div>
             </div>
-           
+
           </vue-perfect-scrollbar>
         </b-dropdown>
       </div>
@@ -184,35 +175,20 @@
 
       <!-- User avatar dropdown -->
       <div class="dropdown">
-        <b-dropdown
-          id="dropdown-1"
-          text="Dropdown Button"
-          class="m-md-2 user col align-self-end d-md-block"
-          toggle-class="text-decoration-none"
-          no-caret
-          variant="link"
-        >
-          <template slot="button-content" >
-            <img
-              :src="'/images/avatar/'+currentUser.avatar"
-              id="userDropdown"
-              alt
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2 user col align-self-end d-md-block"
+          toggle-class="text-decoration-none" no-caret variant="link">
+          <template slot="button-content">
+            <img :src="'/images/avatar/'+currentUser.avatar" id="userDropdown" alt data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
           </template>
 
           <div class="dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-header">
-              <i class="i-Lock-User mr-1"></i> <span >{{currentUser.username}}</span>
+              <i class="i-Lock-User mr-1"></i> <span>{{currentUser.username}}</span>
             </div>
             <router-link to="/app/profile" class="dropdown-item">{{$t('profil')}}</router-link>
-            <router-link
-              v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
-              to="/app/settings/System_settings"
-              class="dropdown-item"
-            >{{$t('Settings')}}</router-link>
+            <router-link v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
+              to="/app/settings/System_settings" class="dropdown-item">{{$t('Settings')}}</router-link>
             <a class="dropdown-item" href="#" @click.prevent="logoutUser">{{$t('logout')}}</a>
           </div>
         </b-dropdown>
@@ -359,7 +335,14 @@ export default {
         // Recarga la página para efectos inmediatos
         window.location.reload(true);
       }
-    }
+    },
+    lista() {
+      // Abre la página en una nueva pestaña o ventana
+      window.open('https://multilaptops.net/dorcas/lista', '_blank');
+
+      // O usa esta línea si prefieres abrir en la misma pestaña
+      // window.location.href = 'https://lista-bay.vercel.app/';
+    },
   }
 };
 </script>

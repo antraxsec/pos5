@@ -11,7 +11,7 @@ echo %date% %time%: Inicio de la compresion > %LOGFILE%
 
 REM -- Usar 7-Zip para comprimir las carpetas y archivos
 echo %date% %time%: Comprimiendo archivos... >> %LOGFILE%
-"%RUTA_7ZIP%\7z.exe" a -tzip "%ZIPFILE%" app bootstrap config database Modules resources routes storage webpack.mix.js public\js public\index.php public\mix-manifest.json >> %LOGFILE% 2>&1
+"%RUTA_7ZIP%\7z.exe" a -tzip "%ZIPFILE%" app bootstrap config database Modules resources routes storage webpack.mix.js public\js public\index.php public\mix-manifest.json public\css\pos_print.css >> %LOGFILE% 2>&1
 if %errorlevel% neq 0 (
   echo ERROR: Fallo al comprimir los archivos. >> %LOGFILE%
   echo Fallo al comprimir los archivos.
