@@ -16,10 +16,7 @@
 
               <div class="header-part-right">
                 <!-- Full screen toggle -->
-                <i
-                  class="i-Full-Screen header-icon d-none d-sm-inline-block"
-                  @click="handleFullScreen"
-                ></i>
+                <i class="i-Full-Screen header-icon d-none d-sm-inline-block" @click="handleFullScreen"></i>
                 <!-- Grid menu Dropdown -->
 
                 <!-- <div class="dropdown">
@@ -133,24 +130,11 @@
 
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
-                  <b-dropdown
-                    id="dropdown-1"
-                    text="Dropdown Button"
-                    class="m-md-2 user col align-self-end"
-                    toggle-class="text-decoration-none"
-                    no-caret
-                    variant="link"
-                    right
-                  >
+                  <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2 user col align-self-end"
+                    toggle-class="text-decoration-none" no-caret variant="link" right>
                     <template slot="button-content">
-                      <img
-                        :src="'/images/avatar/'+currentUser.avatar"
-                        id="userDropdown"
-                        alt
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
+                      <img :src="'/images/avatar/'+currentUser.avatar" id="userDropdown" alt data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                     </template>
 
                     <div class="dropdown-menu-left" aria-labelledby="userDropdown">
@@ -159,11 +143,8 @@
                         <span>{{currentUser.username}}</span>
                       </div>
                       <router-link to="/app/profile" class="dropdown-item">{{$t('profil')}}</router-link>
-                      <router-link
-                        v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
-                        to="/app/settings/System_settings"
-                        class="dropdown-item"
-                      >{{$t('Settings')}}</router-link>
+                      <router-link v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
+                        to="/app/settings/System_settings" class="dropdown-item">{{$t('Settings')}}</router-link>
                       <a class="dropdown-item" href="#" @click.prevent="logoutUser">{{$t('logout')}}</a>
                     </div>
                   </b-dropdown>
@@ -178,16 +159,11 @@
                     <b-col lg="12" md="12" sm="12">
                       <validation-provider name="Customer" :rules="{ required: true}">
                         <b-input-group slot-scope="{ valid, errors }" class="input-customer">
-                          <v-select
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            v-model="sale.client_id"
-                            @input="onClientSelected"
-                            :reduce="label => label.value"
-                            :placeholder="$t('Choose_Customer')"
-                            class="w-100"
-                            :options="clients.map(clients => ({label: clients.name, value: clients.id}))"
-                          />
+                          <v-select :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)" v-model="sale.client_id"
+                            @input="onClientSelected" :reduce="label => label.value"
+                            :placeholder="$t('Choose_Customer')" class="w-100"
+                            :options="clients.map(clients => ({label: clients.name, value: clients.id}))" />
                           <b-input-group-append>
                             <b-button variant="primary" @click="New_Client()">
                               <span>
@@ -203,16 +179,11 @@
                     <b-col lg="12" md="12" sm="12">
                       <validation-provider name="warehouse" :rules="{ required: true}">
                         <b-form-group slot-scope="{ valid, errors }" class="mt-2">
-                          <v-select
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            :disabled="details.length > 0"
-                            @input="Selected_Warehouse"
-                            v-model="sale.warehouse_id"
-                            :reduce="label => label.value"
+                          <v-select :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)" :disabled="details.length > 0"
+                            @input="Selected_Warehouse" v-model="sale.warehouse_id" :reduce="label => label.value"
                             :placeholder="$t('Choose_Warehouse')"
-                            :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
-                          />
+                            :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))" />
                         </b-form-group>
                       </validation-provider>
                     </b-col>
@@ -242,7 +213,7 @@
                                   <span>{{detail.name}}</span>
                                   <br>
                                   <span class="badge badge-success">{{detail.code}}</span>
-                                  <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')" 
+                                  <i v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')"
                                     @click="Modal_Updat_Detail(detail)" class="i-Edit text-success cursor-pointer"></i>
                                 </td>
                                 <td>{{currentUser.currency}} {{formatNumber(detail.Total_price, 2)}}</td>
@@ -250,33 +221,23 @@
                                   <div class="quantity">
                                     <b-input-group>
                                       <b-input-group-prepend>
-                                        <span
-                                          class="btn btn-primary btn-sm"
-                                          @click="decrement(detail ,detail.detail_id)"
-                                        >-</span>
+                                        <span class="btn btn-primary btn-sm"
+                                          @click="decrement(detail ,detail.detail_id)">-</span>
                                       </b-input-group-prepend>
 
-                                      <input
-                                        class="form-control"
-                                        @keyup="Verified_Qty(detail,detail.detail_id)"
-                                        v-model.number="detail.quantity"
-                                      >
+                                      <input class="form-control" @keyup="Verified_Qty(detail,detail.detail_id)"
+                                        v-model.number="detail.quantity">
 
                                       <b-input-group-append>
-                                        <span
-                                          class="btn btn-primary btn-sm"
-                                          @click="increment(detail.detail_id)"
-                                        >+</span>
+                                        <span class="btn btn-primary btn-sm"
+                                          @click="increment(detail.detail_id)">+</span>
                                       </b-input-group-append>
                                     </b-input-group>
                                   </div>
                                 </td>
-                                 <td class="text-center">{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
+                                <td class="text-center">{{currentUser.currency}} {{detail.subtotal.toFixed(2)}}</td>
                                 <td>
-                                  <a
-                                    @click="delete_Product_Detail(detail.detail_id)"
-                                    title="Delete"
-                                  >
+                                  <a @click="delete_Product_Detail(detail.detail_id)" title="Delete">
                                     <i class="i-Close-Window text-25 text-danger cursor-pointer"></i>
                                   </a>
                                 </td>
@@ -388,10 +349,10 @@
                     </b-row>
                   </div>
 
-                
+
                 </b-card-body>
 
-                
+
               </b-form>
             </validation-observer>
 
@@ -402,57 +363,43 @@
                   <b-row>
                     <!-- Unit Price -->
                     <b-col lg="6" md="6" sm="12">
-                      <validation-provider
-                        name="Product Price"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
+                      <validation-provider name="Product Price" :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext">
                         <b-form-group :label="$t('ProductPrice') + ' ' + '*'" id="Price-input">
-                          <b-form-input
-                            label="Product Price"
-                            v-model="detail.Unit_price"
+                          <b-form-input label="Product Price" v-model="detail.Unit_price"
                             :state="getValidationState(validationContext)"
-                            aria-describedby="Price-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback id="Price-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                            aria-describedby="Price-feedback"></b-form-input>
+                          <b-form-invalid-feedback id="Price-feedback">{{ validationContext.errors[0]
+                            }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
                     <!-- Unit Sale -->
                     <b-col lg="6" md="6" sm="12" v-if="detail.product_type != 'is_service'">
-                        <validation-provider name="Unit Sale" :rules="{ required: true }">
-                            <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
-                                <v-select
-                                    :class="{'is-invalid': !!errors.length}"
-                                    :state="errors[0] ? false : (valid ? true : null)"
-                                    v-model="detail.sale_unit_id"
-                                    :disabled="!detail.isEditable"
-                                    :placeholder="$t('Choose_Unit_Sale')"
-                                    :reduce="label => label.value"
-                                    :options="units.map(units => ({label: units.name, value: units.id}))"
-                                />
-                                <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                            </b-form-group>
-                        </validation-provider>
+                      <validation-provider name="Unit Sale" :rules="{ required: true }">
+                        <b-form-group slot-scope="{ valid, errors }" :label="$t('UnitSale') + ' ' + '*'">
+                          <v-select :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)" v-model="detail.sale_unit_id"
+                            :disabled="!detail.isEditable" :placeholder="$t('Choose_Unit_Sale')"
+                            :reduce="label => label.value"
+                            :options="units.map(units => ({label: units.name, value: units.id}))" />
+                          <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                      </validation-provider>
                     </b-col>
 
                     <!-- Tax Method -->
                     <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider name="Tax Method" :rules="{ required: true}">
                         <b-form-group slot-scope="{ valid, errors }" :label="$t('TaxMethod') + ' ' + '*'">
-                          <v-select
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            v-model="detail.tax_method"
-                            :reduce="label => label.value"
-                            :placeholder="$t('Choose_Method')"
-                            :options="
+                          <v-select :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)" v-model="detail.tax_method"
+                            :reduce="label => label.value" :placeholder="$t('Choose_Method')" :options="
                                   [
                                     {label: 'No incluido', value: '1'},
                                     {label: 'Incluido', value: '2'}
-                                  ]"
-                          ></v-select>
+                                  ]"></v-select>
                           <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
@@ -460,21 +407,16 @@
 
                     <!-- Tax Rate -->
                     <b-col lg="6" md="6" sm="12" class="d-none">
-                      <validation-provider
-                        name="Order Tax"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
+                      <validation-provider name="Order Tax" :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext">
                         <b-form-group :label="$t('OrderTax') + ' ' + '*'">
                           <b-input-group append="%">
-                            <b-form-input
-                              label="Order Tax"
-                              v-model="detail.tax_percent"
+                            <b-form-input label="Order Tax" v-model="detail.tax_percent"
                               :state="getValidationState(validationContext)"
-                              aria-describedby="OrderTax-feedback"
-                            ></b-form-input>
+                              aria-describedby="OrderTax-feedback"></b-form-input>
                           </b-input-group>
-                          <b-form-invalid-feedback id="OrderTax-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                          <b-form-invalid-feedback id="OrderTax-feedback">{{ validationContext.errors[0]
+                            }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
@@ -483,61 +425,43 @@
                     <b-col lg="6" md="6" sm="12" class="d-none">
                       <validation-provider name="Discount Method" :rules="{ required: true}">
                         <b-form-group slot-scope="{ valid, errors }" :label="$t('Discount_Method') + ' ' + '*'">
-                          <v-select
-                            v-model="detail.discount_Method"
-                            :reduce="label => label.value"
-                            :placeholder="$t('Choose_Method')"
-                            :class="{'is-invalid': !!errors.length}"
-                            :state="errors[0] ? false : (valid ? true : null)"
-                            :options="
+                          <v-select v-model="detail.discount_Method" :reduce="label => label.value"
+                            :placeholder="$t('Choose_Method')" :class="{'is-invalid': !!errors.length}"
+                            :state="errors[0] ? false : (valid ? true : null)" :options="
                               [
                                 {label: 'Porcentaje %', value: '1'},
                                 {label: 'Fijo', value: '2'}
-                              ]"
-                          ></v-select>
+                              ]"></v-select>
                           <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
                     <!-- Discount Rate -->
-                  <b-col lg="6" md="6" sm="12" class="d-none">
-                      <validation-provider
-                        name="Discount Rate"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
+                    <b-col lg="6" md="6" sm="12" class="d-none">
+                      <validation-provider name="Discount Rate" :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext">
                         <b-form-group :label="$t('Discount') + ' ' + '*'">
-                          <b-form-input
-                            label="Discount"
-                            v-model.number="detail.discount"
+                          <b-form-input label="Discount" v-model.number="detail.discount"
                             :state="getValidationState(validationContext)"
-                            aria-describedby="Discount-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback id="Discount-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                            aria-describedby="Discount-feedback"></b-form-input>
+                          <b-form-invalid-feedback id="Discount-feedback">{{ validationContext.errors[0]
+                            }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
                     <!-- Imei or serial numbers -->
                     <b-col lg="12" md="12" sm="12" v-show="detail.is_imei">
-                        <b-form-group :label="$t('Add_product_IMEI_Serial_number')">
-                          <b-form-input
-                            label="Add_product_IMEI_Serial_number"
-                            v-model="detail.imei_number"
-                            :placeholder="$t('Add_product_IMEI_Serial_number')"
-                          ></b-form-input>
-                        </b-form-group>
+                      <b-form-group :label="$t('Add_product_IMEI_Serial_number')">
+                        <b-form-input label="Add_product_IMEI_Serial_number" v-model="detail.imei_number"
+                          :placeholder="$t('Add_product_IMEI_Serial_number')"></b-form-input>
+                      </b-form-group>
                     </b-col>
 
-                    <b-col md="12" class="text-center pt-3 pb-2" >
+                    <b-col md="12" class="text-center pt-3 pb-2">
                       <b-form-group>
-                        <b-button
-                          variant="primary"
-                          type="submit"
-                          :disabled="Submit_Processing_detail"
-                          class="btn-lg"
-                        >
+                        <b-button variant="primary" type="submit" :disabled="Submit_Processing_detail" class="btn-lg">
                           <i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}
                         </b-button>
                         <div v-once class="typo__p" v-if="Submit_Processing_detail">
@@ -571,50 +495,39 @@
               </b-col>
 
 
-               <!-- Product -->
-                <b-col md="12" class="mt-2 mb-2">
-                 
-                  <div id="autocomplete" class="autocomplete">
-                    <input 
-                     :placeholder="$t('Scan_Search_Product_by_Code_Name')"
-                      @input='e => search_input = e.target.value' 
-                      @keyup="search(search_input)"
-                      @focus="handleFocus"
-                      @blur="handleBlur"
-                      ref="product_autocomplete"
-                      class="autocomplete-input" />
-                    <ul class="autocomplete-result-list" v-show="focused">
-                      <li class="autocomplete-result" v-for="product_fil in product_filter" @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
-                    </ul>
+              <!-- Product -->
+              <b-col md="12" class="mt-2 mb-2">
+
+                <div id="autocomplete" class="autocomplete">
+                  <input :placeholder="$t('Scan_Search_Product_by_Code_Name')"
+                    @input='e => search_input = e.target.value' @keyup="search(search_input)" @focus="handleFocus"
+                    @blur="handleBlur" ref="product_autocomplete" class="autocomplete-input" />
+                  <ul class="autocomplete-result-list" v-show="focused">
+                    <li class="autocomplete-result" v-for="product_fil in product_filter"
+                      @mousedown="SearchProduct(product_fil)">{{getResultValue(product_fil)}}</li>
+                  </ul>
                 </div>
-                </b-col>
+              </b-col>
 
               <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="Check_Product_Exist(product , product.id)"
-                  v-for="product in products"
-                  class="card o-hidden bd-highlight m-1"
-                >
+                <div @click="Check_Product_Exist(product , product.id)" v-for="product in products"
+                  class="card o-hidden bd-highlight m-1">
                   <div class="list-thumb d-flex">
                     <img alt :src="'/images/products/'+product.image">
                   </div>
                   <div class="flex-grow-1 d-bock">
                     <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
+                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                       <div class="w-40 w-sm-100 item-title">{{product.name}}</div>
                       <p class="text-muted text-small w-15 w-sm-100 mb-2">{{product.code}}</p>
 
-                      <span
-                        class="badge badge-primary w-15 w-sm-100 mb-2"
-                      >{{currentUser.currency}} {{formatNumber(product.Net_price , 2)}}</span>
+                      <span class="badge badge-primary w-15 w-sm-100 mb-2">{{currentUser.currency}}
+                        {{formatNumber(product.Net_price , 2)}}</span>
 
                       <p v-if="product.product_type != 'is_service'"
-                        class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"
-                      >
-                        <span
-                          class="badge badge-info"
-                        >{{formatNumber(product.qte_sale , 2)}} {{product.unitSale}}</span>
+                        class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges">
+                        <span class="badge badge-info">{{formatNumber(product.qte_sale , 2)}}
+                          {{product.unitSale}}</span>
                       </p>
                     </div>
                   </div>
@@ -623,16 +536,9 @@
             </b-row>
             <b-row class="mb-3">
               <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="Product_onPageChanged"
-                  :total-rows="product_totalRows"
-                  :per-page="product_perPage"
-                  v-model="product_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
+                <b-pagination @change="Product_onPageChanged" :total-rows="product_totalRows"
+                  :per-page="product_perPage" v-model="product_currentPage"
+                  class="my-0 gull-pagination align-items-center" align="center" first-text last-text>
                   <p class="list-arrow m-0" slot="prev-text">
                     <i class="i-Arrow-Left text-40"></i>
                   </p>
@@ -651,34 +557,24 @@
           <div class="px-3 py-2">
             <b-row>
               <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="GetAllBrands()"
-                  :class="{ 'brand-Active' : brand_id == ''}"
-                  class="card o-hidden bd-highlight m-1"
-                >
+                <div @click="GetAllBrands()" :class="{ 'brand-Active' : brand_id == ''}"
+                  class="card o-hidden bd-highlight m-1">
                   <div class="list-thumb d-flex">
                     <img alt :src="'/images/no-image.png'">
                   </div>
                   <div class="flex-grow-1 d-bock">
                     <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
+                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                       <div class="item-title">{{$t('All_Brand')}}</div>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="card o-hidden bd-highlight m-1"
-                  v-for="brand in paginated_Brands"
-                  :key="brand.id"
-                  @click="Products_by_Brands(brand.id)"
-                  :class="{ 'brand-Active' : brand.id === brand_id}"
-                >
+                <div class="card o-hidden bd-highlight m-1" v-for="brand in paginated_Brands" :key="brand.id"
+                  @click="Products_by_Brands(brand.id)" :class="{ 'brand-Active' : brand.id === brand_id}">
                   <img alt :src="'/images/brands/'+brand.image">
                   <div class="flex-grow-1 d-bock">
                     <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
+                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                       <div class="item-title">{{brand.name}}</div>
                     </div>
                   </div>
@@ -688,16 +584,9 @@
 
             <b-row>
               <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="BrandonPageChanged"
-                  :total-rows="brand_totalRows"
-                  :per-page="brand_perPage"
-                  v-model="brand_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
+                <b-pagination @change="BrandonPageChanged" :total-rows="brand_totalRows" :per-page="brand_perPage"
+                  v-model="brand_currentPage" class="my-0 gull-pagination align-items-center" align="center" first-text
+                  last-text>
                   <p class="list-arrow m-0" slot="prev-text">
                     <i class="i-Arrow-Left text-40"></i>
                   </p>
@@ -711,44 +600,28 @@
         </b-sidebar>
 
         <!-- Sidebar category -->
-        <b-sidebar
-          id="sidebar-category"
-          :title="$t('ListofCategory')"
-          bg-variant="white"
-          right
-          shadow
-        >
+        <b-sidebar id="sidebar-category" :title="$t('ListofCategory')" bg-variant="white" right shadow>
           <div class="px-3 py-2">
             <b-row>
               <div class="col-md-12 d-flex flex-row flex-wrap bd-highlight list-item mt-2">
-                <div
-                  @click="getAllCategory()"
-                  :class="{ 'brand-Active' : category_id == ''}"
-                  class="card o-hidden bd-highlight m-1"
-                >
+                <div @click="getAllCategory()" :class="{ 'brand-Active' : category_id == ''}"
+                  class="card o-hidden bd-highlight m-1">
                   <div class="list-thumb d-flex">
                     <img alt :src="'/images/no-image.png'">
                   </div>
                   <div class="flex-grow-1 d-bock">
                     <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
+                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                       <div class="item-title">{{$t('All_Category')}}</div>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="card o-hidden bd-highlight m-1"
-                  v-for="category in paginated_Category"
-                  :key="category.id"
-                  @click="Products_by_Category(category.id)"
-                  :class="{ 'brand-Active' : category.id === category_id}"
-                >
+                <div class="card o-hidden bd-highlight m-1" v-for="category in paginated_Category" :key="category.id"
+                  @click="Products_by_Category(category.id)" :class="{ 'brand-Active' : category.id === category_id}">
                   <img alt :src="'/images/no-image.png'">
                   <div class="flex-grow-1 d-bock">
                     <div
-                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"
-                    >
+                      class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                       <div class="item-title">{{category.name}}</div>
                     </div>
                   </div>
@@ -758,16 +631,9 @@
 
             <b-row>
               <b-col md="12" class="mt-4">
-                <b-pagination
-                  @change="Category_onPageChanged"
-                  :total-rows="category_totalRows"
-                  :per-page="category_perPage"
-                  v-model="category_currentPage"
-                  class="my-0 gull-pagination align-items-center"
-                  align="center"
-                  first-text
-                  last-text
-                >
+                <b-pagination @change="Category_onPageChanged" :total-rows="category_totalRows"
+                  :per-page="category_perPage" v-model="category_currentPage"
+                  class="my-0 gull-pagination align-items-center" align="center" first-text last-text>
                   <p class="list-arrow m-0" slot="prev-text">
                     <i class="i-Arrow-Left text-40"></i>
                   </p>
@@ -786,117 +652,77 @@
             <div style="max-width:400px;margin:0px auto">
               <div class="info">
                 <div class="invoice_logo text-center mb-2">
-                  <img :src="'/images/'+invoice_pos.setting.logo" alt width="60" height="60">
+                  <img :src="'/images/' + invoice_pos.setting.logo" alt width="120" height="120">
                 </div>
-                <p>
-                  <span>{{$t('date')}} : {{invoice_pos.sale.date}} <br></span>
-                  <span v-show="pos_settings.show_address">{{$t('Adress')}} : {{invoice_pos.setting.CompanyAdress}} <br></span>
-                  <span v-show="pos_settings.show_email">{{$t('Email')}} : {{invoice_pos.setting.email}} <br></span>
-                  <span v-show="pos_settings.show_phone">{{$t('Phone')}} : {{invoice_pos.setting.CompanyPhone}} <br></span>
-                  <span v-show="pos_settings.show_customer">{{$t('Customer')}} : {{invoice_pos.sale.client_name}} <br></span>
-                  <span v-show="pos_settings.show_Warehouse">{{$t('warehouse')}} : {{invoice_pos.sale.warehouse_name}} <br></span>
+                <hr class="m-1">
+                <p class="invoice-details">
+                  <span><strong>{{ $t('date') }}:</strong> {{ invoice_pos.sale.date }} <br></span>
+                  <span v-show="pos_settings.show_Warehouse"><strong>{{ $t('warehouse') }}:</strong>
+                    {{ invoice_pos.sale.warehouse_name }} <br></span>
+                  <span v-show="pos_settings.show_address"><strong>{{ $t('Adress') }}:</strong>
+                    {{ invoice_pos.setting.CompanyAdress }} <br></span>
+                  <span v-show="pos_settings.show_phone"><strong>{{ $t('Phone') }}:</strong>
+                    {{ invoice_pos.setting.CompanyPhone }} <br></span>
+                  <hr class="m-1">
+                  <span v-show="pos_settings.show_customer"><strong>{{ $t('Customer') }}:</strong>
+                    {{ invoice_pos.sale.client_name }} <br></span>
+                  <span v-show="pos_settings.show_customer"><strong>CI:</strong>
+                    {{ invoice_pos.sale.client_cedula }}
+                    <br></span>
+                  <span v-show="pos_settings.show_customer"><strong>{{ $t('Phone') }}:</strong>
+                    {{ invoice_pos.sale.client_telefono }} <br></span>
                 </p>
+                <hr class="m-2">
+                <b class="fw-bolder mb-0">DETALLE</b>
               </div>
 
-              <table class="table_data">
+              <table>
                 <tbody>
                   <tr v-for="detail_invoice in invoice_pos.details">
                     <td colspan="3">
-                      {{detail_invoice.name}}
-                       <br v-show="detail_invoice.is_imei && detail_invoice.imei_number !==null">
-                        <span v-show="detail_invoice.is_imei && detail_invoice.imei_number !==null ">{{$t('IMEI_SN')}} : {{detail_invoice.imei_number}}</span>
-                        <br>
-                        <span>{{formatNumber(detail_invoice.quantity,2)}} {{detail_invoice.unit_sale}} x {{formatNumber(detail_invoice.total/detail_invoice.quantity,2)}}</span>
+                      {{ detail_invoice.name }}
+                      <br v-show="detail_invoice.is_imei && detail_invoice.imei_number !== null">
+                      <span v-show="detail_invoice.is_imei && detail_invoice.imei_number !== null">{{
+                        $t('IMEI_SN') }}
+                        : {{ detail_invoice.imei_number }}</span>
+                      <br>
+                      <span>{{ formatNumber(detail_invoice.quantity, 2) }} {{ detail_invoice.unit_sale }}
+                        x
+                        {{ formatNumber(detail_invoice.total / detail_invoice.quantity, 2) }}</span>
                     </td>
-                    <td
-                      style="text-align:right;vertical-align:bottom"
-                    >{{formatNumber(detail_invoice.total,2)}}</td>
+                    <td style="text-align:right;vertical-align:bottom">
+                      {{ formatNumber(detail_invoice.total, 2) }}</td>
                   </tr>
-
-                  <!-- <tr style="margin-top:10px" v-show="pos_settings.show_discount">
-                    <td colspan="3" class="total">{{$t('OrderTax')}}</td>
-                    <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.taxe ,2)}} ({{formatNumber(invoice_pos.sale.tax_rate,2)}} %)</td>
+                  <tr colspan="2">
                   </tr>
-
-                  <tr style="margin-top:10px" v-show="pos_settings.show_discount">
-                    <td colspan="3" class="total">{{$t('Discount')}}</td>
-                    <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.discount ,2)}}</td>
-                  </tr>
-
-                  <tr style="margin-top:10px" v-show="pos_settings.show_discount">
-                    <td colspan="3" class="total">{{$t('Shipping')}}</td>
-                    <td style="text-align:right;" class="total">{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.shipping ,2)}}</td>
-                  </tr> -->
-
                   <tr style="margin-top:10px">
-                    <td colspan="3" class="total">{{$t('Total')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.GrandTotal ,2)}}</td>
+                    <td colspan="3" class="total">{{ $t('Total') }}</td>
+                    <td style="text-align:right;" class="total">{{ invoice_pos.symbol }}
+                      {{ formatNumber(invoice_pos.sale.GrandTotal, 2) }}</td>
                   </tr>
 
                   <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
-                    <td colspan="3" class="total">{{$t('Paid')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{formatNumber(invoice_pos.sale.paid_amount ,2)}}</td>
+                    <td colspan="3" class="total">{{ $t('Paid') }}</td>
+                    <td style="text-align:right;" class="total">{{ invoice_pos.symbol }}
+                      {{ formatNumber(invoice_pos.sale.paid_amount, 2) }}</td>
                   </tr>
 
                   <tr v-show="invoice_pos.sale.paid_amount < invoice_pos.sale.GrandTotal">
-                    <td colspan="3" class="total">{{$t('Due')}}</td>
-                    <td
-                      style="text-align:right;"
-                      class="total"
-                    >{{invoice_pos.symbol}} {{parseFloat(invoice_pos.sale.GrandTotal - invoice_pos.sale.paid_amount).toFixed(2)}}</td>
+                    <td colspan="3" class="total">{{ $t('Due') }}</td>
+                    <td style="text-align:right;" class="total">{{ invoice_pos.symbol }}
+                      {{ parseFloat(invoice_pos.sale.GrandTotal -
+                        invoice_pos.sale.paid_amount).toFixed(2)}}</td>
                   </tr>
                 </tbody>
               </table>
 
-              <table
-                class="change mt-3"
-                style=" font-size: 10px;"
-                v-show="invoice_pos.sale.paid_amount > 0"
-              >
-                <thead>
-                  <tr style="background: #eee; ">
-                    <th style="text-align: left;" colspan="1">{{$t('PayeBy')}}:</th>
-                    <th style="text-align: center;" colspan="2">{{$t('Amount')}}:</th>
-                    <th style="text-align: right;" colspan="1">{{$t('Change')}}:</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr v-for="payment_pos in payments">
-                    <td style="text-align: left;" colspan="1">{{payment_pos.Reglement}}</td>
-                    <td
-                      style="text-align: center;"
-                      colspan="2"
-                    >{{formatNumber(payment_pos.montant ,2)}}</td>
-                    <td
-                      style="text-align: right;"
-                      colspan="1"
-                    >{{formatNumber(payment_pos.change ,2)}}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div id="legalcopy" class="ml-2">
+              <div id="legalcopy" class="text-center w-100 mt-4">
                 <p class="legal" v-show="pos_settings.show_note">
-                  <strong>{{pos_settings.note_customer}}</strong>
+                  <strong>{{ pos_settings.note_customer }}</strong>
                 </p>
-                <div id="bar" v-show="pos_settings.show_barcode">
-                  <barcode
-                    class="barcode"
-                    :format="barcodeFormat"
-                    :value="invoice_pos.sale.Ref"
-                    textmargin="0"
-                    fontoptions="bold"
-                    fontSize="15"
-                    height="25"
-                    width="1"
-                  ></barcode>
+                <div id="bar" v-show="pos_settings.show_barcode" class="invoice_logo text-center mb-2">
+                  <barcode class="barcode" :format="barcodeFormat" :value="invoice_pos.sale.Ref" textmargin="0"
+                    fontoptions="bold" fontSize="15" height="25" width="1"></barcode>
                 </div>
               </div>
             </div>
@@ -917,49 +743,32 @@
                   <b-row>
                     <!-- Received  Amount  -->
                     <b-col lg="12" md="12" sm="12">
-                      <validation-provider
-                        name="Received Amount"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
+                      <validation-provider name="Received Amount" :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext">
                         <b-form-group :label="$t('Received_Amount') + ' ' + '*'">
-                          <b-form-input
-                            @keyup="Verified_Received_Amount(payment.received_amount)"
-                            label="Received_Amount"
-                            :placeholder="$t('Received_Amount')"
-                            v-model.number="payment.received_amount"
-                            :state="getValidationState(validationContext)"
-                            aria-describedby="Received_Amount-feedback"
-                          ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Received_Amount-feedback"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                          <b-form-input @keyup="Verified_Received_Amount(payment.received_amount)"
+                            label="Received_Amount" :placeholder="$t('Received_Amount')"
+                            v-model.number="payment.received_amount" :state="getValidationState(validationContext)"
+                            aria-describedby="Received_Amount-feedback"></b-form-input>
+                          <b-form-invalid-feedback id="Received_Amount-feedback">{{ validationContext.errors[0]
+                            }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
 
                     <!-- Paying  Amount  -->
                     <b-col lg="12" md="12" sm="12">
-                      <validation-provider
-                        name="Paying Amount"
-                        :rules="{ required: true , regex: /^\d*\.?\d*$/}"
-                        v-slot="validationContext"
-                      >
-                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'" class="font-weight-bold" style="font-size: 1.25rem; color: #007BFF;">
-                          <b-form-input
-                            label="Paying_Amount"
-                            @keyup="Verified_paidAmount(payment.amount)"
-                            :placeholder="$t('Paying_Amount')"
-                            v-model.number="payment.amount"
-                            :state="getValidationState(validationContext)"
-                            aria-describedby="Paying_Amount-feedback"
-                            class="form-control-lg"
-                            style="font-weight: 600; background-color: #E8F0FE;"
-                          ></b-form-input>
-                          <b-form-invalid-feedback
-                            id="Paying_Amount-feedback"
-                            style="font-size: 1rem; font-weight: bold; color: #DC3545;"
-                          >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                      <validation-provider name="Paying Amount" :rules="{ required: true , regex: /^\d*\.?\d*$/}"
+                        v-slot="validationContext">
+                        <b-form-group :label="$t('Paying_Amount') + ' ' + '*'" class="font-weight-bold"
+                          style="font-size: 1.25rem; color: #007BFF;">
+                          <b-form-input label="Paying_Amount" @keyup="Verified_paidAmount(payment.amount)"
+                            :placeholder="$t('Paying_Amount')" v-model.number="payment.amount"
+                            :state="getValidationState(validationContext)" aria-describedby="Paying_Amount-feedback"
+                            class="form-control-lg" style="font-weight: 600; background-color: #E8F0FE;"></b-form-input>
+                          <b-form-invalid-feedback id="Paying_Amount-feedback"
+                            style="font-size: 1rem; font-weight: bold; color: #DC3545;">{{ validationContext.errors[0]
+                            }}</b-form-invalid-feedback>
                         </b-form-group>
                       </validation-provider>
                     </b-col>
@@ -968,23 +777,21 @@
                     <!-- change  Amount  -->
                     <b-col lg="12" md="12" sm="12">
                       <label>{{$t('Change')}} :</label>
-                      <p
-                        class="change_amount"
-                      >{{parseFloat(payment.received_amount - payment.amount).toFixed(2)}}</p>
+                      <p class="change_amount">{{parseFloat(payment.received_amount - payment.amount).toFixed(2)}}</p>
                     </b-col>
 
-                    
+
                   </b-row>
                 </b-col>
-                 <b-col md="6">
-                    <b-card>
-                      <b-list-group>
-                        <b-list-group-item class="d-flex justify-content-between align-items-center">
-                          {{$t('TotalProducts')}}
-                          <b-badge variant="primary" pill>{{details.length}}</b-badge>
-                        </b-list-group-item>
+                <b-col md="6">
+                  <b-card>
+                    <b-list-group>
+                      <b-list-group-item class="d-flex justify-content-between align-items-center">
+                        {{$t('TotalProducts')}}
+                        <b-badge variant="primary" pill>{{details.length}}</b-badge>
+                      </b-list-group-item>
 
-                        <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
+                      <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
                           {{$t('OrderTax')}}
                           <span
                             class="font-weight-bold"
@@ -1004,30 +811,24 @@
                           >{{currentUser.currency}} {{sale.shipping.toFixed(2)}}</span>
                         </b-list-group-item> -->
 
-                        <b-list-group-item class="d-flex justify-content-between align-items-center">
-                          {{$t('Total_Payable')}}
-                          <span
-                            class="font-weight-bold"
-                          >{{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
-                        </b-list-group-item>
-                      </b-list-group>
-                    </b-card>
+                      <b-list-group-item class="d-flex justify-content-between align-items-center">
+                        {{$t('Total_Payable')}}
+                        <span class="font-weight-bold">{{currentUser.currency}} {{GrandTotal.toFixed(2)}}</span>
+                      </b-list-group-item>
+                    </b-list-group>
+                  </b-card>
                 </b-col>
               </b-row>
               <b-row class="mt-4">
-               
-                  <!-- Payment choice -->
-                  <b-col lg="6" md="6" sm="12">
-                    <validation-provider name="Payment choice" :rules="{ required: true}">
-                      <b-form-group slot-scope="{ valid, errors }" :label="$t('Paymentchoice') + ' ' + '*'">
-                        <v-select
-                          :class="{'is-invalid': !!errors.length}"
-                          :state="errors[0] ? false : (valid ? true : null)"
-                          v-model="payment.Reglement"
-                          @input="Selected_PaymentMethod"
-                          :reduce="label => label.value"
-                          :placeholder="$t('PleaseSelect')"
-                          :options="[
+
+                <!-- Payment choice -->
+                <b-col lg="6" md="6" sm="12">
+                  <validation-provider name="Payment choice" :rules="{ required: true}">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('Paymentchoice') + ' ' + '*'">
+                      <v-select :class="{'is-invalid': !!errors.length}"
+                        :state="errors[0] ? false : (valid ? true : null)" v-model="payment.Reglement"
+                        @input="Selected_PaymentMethod" :reduce="label => label.value" :placeholder="$t('PleaseSelect')"
+                        :options="[
                             {label: 'Efectivo', value: 'Cash'},
                             {label: 'Transferencia bancaria', value: 'bank transfer'},
                             {label: 'Tarjeta de crédito/Debito', value: 'credit card'},
@@ -1035,129 +836,113 @@
                             {label: 'Cheque', value: 'cheque'},
                             {label: 'Western Union', value: 'Western Union'},
                             {label: 'Otro', value: 'other'},
-                          ]"
-
-                        ></v-select>
-                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
-                      </b-form-group>
-                    </validation-provider>
-                  </b-col>
-
-                  <!-- Account -->
-                  <b-col lg="6" md="6" sm="12">
-                  <validation-provider name="Account">
-                    <b-form-group slot-scope="{ valid, errors }" :label="$t('Account')">
-                      <v-select
-                        :class="{'is-invalid': !!errors.length}"
-                        :state="errors[0] ? false : (valid ? true : null)"
-                        v-model="payment.account_id"
-                        :reduce="label => label.value"
-                        :placeholder="$t('Choose_Account')"
-                        :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))"
-                      />
+                          ]"></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
                 </b-col>
 
-                  <b-col md="12">
-                     <b-card v-show="payment.Reglement == 'credit card'">
-                        <div v-once class="typo__p" v-if="submit_showing_credit_card">
-                          <div class="spinner sm spinner-primary mt-3"></div>
-                        </div>
-                        <div v-if="displaySavedPaymentMethods && !submit_showing_credit_card">
-                          <div class="mt-3"><span class="mr-3">Saved Credit Card Info For This Client </span>
-                          <b-button variant="outline-info" @click="show_new_credit_card()">
-                              <span>
-                                <i class="i-Two-Windows"></i>
-                                New Credit Card
-                              </span>
-                          </b-button>
+                <!-- Account -->
+                <b-col lg="6" md="6" sm="12">
+                  <validation-provider name="Account">
+                    <b-form-group slot-scope="{ valid, errors }" :label="$t('Account')">
+                      <v-select :class="{'is-invalid': !!errors.length}"
+                        :state="errors[0] ? false : (valid ? true : null)" v-model="payment.account_id"
+                        :reduce="label => label.value" :placeholder="$t('Choose_Account')"
+                        :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))" />
+                      <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-form-group>
+                  </validation-provider>
+                </b-col>
 
-                          </div>
-                          <table class="table table-hover mt-3">
-                            <thead>
-                              <tr>
-                                <th>Last 4 digits</th>
-                                <th>Type</th>
-                                <th>Exp</th>
-                                <th>Action</th>
+                <b-col md="12">
+                  <b-card v-show="payment.Reglement == 'credit card'">
+                    <div v-once class="typo__p" v-if="submit_showing_credit_card">
+                      <div class="spinner sm spinner-primary mt-3"></div>
+                    </div>
+                    <div v-if="displaySavedPaymentMethods && !submit_showing_credit_card">
+                      <div class="mt-3"><span class="mr-3">Saved Credit Card Info For This Client </span>
+                        <b-button variant="outline-info" @click="show_new_credit_card()">
+                          <span>
+                            <i class="i-Two-Windows"></i>
+                            New Credit Card
+                          </span>
+                        </b-button>
 
-                              </tr>
-                            </thead>
+                      </div>
+                      <table class="table table-hover mt-3">
+                        <thead>
+                          <tr>
+                            <th>Last 4 digits</th>
+                            <th>Type</th>
+                            <th>Exp</th>
+                            <th>Action</th>
 
-                            <tbody>
-                              <tr v-for="card in savedPaymentMethods" :class="{ 'bg-selected-card': isSelectedCard(card) }">
-                                <td>**** {{card.last4}}</td>
-                                <td>{{card.type}}</td>
-                                <td>{{card.exp}}</td>
-                                <td>
-                                   <b-button variant="outline-primary" @click="selectCard(card)" v-if="!isSelectedCard(card) && card_id != card.card_id">
-                                      <span>
-                                        <i class="i-Drag-Up"></i> 
-                                        Use This
-                                      </span>
-                                    </b-button>
-                                     <i v-if="isSelectedCard(card) || card_id == card.card_id" class="i-Yes" style=" font-size: 20px; "></i> 
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                          </tr>
+                        </thead>
 
-                        <div v-if="displayFormNewCard && !submit_showing_credit_card">
-                          <form id="payment-form">
-                            <label for="card-element" class="leading-7 text-sm text-gray-600">
-                              {{$t('Credit_Card_Info')}}
-                              <b-button variant="outline-info" @click="show_saved_credit_card()" v-if="savedPaymentMethods && savedPaymentMethods.length > 0">
+                        <tbody>
+                          <tr v-for="card in savedPaymentMethods" :class="{ 'bg-selected-card': isSelectedCard(card) }">
+                            <td>**** {{card.last4}}</td>
+                            <td>{{card.type}}</td>
+                            <td>{{card.exp}}</td>
+                            <td>
+                              <b-button variant="outline-primary" @click="selectCard(card)"
+                                v-if="!isSelectedCard(card) && card_id != card.card_id">
                                 <span>
-                                      <i class="i-Two-Windows"></i>
-                                      Use Saved Credit Card
-                                    </span>
-                                </b-button>
-                              </label>
-                            <div id="card-element">
-                            </div>
-                            <div id="card-errors" class="is-invalid" role="alert"></div>
-                          </form>
+                                  <i class="i-Drag-Up"></i>
+                                  Use This
+                                </span>
+                              </b-button>
+                              <i v-if="isSelectedCard(card) || card_id == card.card_id" class="i-Yes"
+                                style=" font-size: 20px; "></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div v-if="displayFormNewCard && !submit_showing_credit_card">
+                      <form id="payment-form">
+                        <label for="card-element" class="leading-7 text-sm text-gray-600">
+                          {{$t('Credit_Card_Info')}}
+                          <b-button variant="outline-info" @click="show_saved_credit_card()"
+                            v-if="savedPaymentMethods && savedPaymentMethods.length > 0">
+                            <span>
+                              <i class="i-Two-Windows"></i>
+                              Use Saved Credit Card
+                            </span>
+                          </b-button>
+                        </label>
+                        <div id="card-element">
                         </div>
-                     </b-card>
-                  </b-col>
-               
+                        <div id="card-errors" class="is-invalid" role="alert"></div>
+                      </form>
+                    </div>
+                  </b-card>
+                </b-col>
 
 
-                    <!-- payment Note -->
-                    <b-col lg="6" md="6" sm="12" class="mt-2">
-                      <b-form-group :label="$t('Payment_note')">
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="payment.notes"
-                          rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
-                      </b-form-group>
-                    </b-col>
 
-                    <!-- sale Note -->
-                    <b-col lg="6" md="6" sm="12" class="mt-2">
-                      <b-form-group :label="$t('sale_note')">
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="sale.notes"
-                          rows="3"
-                          max-rows="6"
-                        ></b-form-textarea>
-                      </b-form-group>
-                    </b-col>
+                <!-- payment Note -->
+                <b-col lg="6" md="6" sm="12" class="mt-2">
+                  <b-form-group :label="$t('Payment_note')">
+                    <b-form-textarea id="textarea" v-model="payment.notes" rows="3" max-rows="6"></b-form-textarea>
+                  </b-form-group>
+                </b-col>
+
+                <!-- sale Note -->
+                <b-col lg="6" md="6" sm="12" class="mt-2">
+                  <b-form-group :label="$t('sale_note')">
+                    <b-form-textarea id="textarea" v-model="sale.notes" rows="3" max-rows="6"></b-form-textarea>
+                  </b-form-group>
+                </b-col>
 
 
 
                 <b-col md="12" class="mt-3">
-                  <b-button
-                    variant="primary"
-                    type="submit"
-                    :disabled="paymentProcessing"
-                  ><i class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}</b-button>
+                  <b-button variant="primary" type="submit" :disabled="paymentProcessing"><i
+                      class="i-Yes me-2 font-weight-bold"></i> {{$t('submit')}}</b-button>
                   <div v-once class="typo__p" v-if="paymentProcessing">
                     <div class="spinner sm spinner-primary mt-3"></div>
                   </div>
@@ -1173,188 +958,132 @@
               <b-row class="my-3">
                 <!-- Customer Name -->
                 <b-col md="6" sm="12">
-                  <validation-provider
-                    name="Name Customer"
-                    :rules="{ required: true}"
-                    v-slot="validationContext"
-                  >
-                    <b-form-group :label="$t('CustomerName') + ' ' + '*'" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        :state="getValidationState(validationContext)"
-                        aria-describedby="name-feedback"
-                        label="name"
-                        v-model="client.name"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                      <b-form-invalid-feedback id="name-feedback" style="font-size: 0.8rem; color: #dc3545;">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  <validation-provider name="Name Customer" :rules="{ required: true}" v-slot="validationContext">
+                    <b-form-group :label="$t('CustomerName') + ' ' + '*'" label-size="lg" label-class="font-weight-bold"
+                      style="font-size: 1.5rem;">
+                      <b-form-input :state="getValidationState(validationContext)" aria-describedby="name-feedback"
+                        label="name" v-model="client.name" class="form-control-lg"></b-form-input>
+                      <b-form-invalid-feedback id="name-feedback" style="font-size: 0.8rem; color: #dc3545;">{{
+                        validationContext.errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
                 </b-col>
 
                 <!-- Customer Tax Number -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Tax_Number')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        label="Tax Number"
-                        v-model="client.tax_number"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                    </b-form-group>
+                  <b-form-group :label="$t('Tax_Number')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <b-form-input label="Tax Number" v-model="client.tax_number" class="form-control-lg"></b-form-input>
+                  </b-form-group>
                 </b-col>
 
                 <!-- Customer Phone -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Phone')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        label="Phone"
-                        v-model="client.phone"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                    </b-form-group>
+                  <b-form-group :label="$t('Phone')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <b-form-input label="Phone" v-model="client.phone" class="form-control-lg"></b-form-input>
+                  </b-form-group>
                 </b-col>
 
                 <!-- Customer Email -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Email')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        label="email"
-                        v-model="client.email"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                    </b-form-group>
-                </b-col>                
+                  <b-form-group :label="$t('Email')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <b-form-input label="email" v-model="client.email" class="form-control-lg"></b-form-input>
+                  </b-form-group>
+                </b-col>
 
                 <!-- Customer Country -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('Country')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        label="Country"
-                        v-model="client.country"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                    </b-form-group>
+                  <b-form-group :label="$t('Country')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <b-form-input label="Country" v-model="client.country" class="form-control-lg"></b-form-input>
+                  </b-form-group>
                 </b-col>
 
                 <!-- Customer City -->
                 <b-col md="6" sm="12">
-                    <b-form-group :label="$t('City')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <b-form-input
-                        label="City"
-                        v-model="client.city"
-                        
-                        class="form-control-lg"
-                      ></b-form-input>
-                    </b-form-group>
+                  <b-form-group :label="$t('City')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <b-form-input label="City" v-model="client.city" class="form-control-lg"></b-form-input>
+                  </b-form-group>
                 </b-col>
 
                 <!-- Customer Address -->
                 <b-col md="12" sm="12">
-                    <b-form-group :label="$t('Adress')" label-size="lg" label-class="font-weight-bold" style="font-size: 1.5rem;">
-                      <textarea
-                        label="Adress"
-                        class="form-control form-control-lg"
-                        rows="4"
-                        v-model="client.adresse"
-                        
-                    ></textarea>
-                    </b-form-group>
+                  <b-form-group :label="$t('Adress')" label-size="lg" label-class="font-weight-bold"
+                    style="font-size: 1.5rem;">
+                    <textarea label="Adress" class="form-control form-control-lg" rows="4"
+                      v-model="client.adresse"></textarea>
+                  </b-form-group>
                 </b-col>
 
                 <!-- Submit Button -->
                 <b-col md="12" class="mt-3 d-flex justify-content-center">
-                  <b-button variant="primary" type="submit" size="lg"><i class="i-Yes me-2"></i> {{$t('submit')}}</b-button>
+                  <b-button variant="primary" type="submit" size="lg"><i class="i-Yes me-2"></i>
+                    {{$t('submit')}}</b-button>
                 </b-col>
-            </b-row>
+              </b-row>
 
 
             </b-form>
           </b-modal>
         </validation-observer>
 
-        <b-modal
-          hide-footer
-          size="lg"
-          id="show_draft_sales"
-          title="Ventas en espera"
-        >
+        <b-modal hide-footer size="lg" id="show_draft_sales" title="Ventas en espera">
 
-        <vue-good-table
-          mode="remote"
-          :columns="columns_draft_sales"
-          :totalRows="totalRows_draft_sales"
-          :rows="draft_sales"
-          @on-page-change="onPageChange"
-          @on-per-page-change="onPerPageChange"
-        
-          :pagination-options="{
+          <vue-good-table mode="remote" :columns="columns_draft_sales" :totalRows="totalRows_draft_sales"
+            :rows="draft_sales" @on-page-change="onPageChange" @on-per-page-change="onPerPageChange"
+            :pagination-options="{
             enabled: true,
             mode: 'records',
             nextLabel: 'next',
             prevLabel: 'prev',
-          }"
-          styleClass="tableOne table-hover vgt-table"
-        >
+          }" styleClass="tableOne table-hover vgt-table">
 
-        
-        <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'actions'">
-          
-            <router-link
-              v-b-tooltip.hover
-              title="Edit"
-              :to="{ name:'pos_draft', params: { id: props.row.id } }"
-            >
-              <i class="i-Edit text-25 text-success"></i>
-            </router-link>
-            <a @click="Remove_Draft_Sale(props.row.id)"
-              v-b-tooltip.hover
-              title="Delete"
-              class="cursor-pointer"
-            >
-              <i class="i-Close-Window text-25 text-danger"></i>
-            </a>
-          </span>
-         
-        </template>
-      
-      </vue-good-table>
 
-       </b-modal>
+            <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'actions'">
 
-        <div class="pos-button-actions" style="display: flex;margin-top: 10px;bottom: 0px;margin-left: 29px;width: 100%; flex-wrap: wrap; ">
-            <b-button style="width: auto;margin-bottom: 8px;"
-              @click="Reset_Pos()"
-              variant="danger ripple btn-rounded mr-1"
-            >
-              <i class="i-Power-2"></i>
-              {{ $t("Reset") }}
-            </b-button>
+                <router-link v-b-tooltip.hover title="Edit" :to="{ name:'pos_draft', params: { id: props.row.id } }">
+                  <i class="i-Edit text-25 text-success"></i>
+                </router-link>
+                <a @click="Remove_Draft_Sale(props.row.id)" v-b-tooltip.hover title="Delete" class="cursor-pointer">
+                  <i class="i-Close-Window text-25 text-danger"></i>
+                </a>
+              </span>
 
-            <b-button style="width: auto;margin-bottom: 8px;"
-             @click="Submit_Pos()" variant="success ripple mr-1 btn-rounded">
-              <i class="i-Checkout"></i>
-              {{ $t("payNow") }}
-            </b-button>
+            </template>
 
-            <b-button  style="width: auto;margin-bottom: 8px;"
-             @click="Submit_Draft()"
-             :disabled="DraftProcessing"
-              variant="primary ripple mr-1 btn-rounded">
-              <i class="i-Sand-watch"></i>
-                En espera
+          </vue-good-table>
+
+        </b-modal>
+
+        <div class="pos-button-actions"
+          style="display: flex;margin-top: 10px;bottom: 0px;margin-left: 29px;width: 100%; flex-wrap: wrap; ">
+          <!-- <b-button style="width: auto;margin-bottom: 8px;" @click="Reset_Pos()"
+            variant="danger ripple btn-rounded mr-1">
+            <i class="i-Power-2"></i>
+            {{ $t("Reset") }}
+          </b-button> -->
+
+          <b-button style="width: auto;margin-bottom: 8px;" @click="Submit_Pos()"
+            variant="success ripple mr-1 btn-rounded">
+            <i class="i-Checkout"></i>
+            {{ $t("payNow") }}
           </b-button>
 
-          <b-button  style="width: auto;margin-bottom: 8px;"
-             @click="Show_Draft_Sales()"
-              variant="light ripple mr-1 btn-rounded">
-              <i class="i-Alarm-Clock"></i>
-                Lista de espera
-          </b-button>
+          <!-- <b-button style="width: auto;margin-bottom: 8px;" @click="Submit_Draft()" :disabled="DraftProcessing"
+            variant="primary ripple mr-1 btn-rounded">
+            <i class="i-Sand-watch"></i>
+            En espera
+          </b-button> -->
+
+          <!-- <b-button style="width: auto;margin-bottom: 8px;" @click="Show_Draft_Sales()"
+            variant="light ripple mr-1 btn-rounded">
+            <i class="i-Alarm-Clock"></i>
+            Lista de espera
+          </b-button> -->
         </div>
 
       </b-row>

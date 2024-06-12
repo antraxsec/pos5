@@ -21,15 +21,15 @@ mix.js('resources/src/main.js', 'public').js('resources/src/login.js', 'public')
 
     mix.webpackConfig({
         output: {
-          
             filename:'js/[name].min.js',
             chunkFilename: 'js/bundle/[name].[hash].js',
           },
         plugins: [
           new MomentLocalesPlugin(),
           new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['js/*', 'css/*', 'js/bundle/*'],
-            verbose: true
+            cleanOnceBeforeBuildPatterns: ['js/*', 'js/bundle/*'],
+            verbose: true,
+            // cleanAfterEveryBuildPatterns: ['!css/pos_print.css'], // Excluye este archivo específico
           }),
             // new CleanWebpackPlugin({
             //     cleanOnceBeforeBuildPatterns: ['./js/*']
