@@ -491,6 +491,8 @@ class QuotationsController extends BaseController
         $quote['GrandTotal'] = number_format($Quotation->GrandTotal, 2, '.', '');
 
         $detail_id = 0;
+
+        $totalDiscount = 0;  // Variable para acumular el total de descuentos
         foreach ($Quotation['details'] as $detail) {
 
             //check if detail has sale_unit_id Or Null
@@ -529,9 +531,17 @@ class QuotationsController extends BaseController
 
             if ($detail->discount_method == '2') {
                 $data['DiscountNet'] = number_format($detail->discount, 2, '.', '');
+
+                // Descuento fijo ya establecido
+                $discountAmount = $detail->discount;  // Descuento fijo ya establecido
             } else {
                 $data['DiscountNet'] = number_format($detail->price * $detail->discount / 100, 2, '.', '');
+
+                // Descuento calculado como un porcentaje del precio
+                $discountAmount = $detail->price * ($detail->discount / 100);
             }
+
+            $totalDiscount += $discountAmount;  // Acumula el total de descuentos
 
             $tax_price = $detail->TaxNet * (($detail->price - $data['DiscountNet']) / 100);
             $data['Unit_price'] = number_format($detail->price, 2, '.', '');
@@ -550,6 +560,9 @@ class QuotationsController extends BaseController
 
             $details[] = $data;
         }
+
+        // Agregar el total de descuentos al arreglo $quote para pasarlo a la vista
+        $quote['totalDiscount'] = number_format($totalDiscount, 2, '.', '');    
 
         $settings = Setting::where('deleted_at', '=', null)->first();
         $symbol = $helpers->Get_Currency_Code();
@@ -570,7 +583,8 @@ class QuotationsController extends BaseController
         }
 
         $pdf = PDF::loadHTML($Html);
-        return $pdf->download('quotation.pdf');
+        // return $pdf->download('quotation.pdf');
+        return response($Html);
 
     }
 
