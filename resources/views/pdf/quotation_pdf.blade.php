@@ -97,7 +97,12 @@
             <table>
                <tr>
                   <td>Desc.</td>
-                  <td>{{$quote['discount']}} </td>
+                  <!-- <td>{{$quote['discount']}} </td> -->
+                  @if($quote['totalDiscount'] != 0 && !is_null($quote['totalDiscount']))
+                     <td>{{ $quote['totalDiscount'] }}</td>
+                  @else
+                     <td>{{$quote['discount']}}</td>  <!-- O puedes dejarlo vacío o poner algún otro marcador como 'N/A' -->
+                  @endif
                </tr>
                <tr>
                   <td>Total</td>

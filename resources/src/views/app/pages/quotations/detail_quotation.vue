@@ -203,20 +203,21 @@ export default {
      
        axios
         .get(`quote_pdf/${id}`, {
-          responseType: "blob", // important
+          // responseType: "blob", // important
           headers: {
             "Content-Type": "application/json"
           }
         })
-        .then(response => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "Quotation_" + this.quote.Ref + ".pdf");
-          document.body.appendChild(link);
-          link.click();
-          // Complete the animation of the  progress bar.
-          setTimeout(() => NProgress.done(), 500);
+         .then(response => {
+          console.warn(response)
+          // const url = window.URL.createObjectURL(new Blob([response.data]));
+          // const link = document.createElement("a");
+          // link.href = url;
+          // link.setAttribute("download", "Quotation_" + this.quote.Ref + ".pdf");
+          // document.body.appendChild(link);
+          // link.click();
+          // // Complete the animation of the  progress bar.
+          // setTimeout(() => NProgress.done(), 500);
         })
         .catch(() => {
           // Complete the animation of the  progress bar.

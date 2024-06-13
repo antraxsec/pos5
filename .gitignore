@@ -5,7 +5,7 @@
 /public/storage/
 /storage/
 /storage/*.key
-/storage/framework/sessions/
+# /storage/framework/sessions/
 
 # Ignorar archivos específicos
 /.env
