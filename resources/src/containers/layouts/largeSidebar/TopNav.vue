@@ -22,10 +22,14 @@
       <button @click="lista" class="btn btn-outline-danger tn-sm btn-rounded">
         <span class="ul-btn__text ml-1">Lista</span>
       </button>
-      <router-link v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
-        class="btn btn-outline-primary tn-sm btn-rounded" to="/app/pos">
+       <router-link v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
+        class="btn btn-outline-primary tn-sm btn-rounded" to="/app/sales/store">
         <span class="ul-btn__text ml-1">POS</span>
       </router-link>
+      <!-- <router-link v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
+        class="btn btn-outline-primary tn-sm btn-rounded" to="/app/pos">
+        <span class="ul-btn__text ml-1">POS</span>
+      </router-link> -->
       <!-- Full screen toggle -->
       <i class="i-Full-Screen header-icon d-none d-sm-inline-block" @click="handleFullScreen"></i>
       <!-- Grid menu Dropdown -->
