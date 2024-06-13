@@ -33,7 +33,7 @@
             SMS
           </button>
           <button @click="Quote_PDF()" class="btn-sm btn btn-light ripple btn-icon m-1">
-            <i class="i-File-TXT"></i> PDF
+            <i class="i-File-TXT"></i> PDFzzz
           </button>
           <button @click="print()" class="btn-sm btn btn-warning ripple btn-icon m-1">
             <i class="i-Billing"></i>
@@ -208,7 +208,8 @@ export default {
             "Content-Type": "application/json"
           }
         })
-        .then(response => {
+         .then(response => {
+          console.warn('res', response.data)
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;

@@ -1213,18 +1213,7 @@ const baseRoutes = [
                     import(
                         /* webpackChunkName: "profile" */ "./views/app/pages/profile"
                     )
-            },
-
-            //NUEVO TEST
-            // {
-            //     path: "/app/test",
-            //     name: "test",
-            //     component: () =>
-            //         import( //resources\src\views\app\pages\test
-            //             "./views/app/pages/test"
-            //         )
-
-            // },
+            }
         ]
     },
 

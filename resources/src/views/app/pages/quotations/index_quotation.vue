@@ -1,37 +1,26 @@
 <template>
   <div class="main-content">
-    <breadcumb :page="$t('ListQuotations')" :folder="$t('Quotations')"/>
+    <breadcumb :page="$t('ListQuotations')" :folder="$t('Quotations')" />
 
     <div v-if="isLoading" class="loading_page spinner spinner-primary mr-3"></div>
     <div v-else>
-      <vue-good-table
-        mode="remote"
-        :columns="columns"
-        :totalRows="totalRows"
-        :rows="quotations"
-        @on-page-change="onPageChange"
-        @on-per-page-change="onPerPageChange"
-        @on-sort-change="onSortChange"
-        @on-search="onSearch"
-        :search-options="{
+      <vue-good-table mode="remote" :columns="columns" :totalRows="totalRows" :rows="quotations"
+        @on-page-change="onPageChange" @on-per-page-change="onPerPageChange" @on-sort-change="onSortChange"
+        @on-search="onSearch" :search-options="{
+          enabled: true,
+          placeholder: $t('Search_this_table'),
+        }" :select-options="{
         enabled: true,
-        placeholder: $t('Search_this_table'),  
-      }"
-        :select-options="{ 
-          enabled: true ,
-          clearSelectionText: '',
-        }"
-        @on-selected-rows-change="selectionChanged"
-        :pagination-options="{
+        clearSelectionText: '',
+      }" @on-selected-rows-change="selectionChanged" :pagination-options="{
           enabled: true,
           mode: 'records',
           nextLabel: 'next',
           prevLabel: 'prev',
         }"
-        :styleClass="showDropdown?'tableOne table-hover vgt-table full-height':'tableOne table-hover vgt-table non-height'"
-      >
+        :styleClass="showDropdown ? 'tableOne table-hover vgt-table full-height' : 'tableOne table-hover vgt-table non-height'">
         <div slot="selected-row-actions">
-          <button class="btn btn-danger btn-sm" @click="delete_by_selected()">{{$t('Del')}}</button>
+          <button class="btn btn-danger btn-sm" @click="delete_by_selected()">{{ $t('Del') }}</button>
         </div>
         <div slot="table-actions" class="mt-2 mb-3">
           <b-button variant="outline-info ripple m-1" size="sm" v-b-toggle.sidebar-right>
@@ -39,109 +28,81 @@
             {{ $t("Filter") }}
           </b-button>
           <b-button @click="Quotation_PDF()" size="sm" variant="outline-success ripple m-1">
-            <i class="i-File-Copy"></i> PDF
+            <i class="i-File-Copy"></i> PDFsss
           </b-button>
-          <vue-excel-xlsx
-              class="btn btn-sm btn-outline-danger ripple m-1"
-              :data="quotations"
-              :columns="columns"
-              :file-name="'quotations'"
-              :file-type="'xlsx'"
-              :sheet-name="'quotations'"
-              >
-              <i class="i-File-Excel"></i> EXCEL
+          <vue-excel-xlsx class="btn btn-sm btn-outline-danger ripple m-1" :data="quotations" :columns="columns"
+            :file-name="'quotations'" :file-type="'xlsx'" :sheet-name="'quotations'">
+            <i class="i-File-Excel"></i> EXCEL
           </vue-excel-xlsx>
-          <router-link
-            class="btn-sm btn btn-primary ripple btn-icon m-1"
+          <router-link class="btn-sm btn btn-primary ripple btn-icon m-1"
             v-if="currentUserPermissions && currentUserPermissions.includes('Quotations_add')"
-            to="/app/quotations/store"
-          >
+            to="/app/quotations/store">
             <span class="ul-btn__icon">
               <i class="i-Add"></i>
             </span>
-            <span class="ul-btn__text ml-1">{{$t('Add')}}</span>
+            <span class="ul-btn__text ml-1">{{ $t('Add') }}</span>
           </router-link>
         </div>
 
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'actions'">
             <div>
-              <b-dropdown
-                id="dropdown-left"
-                variant="link"
-                text="Left align"
-                toggle-class="text-decoration-none"
-                size="lg"
-                no-caret
-              >
+              <b-dropdown id="dropdown-left" variant="link" text="Left align" toggle-class="text-decoration-none"
+                size="lg" no-caret>
                 <template v-slot:button-content class="_r_btn border-0">
                   <span class="_dot _r_block-dot bg-dark"></span>
                   <span class="_dot _r_block-dot bg-dark"></span>
                   <span class="_dot _r_block-dot bg-dark"></span>
                 </template>
                 <b-navbar-nav>
-                  <b-dropdown-item title="Show" :to="'/app/quotations/detail/'+props.row.id">
+                  <b-dropdown-item title="Show" :to="'/app/quotations/detail/' + props.row.id">
                     <i class="nav-icon i-Eye font-weight-bold mr-2"></i>
-                    {{$t('DetailQuote')}}
+                    {{ $t('DetailQuote') }}
                   </b-dropdown-item>
                 </b-navbar-nav>
 
-                <b-dropdown-item
-                  title="Edit"
-                  v-if="currentUserPermissions.includes('Quotations_edit')"
-                  :to="'/app/quotations/edit/'+props.row.id"
-                >
+                <b-dropdown-item title="Edit" v-if="currentUserPermissions.includes('Quotations_edit')"
+                  :to="'/app/quotations/edit/' + props.row.id">
                   <i class="nav-icon i-Pen-2 font-weight-bold mr-2"></i>
-                  {{$t('EditQuote')}}
+                  {{ $t('EditQuote') }}
                 </b-dropdown-item>
 
-                <b-dropdown-item
-                  title="Create Sale"
-                  v-if="currentUserPermissions.includes('Quotations_edit')"
-                  :to="'/app/quotations/Create_sale/'+props.row.id"
-                >
+                <b-dropdown-item title="Create Sale" v-if="currentUserPermissions.includes('Quotations_edit')"
+                  :to="'/app/quotations/Create_sale/' + props.row.id">
                   <i class="nav-icon i-Add font-weight-bold mr-2"></i>
-                  {{$t('CreateSale')}}
+                  {{ $t('CreateSale') }}
                 </b-dropdown-item>
 
-                <b-dropdown-item title="PDF" @click="Quote_pdf(props.row , props.row.id)">
+                <b-dropdown-item title="PDF" @click="Quote_pdf(props.row, props.row.id)">
                   <i class="nav-icon i-File-TXT font-weight-bold mr-2"></i>
-                  {{$t('DownloadPdf')}}
+                  {{ $t('DownloadPdf') }}
                 </b-dropdown-item>
 
                 <b-dropdown-item title="Email" @click="SendEmail(props.row.id)">
                   <i class="nav-icon i-Envelope-2 font-weight-bold mr-2"></i>
-                  {{$t('email_notification')}}
+                  {{ $t('email_notification') }}
                 </b-dropdown-item>
 
-                 <b-dropdown-item title="SMS" @click="Quote_SMS(props.row.id)">
+                <b-dropdown-item title="SMS" @click="Quote_SMS(props.row.id)">
                   <i class="nav-icon i-Speach-Bubble font-weight-bold mr-2"></i>
-                  {{$t('sms_notification')}}
+                  {{ $t('sms_notification') }}
                 </b-dropdown-item>
 
-                <b-dropdown-item
-                  title="Delete"
-                  v-if="currentUserPermissions.includes('Quotations_delete')"
-                  @click="Remove_Quotation(props.row.id)"
-                >
+                <b-dropdown-item title="Delete" v-if="currentUserPermissions.includes('Quotations_delete')"
+                  @click="Remove_Quotation(props.row.id)">
                   <i class="nav-icon i-Close-Window font-weight-bold mr-2"></i>
-                  {{$t('DeleteQuote')}}
+                  {{ $t('DeleteQuote') }}
                 </b-dropdown-item>
               </b-dropdown>
             </div>
           </span>
           <div v-else-if="props.column.field == 'statut'">
-            <span
-              v-if="props.row.statut == 'sent'"
-              class="badge badge-outline-success"
-            >{{$t('Sent')}}</span>
-            <span v-else class="badge badge-outline-info">{{$t('Pending')}}</span>
+            <span v-if="props.row.statut == 'sent'" class="badge badge-outline-success">{{ $t('Sent') }}</span>
+            <span v-else class="badge badge-outline-info">{{ $t('Pending') }}</span>
           </div>
           <div v-else-if="props.column.field == 'Ref'">
-            <router-link
-              :to="'/app/quotations/detail/'+props.row.id"
-            >
-              <span class="ul-btn__text ml-1">{{props.row.Ref}}</span>
+            <router-link :to="'/app/quotations/detail/' + props.row.id">
+              <span class="ul-btn__text ml-1">{{ props.row.Ref }}</span>
             </router-link>
           </div>
         </template>
@@ -168,50 +129,32 @@
           <!-- Customer  -->
           <b-col md="12">
             <b-form-group :label="$t('Customer')">
-              <v-select
-                :reduce="label => label.value"
-                :placeholder="$t('Choose_Customer')"
-                v-model="Filter_client"
-                :options="customers.map(customers => ({label: customers.name, value: customers.id}))"
-              />
+              <v-select :reduce="label => label.value" :placeholder="$t('Choose_Customer')" v-model="Filter_client"
+                :options="customers.map(customers => ({ label: customers.name, value: customers.id }))" />
             </b-form-group>
           </b-col>
 
           <!-- warehouse -->
           <b-col md="12">
             <b-form-group :label="$t('warehouse')">
-              <v-select
-                v-model="Filter_warehouse"
-                :reduce="label => label.value"
-                :placeholder="$t('Choose_Warehouse')"
-                :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
-              />
+              <v-select v-model="Filter_warehouse" :reduce="label => label.value" :placeholder="$t('Choose_Warehouse')"
+                :options="warehouses.map(warehouses => ({ label: warehouses.name, value: warehouses.id }))" />
             </b-form-group>
           </b-col>
 
           <!-- Status  -->
           <b-col md="12">
             <b-form-group :label="$t('Status')">
-              <v-select
-                v-model="Filter_status"
-                :reduce="label => label.value"
-                :placeholder="$t('Choose_Status')"
-                :options="
-                      [
-                        {label: 'Sent', value: 'sent'},
-                        {label: 'Pending', value: 'pending'}
-                      ]"
-              ></v-select>
+              <v-select v-model="Filter_status" :reduce="label => label.value" :placeholder="$t('Choose_Status')"
+                :options="[
+                    { label: 'Sent', value: 'sent' },
+                    { label: 'Pending', value: 'pending' }
+                  ]"></v-select>
             </b-form-group>
           </b-col>
 
           <b-col md="6" sm="12">
-            <b-button
-              @click="Get_Quotations(serverParams.page)"
-              variant="primary ripple m-1"
-              size="sm"
-              block
-            >
+            <b-button @click="Get_Quotations(serverParams.page)" variant="primary ripple m-1" size="sm" block>
               <i class="i-Filter-2"></i>
               {{ $t("Filter") }}
             </b-button>
@@ -237,7 +180,7 @@ import "jspdf-autotable";
 
 export default {
   metaInfo: {
-    title: "Quotation"
+    title: "Cotizaciones"
   },
   data() {
     return {
@@ -274,7 +217,7 @@ export default {
       }
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.$root.$on("bv::dropdown::show", bvEvent => {
       this.showDropdown = true;
     });
@@ -287,7 +230,7 @@ export default {
     ...mapGetters(["currentUserPermissions", "currentUser"]),
     columns() {
       return [
-        
+
         {
           label: this.$t("date"),
           field: "date",
@@ -409,7 +352,7 @@ export default {
       this.Filter_client = "";
       this.Filter_status = "";
       this.Filter_Ref = "";
-      this.Filter_warehouse = ""; 
+      this.Filter_warehouse = "";
       this.Get_Quotations(this.serverParams.page);
     },
 
@@ -431,7 +374,7 @@ export default {
       pdf.save("Quotation_List.pdf");
     },
 
-     //----------------------------------- Quotation PDF by id -------------------------\\
+    //----------------------------------- Quotation PDF by id -------------------------\\
     Quote_pdf(quote, id) {
       // Start the progress bar.
       NProgress.start();
@@ -485,8 +428,8 @@ export default {
     },
 
     //---------SMS notification
-     
-     Quote_SMS(id) {
+
+    Quote_SMS(id) {
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
@@ -531,25 +474,25 @@ export default {
       axios
         .get(
           "quotations?page=" +
-            this.serverParams.page +
-            "&Ref=" +
-            this.Filter_Ref +
-            "&client_id=" +
-            this.Filter_client +
-            "&statut=" +
-            this.Filter_status +
-            "&warehouse_id=" +
-            this.Filter_warehouse +
-            "&date=" +
-            this.Filter_date +
-            "&SortField=" +
-            this.serverParams.sort.field +
-            "&SortType=" +
-            this.serverParams.sort.type +
-            "&search=" +
-            this.search +
-            "&limit=" +
-            this.limit
+          this.serverParams.page +
+          "&Ref=" +
+          this.Filter_Ref +
+          "&client_id=" +
+          this.Filter_client +
+          "&statut=" +
+          this.Filter_status +
+          "&warehouse_id=" +
+          this.Filter_warehouse +
+          "&date=" +
+          this.Filter_date +
+          "&SortField=" +
+          this.serverParams.sort.field +
+          "&SortType=" +
+          this.serverParams.sort.type +
+          "&search=" +
+          this.search +
+          "&limit=" +
+          this.limit
         )
         .then(response => {
           this.quotations = response.data.quotations;
@@ -570,7 +513,7 @@ export default {
         });
     },
 
-   
+
 
     //-------------------------------------------- Delete Quotation -------------------------\\
     Remove_Quotation(id) {
@@ -656,7 +599,7 @@ export default {
   },
 
   //-----------------------------Autoload function-------------------
-  created: function() {
+  created: function () {
     this.Get_Quotations(1);
 
     Fire.$on("Delete_Quote", () => {
