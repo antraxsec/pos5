@@ -1,19 +1,18 @@
 @page {
 	margin: 0cm 0cm;
-  }
+}
 
-  body {
+body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	padding: 10px 25px 0px 25px;
 	height: 100%;
 	position: relative;
 	margin: 0 auto;
-	color: black;
-	font-size: 14px;
-	font-family: 'dejavu sans', sans-serif;
-
-  }
+	color: #333; /* Más suave que el negro puro */
+	font-size: 12px;
+	font-family: 'Arial', sans-serif; /* Cambio a Arial */
+}
 
 .clearfix:after {
 	content: "";
@@ -22,303 +21,73 @@
 }
 
 a {
-	color: #0087C3;
+	color: #0056b3; /* Azul más suave */
 	text-decoration: none;
 }
 
-#comp {
-	font-size: 15px;
-	color: black;
-	font-weight: 600;
+#comp, #client .to, #invoice h1, #thanks {
+	font-size: 16px;
+	color: #333;
+	font-weight: bold;
 }
 
-
-#total {
-	float: right;
-}
-
-#total>table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 20px;
-}
-
-#total>table td {
-	padding: 10px;
-	background: #EEEEEE;
-	line-height: 10px;
-}
-
-#total>table th {
-	padding: 6px;
-	background: darkturquoise;
-	border-bottom: 1px solid #FFFFFF;
-}
-
-#total>table th {
-	color: #fff;
-	font-size: 12px;
-	font-weight: 300;
-}
-
-#total>table tr:last-child {
-	border-top: 2px solid;
-}
-
-#Title-heading {
-	float: right;
-	margin-right: 160px;
-	margin-top: 40px;
-	padding-left: 6px;
-	min-height: 90px;
-	font-size: 85%;
-	font-size: 22px;
-	color:#8A2BE2;
-	font-weight: 900;
-}
-
-#logo {
+#logo, #company, #Title-heading, #total, #signature {
+	margin-top: 10px;
 	float: left;
-	margin-top: 8px;
-	width: 280px;
+	width: 100%;
+	text-align: center;
 }
 
 #logo img {
-	height: 70px;
-	width: 70px;
+	height: auto;
+	width: 100px; /* Logo más pequeño y manejable */
 }
 
-#company {
-
-	float: right;
-	float: right;
-	padding-left: 6px;
-	min-height: 90px;
-	font-size: 85%;
-	padding: 1.5%;
-}
-
-.name {
-	font-size: 22px;
-}
-
-#client .to {
-	color: cornflowerblue;
-	font-size: 22px;
-}
-
-h2.name {
-	font-size: 1.4em;
-	font-weight: normal;
-	margin: 0;
-	background: darkturquoise;
-}
-
-#invoice>table {
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 20px;
-}
-
-#invoice>table td {
-	padding: 14px;
-	background: #EEEEEE;
-	line-height: 20px;
-}
-
-#invoice>table th {
-	padding: 6px;
-	border-bottom: 1px solid #FFFFFF;
-	background: blueviolet;
-	color: #fff;
-	font-size: 13px;
-	font-weight: bold;
-}
-
-#client>table {
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 20px;
-}
-
-#client>table td {
-	padding: 14px;
-	background: #EEEEEE;
-	line-height: 20px;
-}
-
-#client>table th {
-	padding: 6px;
-	background: blueviolet;
-	color: #fff;
-	font-size: 13px;
-	font-weight: bold;
-}
-
-#client {
-	padding: 0!important;
-	float: left;
-	width: 50%;
-	min-height: 90px;
-	font-size: 85%;
-}
-
-#invoice {
-	margin-right: 0px;
-	width: 40%;
-	float: right;
-	padding-left: 6px;
-	min-height: 90px;
-	font-size: 85%;
-	padding: 0%;
-}
-
-#invoice h1 {
-	color: #0087C3;
-	font-size: 16px;
-	line-height: 1em;
-	font-weight: normal;
-	margin: 0 0 10px 0;
-}
-
-#invoice .to {
-	color: cornflowerblue;
-}
-
-#invoice .date {
-	font-size: 1.1em;
-	color: #777777;
-}
-
-#details_inv>table {
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 20px;
-}
-
-#details_inv>table td {
-	padding: 6px;
-	background: #EEEEEE;
-	text-align: left;
-}
-
-#details_inv>table th {
-	padding: 6px;
-	text-align: left;
-	border-bottom: 1px solid #FFFFFF;
-	color: #fff;
-	background: blueviolet;
-	color: #fff;
-	font-size: 13px;
-	font-weight: bold;
-}
-
-#details_inv>table td {
-	text-align: left;
-}
-
-#details_inv>table td h3 {
-	color: #57B223;
-	font-size: 1.2em;
-	font-weight: normal;
-	margin: 0 0 0.2em 0;
-}
-
-#details_inv>table .no {
-	color: #FFFFFF;
-	font-size: 1.6em;
-	background: #57B223;
-}
-
-#details_inv>table .Ref {
-	text-align: left;
-	font-size: 16px!important;
-}
-
-#details_inv>table .Payment {
+#company, #Title-heading {
 	text-align: right;
-	font-size: 16px!important;
 }
 
-#details_inv>table .mode {
-	text-align: center;
-	font-size: 16px!important;
+#total {
+	margin-top: 10px;
 }
 
-#details_inv>table td.unit,
-#details_inv>table td.qty,
-#details_inv>table td.total {
-	font-size: 1.2em;
-}
-
-#details_inv>table tbody tr:last-child td {
-	border: none;
-}
-
-#details_inv>table tfoot td {
-	padding: 10px 20px;
-	background: #FFFFFF;
-	border-bottom: none;
-	font-size: 1.2em;
-	white-space: nowrap;
-	border-top: 1px solid #AAAAAA;
-}
-
-#details_inv>table tfoot tr:first-child td {
-	border-top: none;
-}
-
-#details_inv>table tfoot tr:last-child td {
-	color: #57B223;
-	font-size: 1.4em;
-	border-top: 1px solid #57B223;
-}
-
-#details_inv>table tfoot tr td:first-child {
-	border: none;
-}
-
-#thanks {
-	font-size: 2em;
-	margin-bottom: 50px;
-	margin-top: 228px;
-}
-
-#signature {
-	color: #777777;
+#total > table, #invoice > table, #client > table, #details_inv > table {
 	width: 100%;
-	height: 30px;
-	position: absolute;
-	bottom: 30;
-	padding: 8px 0;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+th {
+	background-color: #f2f2f2; /* Fondo claro para las cabeceras */
+	color: #333; /* Texto más suave */
+	font-weight: bold;
+}
+
+td {
+	background-color: #fff; /* Fondo blanco para contenido */
+	color: #666; /* Texto gris suave */
+	padding: 8px;
+	border: 1px solid #ddd; /* Bordes sutiles */
+}
+
+tfoot tr td {
+	border-top: 2px solid #aaa; /* Línea más definida en el pie */
+	font-size: 14px;
+}
+
+footer {
+	color: #777;
+	width: 100%;
 	text-align: center;
+	border-top: 1px solid #AAAAAA;
+	padding: 8px 0;
 }
 
 #notices {
 	padding-left: 6px;
-	border-left: 6px solid #0087C3;
+	border-left: 6px solid #0056b3; /* Azul más suave */
 }
 
 #notices .notice {
 	font-size: 1.2em;
-}
-
-footer {
-	color: #777777;
-	width: 100%;
-	height: 30px;
-	position: absolute;
-	bottom: 0;
-	border-top: 1px solid #AAAAAA;
-	padding: 8px 0;
-	text-align: center;
-}
-
-#paiment {
-	border: 2px solid;
-	padding: 24px;
-	width: 659px;
 }

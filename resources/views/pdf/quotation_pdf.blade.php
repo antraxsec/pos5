@@ -23,6 +23,25 @@
       </header>
       <main>
          <div id="details" class="clearfix">
+            <div id="invoice">
+               <table  class="table-sm">
+                  <thead>
+                     <tr>
+                        <th class="desc">Sucursal</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <div id="comp">{{$setting['CompanyName']}}</div>
+                           <div><strong>Teléfono :</strong>  {{$setting['CompanyPhone']}}</div>
+                           <div><strong>Correo :</strong>  {{$setting['email']}}</div>
+                           <div><strong>Dirección :</strong>  {{$setting['CompanyAdress']}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
             <div id="client">
                <table class="table-sm">
                   <thead>
@@ -43,25 +62,7 @@
                   </tbody>
                </table>
             </div>
-            <div id="invoice">
-               <table  class="table-sm">
-                  <thead>
-                     <tr>
-                        <th class="desc">Sucursal</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>
-                           <div id="comp">{{$setting['CompanyName']}}</div>
-                           <div><strong>Teléfono :</strong>  {{$setting['CompanyPhone']}}</div>
-                           <div><strong>Correo :</strong>  {{$setting['email']}}</div>
-                           <div><strong>Dirección :</strong>  {{$setting['CompanyAdress']}}</div>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
+            
          </div>
          <div id="details_inv">
             <table class="table-sm">

@@ -33,7 +33,7 @@
             SMS
           </button>
           <button @click="Quote_PDF()" class="btn-sm btn btn-light ripple btn-icon m-1">
-            <i class="i-File-TXT"></i> PDFzzz
+            <i class="i-File-TXT"></i> PDFz
           </button>
           <button @click="print()" class="btn-sm btn btn-warning ripple btn-icon m-1">
             <i class="i-Billing"></i>
@@ -168,7 +168,7 @@ import NProgress from "nprogress";
 export default {
   computed: mapGetters(["currentUserPermissions", "currentUser"]),
   metaInfo: {
-    title: "Detail Quotation"
+    title: "Detalle de cotización"
   },
 
   data() {
@@ -208,8 +208,7 @@ export default {
             "Content-Type": "application/json"
           }
         })
-         .then(response => {
-          console.warn('res', response.data)
+        .then(response => {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
