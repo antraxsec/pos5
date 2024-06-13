@@ -95,13 +95,13 @@
          </div>
          <div id="total">
             <table>
-               <tr>
+               <!-- <tr>
                   <td>Desc.</td>
                   <td>{{$quote['discount']}} </td>
-               </tr>
+               </tr> -->
                <tr>
-                  <td>Total</td>
-                  <td>{{$symbol}} {{$quote['GrandTotal']}} </td>
+                  <td><b>Total</b></td>
+                  <td><b>{{$symbol}} {{$quote['GrandTotal']}}</b></td>
                </tr>
             </table>
          </div>
