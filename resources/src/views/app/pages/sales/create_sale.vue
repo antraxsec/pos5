@@ -249,7 +249,9 @@
                           {label: 'Venta completada', value: 'completed'},
                           {label: 'Pendiente', value: 'pending'},
                           {label: 'Pedido', value: 'ordered'}
-                        ]"></v-select>
+                        ]"
+                        disabled
+                        ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                     </b-form-group>
                   </validation-provider>
