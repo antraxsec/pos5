@@ -89,7 +89,7 @@ export default {
         page: 1,
         perPage: 10
       },
-      limit: "10",
+      limit: "100",
       search: "",
       totalRows: "",
       reports: [],

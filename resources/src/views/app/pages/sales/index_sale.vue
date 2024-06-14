@@ -401,12 +401,13 @@
 									style="font-size: 1.25rem;">
 									<b-form-input @keyup="Verified_paidAmount(payment.montant)" label="Amount"
 										:placeholder="$t('Paying_Amount')" v-model.number="payment.montant"
-										:state="getValidationState(validationContext)" aria-describedby="Amount-feedback"
+										:state="getValidationState(validationContext)"
+										aria-describedby="Amount-feedback"
 										:disabled="EditPaiementMode && payment.Reglement == 'credit card'"
 										class="form-control-lg">
 									</b-form-input>
 									<b-form-invalid-feedback id="Amount-feedback">{{ validationContext.errors[0]
-									}}</b-form-invalid-feedback>
+										}}</b-form-invalid-feedback>
 								</b-form-group>
 							</validation-provider>
 						</b-col>
@@ -621,9 +622,11 @@
 								<td style="text-align:right;vertical-align:bottom">
 									{{ formatNumber(detail_invoice.total, 2) }}</td>
 							</tr>
+							
 							<tr colspan="2">
 							</tr>
-							<tr style="margin-top:10px">
+
+							<tr style="margin-top:20px; padding-top: 20px; ">
 								<td colspan="3" class="total">{{ $t('Total') }}</td>
 								<td style="text-align:right;" class="total">{{ invoice_pos.symbol }}
 									{{ formatNumber(invoice_pos.sale.GrandTotal, 2) }}</td>
@@ -664,6 +667,16 @@
 							</tr>
 						</tbody>
 					</table>
+
+
+					<!-- Agregar sección de IMEIs -->
+					<hr>
+					<div class="imei-section mt-3" v-if="hasImeis()" style="padding-top: 10px;">
+						<b>Números de serie</b>
+						<div v-for="detail in invoice_pos.details" v-if="detail.is_imei && detail.imei_number">
+							<p>{{ detail.imei_number }}</p>
+						</div>
+					</div>
 
 					<div id="legalcopy" class="text-center w-100 mt-4">
 						<p class="legal" v-show="pos_settings.show_note">
@@ -907,6 +920,10 @@ export default {
 		}
 	},
 	methods: {
+
+		hasImeis() {
+			return this.invoice_pos.details.some(detail => detail.is_imei && detail.imei_number);
+		},
 
 		async Selected_PaymentMethod(value) {
 			if (value === 'credit card') {
@@ -1952,5 +1969,11 @@ export default {
 	font-size: 14px;
 	/* text-transform: uppercase;
     height: 50px; */
+}
+
+.imei-section pre {
+	background-color: #f8f9fa;
+	border: 1px solid #e9ecef;
+	padding: 10px;
 }
 </style>
