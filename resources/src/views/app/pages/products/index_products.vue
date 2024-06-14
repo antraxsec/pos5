@@ -630,6 +630,7 @@ export default {
             this.limit
         )
         .then(response => {
+          console.log(response.data.products)
           this.products = response.data.products;
           this.warehouses = response.data.warehouses;
           this.categories = response.data.categories;

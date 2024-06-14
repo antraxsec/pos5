@@ -4,11 +4,12 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Cliente</th>
-          <th>Fecha</th>
-          <th>Total</th>
-          <th>Acciones</th>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>codigo </th>
+          <th>Acción </th>
         </tr>
       </thead>
       <tbody>
@@ -16,6 +17,7 @@
           <td>{{ order.id }}</td>
           <td>{{ order.customer }}</td>
           <td>{{ order.date }}</td>
+          <td>{{ order.total }}</td>
           <td>{{ order.total }}</td>
           <td>
             <button @click="editOrder(order.id)">Editar</button>
@@ -38,8 +40,11 @@ export default {
         // Añadir más pedidos aquí
       ]
     }
-  },
-  methods: {
+    },
+
+    
+    methods: {
+        
     editOrder(id) {
       // Lógica para editar un pedido
       this.$router.push(`/app/orders/edit/${id}`);
@@ -49,7 +54,7 @@ export default {
       // Podría involucrar llamar a una API y luego actualizar la lista de pedidos
       console.log('Eliminar pedido', id);
     }
-  }
+    }
 }
 </script>
 
