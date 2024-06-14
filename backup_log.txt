@@ -1,18 +1,18 @@
-13/06/2024 10:17:43.05: Inicio de la compresion 
-13/06/2024 10:17:43.05: Comprimiendo archivos... 
+13/06/2024 14:37:29.67: Inicio de la compresion 
+13/06/2024 14:37:29.68: Comprimiendo archivos... 
 
 7-Zip 24.06 (x64) : Copyright (c) 1999-2024 Igor Pavlov : 2024-05-26
 
 Scanning the drive:
-129 folders, 1250 files, 56910538 bytes (55 MiB)
+129 folders, 1249 files, 56911853 bytes (55 MiB)
 
 Creating archive: backup_site.zip
 
-Add new data to archive: 129 folders, 1250 files, 56910538 bytes (55 MiB)
+Add new data to archive: 129 folders, 1249 files, 56911853 bytes (55 MiB)
 
 
-Files read from disk: 1250
-Archive size: 13052009 bytes (13 MiB)
+Files read from disk: 1249
+Archive size: 13053472 bytes (13 MiB)
 Everything is Ok
-13/06/2024 10:17:44.20: Archivo comprimido creado: backup_site.zip 
-13/06/2024 10:17:44.21: Script finalizado. Revisa backup_log.txt para detalles. 
+13/06/2024 14:37:38.37: Archivo comprimido creado: backup_site.zip 
+13/06/2024 14:37:38.38: Script finalizado. Revisa backup_log.txt para detalles. 
