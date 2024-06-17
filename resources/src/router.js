@@ -19,7 +19,7 @@ const baseRoutes = [
         path: "/",
         component: () => import("./views/app"),
         redirect: "/app/dashboard",
-        name: 'app',
+        name: "app",
 
         children: [
             {
@@ -28,8 +28,7 @@ const baseRoutes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "dashboard" */ "./views/app/dashboard/dashboard"
-                    )
-
+                    ),
             },
 
             //Products
@@ -47,7 +46,15 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_products" */ "./views/app/pages/products/index_products"
-                            )
+                            ),
+                    },
+                    {
+                        name: "index_producto",
+                        path: "lista",
+                        component: () =>
+                            import(
+                                /* webpackChunkName: "index_products" */ "./views/app/pages/products/index_producto"
+                            ),
                     },
                     {
                         path: "store",
@@ -55,7 +62,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "store_product" */ "./views/app/pages/products/Add_product"
-                            )
+                            ),
                     },
                     {
                         path: "edit/:id",
@@ -63,7 +70,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_product" */ "./views/app/pages/products/Edit_product"
-                            )
+                            ),
                     },
                     {
                         path: "detail/:id",
@@ -71,7 +78,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "detail_product" */ "./views/app/pages/products/Detail_Product"
-                            )
+                            ),
                     },
                     {
                         path: "barcode",
@@ -79,7 +86,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "barcode" */ "./views/app/pages/products/barcode"
-                            )
+                            ),
                     },
 
                     {
@@ -88,7 +95,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "count_stock" */ "./views/app/pages/products/count_stock"
-                            )
+                            ),
                     },
                     // categories
                     {
@@ -97,7 +104,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Categories" */ "./views/app/pages/products/categorie"
-                            )
+                            ),
                     },
 
                     // brands
@@ -107,7 +114,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Brands" */ "./views/app/pages/products/brands"
-                            )
+                            ),
                     },
 
                     // units
@@ -117,9 +124,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "units" */ "./views/app/pages/products/units"
-                            )
+                            ),
                     },
-                ]
+                ],
             },
 
             //Adjustement
@@ -138,7 +145,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "index_adjustment" */
                                 "./views/app/pages/adjustment/index_Adjustment"
-                            )
+                            ),
                     },
                     {
                         name: "store_adjustment",
@@ -147,7 +154,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "store_adjustment" */
                                 "./views/app/pages/adjustment/Create_Adjustment"
-                            )
+                            ),
                     },
                     {
                         name: "edit_adjustment",
@@ -156,9 +163,9 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "edit_adjustment" */
                                 "./views/app/pages/adjustment/Edit_Adjustment"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             //Transfer
@@ -176,7 +183,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_transfer" */ "./views/app/pages/transfers/index_transfer"
-                            )
+                            ),
                     },
                     {
                         name: "store_transfer",
@@ -185,7 +192,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "store_transfer" */
                                 "./views/app/pages/transfers/create_transfer"
-                            )
+                            ),
                     },
                     {
                         name: "edit_transfer",
@@ -193,9 +200,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_transfer" */ "./views/app/pages/transfers/edit_transfer"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             // accounts
@@ -205,9 +212,8 @@ const baseRoutes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "accounts" */ "./views/app/pages/accounts/account_list"
-                    )
+                    ),
             },
-
 
             // transfer_money
             {
@@ -216,10 +222,8 @@ const baseRoutes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "transfer_money" */ "./views/app/pages/accounts/transfer_money"
-                    )
+                    ),
             },
-
-
 
             //expenses
             {
@@ -236,7 +240,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_expense" */ "./views/app/pages/expense/index_expense"
-                            )
+                            ),
                     },
                     {
                         name: "store_expense",
@@ -244,7 +248,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "store_expense" */ "./views/app/pages/expense/create_expense"
-                            )
+                            ),
                     },
                     {
                         name: "edit_expense",
@@ -252,7 +256,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_expense" */ "./views/app/pages/expense/edit_expense"
-                            )
+                            ),
                     },
                     {
                         name: "expense_category",
@@ -260,10 +264,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "expense_category" */ "./views/app/pages/expense/category_expense"
-                            )
+                            ),
                     },
-
-                ]
+                ],
             },
 
             //deposits
@@ -275,14 +278,13 @@ const baseRoutes = [
                     ),
                 redirect: "/app/deposits/list",
                 children: [
-
                     {
                         name: "index_deposit",
                         path: "list",
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_deposit" */ "./views/app/pages/deposits/index_deposit"
-                            )
+                            ),
                     },
                     {
                         name: "store_deposit",
@@ -290,7 +292,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "store_deposit" */ "./views/app/pages/deposits/create_deposit"
-                            )
+                            ),
                     },
                     {
                         name: "edit_deposit",
@@ -298,7 +300,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_deposit" */ "./views/app/pages/deposits/edit_deposit"
-                            )
+                            ),
                     },
                     {
                         name: "deposit_category",
@@ -306,9 +308,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "deposit_category" */ "./views/app/pages/deposits/deposit_category"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             //Quotation
@@ -326,7 +328,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 "./views/app/pages/quotations/index_quotation"
-                            )
+                            ),
                     },
                     {
                         name: "store_quotation",
@@ -335,7 +337,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "store_quotation" */
                                 "./views/app/pages/quotations/create_quotation"
-                            )
+                            ),
                     },
                     {
                         name: "edit_quotation",
@@ -344,7 +346,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "edit_quotation" */
                                 "./views/app/pages/quotations/edit_quotation"
-                            )
+                            ),
                     },
                     {
                         name: "detail_quotation",
@@ -353,7 +355,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_quotation" */
                                 "./views/app/pages/quotations/detail_quotation"
-                            )
+                            ),
                     },
                     {
                         name: "change_to_sale",
@@ -361,9 +363,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "change_to_sale" */ "./views/app/pages/sales/change_to_sale.vue"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             //Purchase
@@ -381,7 +383,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_purchases" */ "./views/app/pages/purchases/index_purchase"
-                            )
+                            ),
                     },
                     {
                         name: "store_purchase",
@@ -390,7 +392,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "store_purchase" */
                                 "./views/app/pages/purchases/create_purchase"
-                            )
+                            ),
                     },
                     {
                         name: "edit_purchase",
@@ -398,7 +400,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_purchase" */ "./views/app/pages/purchases/edit_purchase"
-                            )
+                            ),
                     },
                     {
                         name: "purchase_return",
@@ -406,7 +408,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "create_purchase_return" */ "./views/app/pages/purchase_return/create_purchase_return"
-                            )
+                            ),
                     },
                     {
                         name: "detail_purchase",
@@ -415,9 +417,9 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_purchase" */
                                 "./views/app/pages/purchases/detail_purchase"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             //Sale
@@ -435,7 +437,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "index_sales" */ "./views/app/pages/sales/index_sale"
-                            )
+                            ),
                     },
                     {
                         name: "store_sale",
@@ -443,7 +445,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "store_sale" */ "./views/app/pages/sales/create_sale"
-                            )
+                            ),
                     },
                     {
                         name: "edit_sale",
@@ -451,7 +453,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "edit_sale" */ "./views/app/pages/sales/edit_sale"
-                            )
+                            ),
                     },
                     {
                         name: "sale_return",
@@ -459,7 +461,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "create_sale_return" */ "./views/app/pages/sale_return/create_sale_return"
-                            )
+                            ),
                     },
                     {
                         name: "detail_sale",
@@ -467,7 +469,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "detail_sale" */ "./views/app/pages/sales/detail_sale"
-                            )
+                            ),
                     },
                     {
                         name: "shipment",
@@ -475,9 +477,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "shipment" */ "./views/app/pages/sales/shipments"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             // Sales Return
@@ -496,7 +498,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "index_sale_return" */
                                 "./views/app/pages/sale_return/index_sale_return"
-                            )
+                            ),
                     },
                     // {
                     //     name: "store_sale_return",
@@ -514,7 +516,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "edit_sale_return" */
                                 "./views/app/pages/sale_return/edit_sale_return"
-                            )
+                            ),
                     },
                     {
                         name: "detail_sale_return",
@@ -523,9 +525,9 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_sale_return" */
                                 "./views/app/pages/sale_return/detail_sale_return"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             // purchase Return
@@ -544,7 +546,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "index_purchase_return" */
                                 "./views/app/pages/purchase_return/index_purchase_return"
-                            )
+                            ),
                     },
                     // {
                     //     name: "store_purchase_return",
@@ -562,7 +564,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "edit_purchase_return" */
                                 "./views/app/pages/purchase_return/edit_purchase_return"
-                            )
+                            ),
                     },
                     {
                         name: "detail_purchase_return",
@@ -571,9 +573,9 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_purchase_return" */
                                 "./views/app/pages/purchase_return/detail_purchase_return"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             // Hrm
@@ -601,7 +603,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "index_employee" */
                                         "./views/app/pages/hrm/employees/index_employee"
-                                    )
+                                    ),
                             },
                             {
                                 name: "store_employee",
@@ -610,7 +612,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "store_employee" */
                                         "./views/app/pages/hrm/employees/employee_create"
-                                    )
+                                    ),
                             },
                             {
                                 name: "edit_employee",
@@ -619,7 +621,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "edit_employee" */
                                         "./views/app/pages/hrm/employees/employee_edit"
-                                    )
+                                    ),
                             },
                             {
                                 name: "detail_employee",
@@ -628,16 +630,18 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "detail_employee" */
                                         "./views/app/pages/hrm/employees/employee_details"
-                                    )
+                                    ),
                             },
-                        ]
+                        ],
                     },
                     // company
                     {
                         name: "company",
                         path: "company",
                         component: () =>
-                            import(/* webpackChunkName: "company" */"./views/app/pages/hrm/company")
+                            import(
+                                /* webpackChunkName: "company" */ "./views/app/pages/hrm/company"
+                            ),
                     },
 
                     // departments
@@ -645,7 +649,9 @@ const baseRoutes = [
                         name: "departments",
                         path: "departments",
                         component: () =>
-                            import(/* webpackChunkName: "departments" */"./views/app/pages/hrm/department")
+                            import(
+                                /* webpackChunkName: "departments" */ "./views/app/pages/hrm/department"
+                            ),
                     },
 
                     // designations
@@ -653,7 +659,9 @@ const baseRoutes = [
                         name: "designations",
                         path: "designations",
                         component: () =>
-                            import(/* webpackChunkName: "designations" */"./views/app/pages/hrm/designation")
+                            import(
+                                /* webpackChunkName: "designations" */ "./views/app/pages/hrm/designation"
+                            ),
                     },
 
                     // office_shift
@@ -661,7 +669,9 @@ const baseRoutes = [
                         name: "office_shift",
                         path: "office_shift",
                         component: () =>
-                            import(/* webpackChunkName: "office_shift" */"./views/app/pages/hrm/office_shift")
+                            import(
+                                /* webpackChunkName: "office_shift" */ "./views/app/pages/hrm/office_shift"
+                            ),
                     },
 
                     // attendance
@@ -669,7 +679,9 @@ const baseRoutes = [
                         name: "attendance",
                         path: "attendance",
                         component: () =>
-                            import(/* webpackChunkName: "attendance" */"./views/app/pages/hrm/attendance")
+                            import(
+                                /* webpackChunkName: "attendance" */ "./views/app/pages/hrm/attendance"
+                            ),
                     },
 
                     // holidays
@@ -677,7 +689,9 @@ const baseRoutes = [
                         name: "holidays",
                         path: "holidays",
                         component: () =>
-                            import(/* webpackChunkName: "holidays" */"./views/app/pages/hrm/holidays")
+                            import(
+                                /* webpackChunkName: "holidays" */ "./views/app/pages/hrm/holidays"
+                            ),
                     },
 
                     // payrolls
@@ -685,9 +699,10 @@ const baseRoutes = [
                         name: "payrolls",
                         path: "payrolls",
                         component: () =>
-                            import(/* webpackChunkName: "payrolls" */"./views/app/pages/hrm/payrolls")
+                            import(
+                                /* webpackChunkName: "payrolls" */ "./views/app/pages/hrm/payrolls"
+                            ),
                     },
-
 
                     {
                         path: "leaves",
@@ -704,7 +719,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "leave_list" */
                                         "./views/app/pages/hrm/leaves/leave_list"
-                                    )
+                                    ),
                             },
                             {
                                 name: "leave_type",
@@ -713,14 +728,11 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "leave_type" */
                                         "./views/app/pages/hrm/leaves/leave_type"
-                                    )
+                                    ),
                             },
-
-                        ]
+                        ],
                     },
-
-
-                ]
+                ],
             },
 
             // People
@@ -739,7 +751,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Customers" */ "./views/app/pages/people/customers"
-                            )
+                            ),
                     },
 
                     // Customers
@@ -749,7 +761,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Customers_without_ecommerce" */ "./views/app/pages/people/Customers_without_ecommerce"
-                            )
+                            ),
                     },
 
                     // Suppliers
@@ -759,7 +771,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Suppliers" */ "./views/app/pages/people/providers"
-                            )
+                            ),
                     },
 
                     // Users
@@ -769,9 +781,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Users" */ "./views/app/pages/people/users"
-                            )
-                    }
-                ]
+                            ),
+                    },
+                ],
             },
 
             // Settings
@@ -799,7 +811,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "groupPermission" */
                                         "./views/app/pages/settings/permissions/Permissions"
-                                    )
+                                    ),
                             },
                             {
                                 name: "store_permission",
@@ -808,7 +820,7 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "store_permission" */
                                         "./views/app/pages/settings/permissions/Create_permission"
-                                    )
+                                    ),
                             },
                             {
                                 name: "edit_permission",
@@ -817,9 +829,9 @@ const baseRoutes = [
                                     import(
                                         /* webpackChunkName: "edit_permission" */
                                         "./views/app/pages/settings/permissions/Edit_permission"
-                                    )
-                            }
-                        ]
+                                    ),
+                            },
+                        ],
                     },
 
                     // sms_settings
@@ -829,7 +841,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "sms_settings" */ "./views/app/pages/settings/sms_settings"
-                            )
+                            ),
                     },
 
                     // sms_templates
@@ -839,7 +851,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "sms_templates" */ "./views/app/pages/settings/sms_templates"
-                            )
+                            ),
                     },
 
                     // email_templates
@@ -849,10 +861,8 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "email_templates" */ "./views/app/pages/settings/email_templates"
-                            )
+                            ),
                     },
-
-
 
                     // pos_settings
                     {
@@ -860,8 +870,8 @@ const baseRoutes = [
                         path: "pos_settings",
                         component: () =>
                             import(
-                            /* webpackChunkName: "pos_settings" */ "./views/app/pages/settings/pos_settings"
-                            )
+                                /* webpackChunkName: "pos_settings" */ "./views/app/pages/settings/pos_settings"
+                            ),
                     },
 
                     // payment_gateway
@@ -871,7 +881,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "payment_gateway" */ "./views/app/pages/settings/payment_gateway"
-                            )
+                            ),
                     },
 
                     // mail_settings
@@ -881,7 +891,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "mail_settings" */ "./views/app/pages/settings/mail_settings"
-                            )
+                            ),
                     },
 
                     // module_settings
@@ -891,7 +901,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "module_settings" */ "./views/app/pages/settings/module_settings"
-                            )
+                            ),
                     },
 
                     // update_settings
@@ -901,7 +911,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "update_settings" */ "./views/app/pages/settings/update_settings"
-                            )
+                            ),
                     },
 
                     // currencies
@@ -911,7 +921,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Currencies" */ "./views/app/pages/settings/currencies"
-                            )
+                            ),
                     },
 
                     // Backup
@@ -921,7 +931,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Backup" */ "./views/app/pages/settings/backup"
-                            )
+                            ),
                     },
 
                     // Warehouses
@@ -931,7 +941,7 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "Warehouses" */ "./views/app/pages/settings/warehouses"
-                            )
+                            ),
                     },
 
                     // System Settings
@@ -941,10 +951,9 @@ const baseRoutes = [
                         component: () =>
                             import(
                                 /* webpackChunkName: "System_settings" */ "./views/app/pages/settings/system_settings"
-                            )
-                    }
-
-                ]
+                            ),
+                    },
+                ],
             },
 
             // Reports
@@ -960,7 +969,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "payments_purchases" */
                                 "./views/app/pages/reports/payments/payments_purchases"
-                            )
+                            ),
                     },
                     {
                         name: "payments_sales",
@@ -969,7 +978,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "payments_sales" */
                                 "./views/app/pages/reports/payments/payments_sales"
-                            )
+                            ),
                     },
                     {
                         name: "payments_purchases_returns",
@@ -978,7 +987,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "payments_purchases_returns" */
                                 "./views/app/pages/reports/payments/payments_purchases_returns"
-                            )
+                            ),
                     },
                     {
                         name: "payments_sales_returns",
@@ -987,7 +996,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "payments_sales_returns" */
                                 "./views/app/pages/reports/payments/payments_sales_returns"
-                            )
+                            ),
                     },
 
                     {
@@ -997,7 +1006,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "profit_and_loss" */
                                 "./views/app/pages/reports/profit_and_loss"
-                            )
+                            ),
                     },
 
                     {
@@ -1007,7 +1016,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "inventory_valuation_summary" */
                                 "./views/app/pages/reports/inventory_valuation_summary"
-                            )
+                            ),
                     },
 
                     {
@@ -1017,7 +1026,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "expenses_report" */
                                 "./views/app/pages/reports/expenses_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1027,9 +1036,8 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "deposits_report" */
                                 "./views/app/pages/reports/deposits_report"
-                            )
+                            ),
                     },
-
 
                     {
                         name: "quantity_alerts",
@@ -1038,7 +1046,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "quantity_alerts" */
                                 "./views/app/pages/reports/quantity_alerts"
-                            )
+                            ),
                     },
                     {
                         name: "warehouse_report",
@@ -1047,7 +1055,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "warehouse_report" */
                                 "./views/app/pages/reports/warehouse_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1057,7 +1065,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "sales_report" */
                                 "./views/app/pages/reports/sales_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1067,7 +1075,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "product_sales_report" */
                                 "./views/app/pages/reports/product_sales_report"
-                            )
+                            ),
                     },
                     {
                         name: "purchase_report",
@@ -1076,7 +1084,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "purchase_report" */
                                 "./views/app/pages/reports/purchase_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1086,7 +1094,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "product_purchases_report" */
                                 "./views/app/pages/reports/product_purchases_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1096,7 +1104,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "customers_report" */
                                 "./views/app/pages/reports/customers_report"
-                            )
+                            ),
                     },
                     {
                         name: "detail_customer_report",
@@ -1105,7 +1113,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_customer_report" */
                                 "./views/app/pages/reports/detail_Customer_Report"
-                            )
+                            ),
                     },
 
                     {
@@ -1115,7 +1123,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "providers_report" */
                                 "./views/app/pages/reports/providers_report"
-                            )
+                            ),
                     },
                     {
                         name: "detail_supplier_report",
@@ -1124,7 +1132,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_supplier_report" */
                                 "./views/app/pages/reports/detail_Supplier_Report"
-                            )
+                            ),
                     },
 
                     {
@@ -1134,7 +1142,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "top_selling_products" */
                                 "./views/app/pages/reports/top_selling_products"
-                            )
+                            ),
                     },
 
                     {
@@ -1144,7 +1152,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "product_report" */
                                 "./views/app/pages/reports/product_report"
-                            )
+                            ),
                     },
                     {
                         name: "detail_product_report",
@@ -1153,7 +1161,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_product_report" */
                                 "./views/app/pages/reports/detail_product_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1163,7 +1171,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "top_customers" */
                                 "./views/app/pages/reports/top_customers"
-                            )
+                            ),
                     },
 
                     {
@@ -1173,7 +1181,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "stock_report" */
                                 "./views/app/pages/reports/stock_report"
-                            )
+                            ),
                     },
                     {
                         name: "detail_stock_report",
@@ -1182,7 +1190,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_stock_report" */
                                 "./views/app/pages/reports/detail_stock_report"
-                            )
+                            ),
                     },
 
                     {
@@ -1192,7 +1200,7 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "users_report" */
                                 "./views/app/pages/reports/users_report"
-                            )
+                            ),
                     },
                     {
                         name: "detail_user_report",
@@ -1201,9 +1209,9 @@ const baseRoutes = [
                             import(
                                 /* webpackChunkName: "detail_user_report" */
                                 "./views/app/pages/reports/detail_user_report"
-                            )
+                            ),
                     },
-                ]
+                ],
             },
 
             {
@@ -1212,9 +1220,9 @@ const baseRoutes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "profile" */ "./views/app/pages/profile"
-                    )
-            }
-        ]
+                    ),
+            },
+        ],
     },
 
     {
@@ -1222,7 +1230,7 @@ const baseRoutes = [
         path: "/app/pos",
         // beforeEnter: authenticate,
         component: () =>
-            import(/* webpackChunkName: "pos" */ "./views/app/pages/pos")
+            import(/* webpackChunkName: "pos" */ "./views/app/pages/pos"),
     },
 
     {
@@ -1231,7 +1239,7 @@ const baseRoutes = [
         component: () =>
             import(
                 /* webpackChunkName: "pos_draft" */ "./views/app/pages/pos_draft"
-            )
+            ),
     },
 
     {
@@ -1240,7 +1248,7 @@ const baseRoutes = [
         component: () =>
             import(
                 /* webpackChunkName: "NotFound" */ "./views/app/pages/notFound"
-            )
+            ),
     },
 
     {
@@ -1249,8 +1257,8 @@ const baseRoutes = [
         component: () =>
             import(
                 /* webpackChunkName: "not_authorize" */ "./views/app/pages/NotAuthorize"
-            )
-    }
+            ),
+    },
 ];
 
 const router = new Router({

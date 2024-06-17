@@ -8,7 +8,7 @@
 # # /storage/framework/sessions/s
 
 # # Ignorar archivos específicos
-# /.env
+#/.env
 # /.env.backup
 # /composer.lock
 # /.phpunit.result.cache
@@ -26,6 +26,6 @@
 /documentation.zip
 
 # Ignorar rutas específicas de activos
-/public/js/bundle/
+# /public/js/bundle/
 # /public/images/vendor/
 # /public/js/main.js
