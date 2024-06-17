@@ -5,7 +5,7 @@
 # /public/storage/
 # /storage/
 # /storage/*.key
-# # /storage/framework/sessions/s
+# /storage/framework/sessions/s
 
 # # Ignorar archivos específicos
 /.env
@@ -26,6 +26,6 @@
 /documentation.zip
 
 # Ignorar rutas específicas de activos
-# /public/js/bundle/
-# /public/images/vendor/
-# /public/js/main.js
+/public/js/bundle/
+/public/images/vendor/
+/public/js/main.js

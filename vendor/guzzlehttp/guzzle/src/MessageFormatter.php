@@ -38,29 +38,18 @@ use Psr\Http\Message\ResponseInterface;
 class MessageFormatter implements MessageFormatterInterface
 {
     /**
-     * Apache Common Log Format.
-     *
+     * Apache Common Log Format (CLF).
      * @see https://httpd.apache.org/docs/2.4/logs.html#common
-     *
      * @var string
      */
     public const CLF = '{hostname} {req_header_User-Agent} - [{date_common_log}] "{method} {target} HTTP/{version}" {code} {res_header_Content-Length}';
+    
+    /**
+     * Debug format template.
+     * @var string
+     */
     public const DEBUG = ">>>>>>>>\n{request}\n<<<<<<<<\n{response}\n--------\n{error}";
-    public const SHORT = '[{ts}] "{method} {target} HTTP/{version}" {code}';
-
-    /**
-     * @var string Template used to format log messages
-     */
-    private $template;
-
-    /**
-     * @param string $template Log message template
-     */
-    public function __construct(?string $template = self::CLF)
-    {
-        $this->template = $template ?: self::CLF;
-    }
-
+    
     /**
      * Returns a formatted message string.
      *
