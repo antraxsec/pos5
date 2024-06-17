@@ -26,6 +26,6 @@
 /documentation.zip
 
 # Ignorar rutas específicas de activos
-#/public/js/bundle/
+# /public/js/bundle/
 # /public/images/vendor/
 # /public/js/main.js

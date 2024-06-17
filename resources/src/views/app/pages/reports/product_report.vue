@@ -280,6 +280,7 @@ export default {
             this.search_products
         )
         .then(response => {
+          console.log(response)
           this.warehouses = response.data.warehouses;
           this.products = response.data.products;
           this.totalRows = response.data.totalRows;

@@ -583,8 +583,8 @@ class QuotationsController extends BaseController
         }
 
         $pdf = PDF::loadHTML($Html);
-        // return $pdf->download('quotation.pdf');
-        return response($Html);
+        return $pdf->download('quotation.pdf'); //importante importante
+        // return response($Html);
 
     }
 

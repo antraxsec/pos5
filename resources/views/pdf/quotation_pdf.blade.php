@@ -97,18 +97,8 @@
             <table>
                <!-- <tr>
                   <td>Desc.</td>
-<<<<<<< HEAD
                   <td>{{$quote['discount']}} </td>
                </tr> -->
-=======
-                  <!-- <td>{{$quote['discount']}} </td> -->
-                  @if($quote['totalDiscount'] != 0 && !is_null($quote['totalDiscount']))
-                     <td>{{ $quote['totalDiscount'] }}</td>
-                  @else
-                     <td>{{$quote['discount']}}</td>  <!-- O puedes dejarlo vacío o poner algún otro marcador como 'N/A' -->
-                  @endif
-               </tr>
->>>>>>> 1b3c5d61d46f61058cf98f684abb402bd9c3633a
                <tr>
                   <td><b>Total</b></td>
                   <td><b>{{$symbol}} {{$quote['GrandTotal']}}</b></td>

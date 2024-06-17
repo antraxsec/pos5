@@ -43,7 +43,7 @@
 
     @endforeach -->
 
-    <script src="/js/main.min.js?v=4.0.12"></script>
+    <script src="/js/main.min.js?v=4.0.13"></script>
 
   </body>
 </html>

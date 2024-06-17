@@ -203,7 +203,7 @@ export default {
      
        axios
         .get(`quote_pdf/${id}`, {
-          // responseType: "blob", // important
+          responseType: "blob", // IMPORTANTE IMPORTANTE IMPORTANTE
           headers: {
             "Content-Type": "application/json"
           }
