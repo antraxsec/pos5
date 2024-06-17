@@ -8,7 +8,7 @@
 # # /storage/framework/sessions/s
 
 # # Ignorar archivos específicos
-#/.env
+/.env
 # /.env.backup
 # /composer.lock
 # /.phpunit.result.cache
