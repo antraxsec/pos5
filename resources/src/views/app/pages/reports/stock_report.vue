@@ -229,7 +229,7 @@ export default {
       NProgress.set(0.1);
       axios
         .get(
-          "report/stock?page=" +
+            "report/stock?page=" +
             page +
             "&SortField=" +
             this.serverParams.sort.field +
@@ -243,6 +243,7 @@ export default {
             this.limit
         )
         .then(response => {
+          console.log(response)
           this.reports = response.data.report;
           this.totalRows = response.data.totalRows;
           this.warehouses = response.data.warehouses;
