@@ -1,31 +1,29 @@
 # Ignorar directorios específicos
-# /node_modules/
-# /vendor/
-# /public/hot/
-# /public/storage/
-# /storage/
-# /storage/*.key
-# /storage/framework/sessions/s
+/node_modules/
+/vendor/
+/public/hot/
+/public/storage/
+/storage/
+/storage/*.key
+/storage/framework/sessions/s
 
 # # Ignorar archivos específicos
 /.env
-# /.env.backup
-# /composer.lock
-# /.phpunit.result.cache
-# /docker-compose.override.yml
-# /Homestead.json
-# /Homestead.yaml
-# /npm-debug.loggit 
-# /yarn-error.log
+/.env.backup
+/.gitignore
+/composer.lock
+/.phpunit.result.cache
+/docker-compose.override.yml
+/Homestead.json
+/Homestead.yaml
+/npm-debug.loggit 
+/yarn-error.log
 
 # Ignorar todos los archivos .zip en el directorio raíz
 /*.zip
-
-# Ignorar archivos .zip específicos
-/pos5.zip
-/documentation.zip
 
 # Ignorar rutas específicas de activos
 /public/js/bundle/
 /public/images/vendor/
 /public/js/main.js
+
