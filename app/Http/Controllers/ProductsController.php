@@ -179,6 +179,7 @@ class ProductsController extends BaseController
             'brands' => $brands,
             'products' => $data,
             'totalRows' => $totalRows,
+            'hola' => 'QUE RAL HARDYS 1111',
         ]);
     }
 
