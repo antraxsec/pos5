@@ -253,6 +253,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
      Route::get('count_stock', 'ProductsController@count_stock_list');
      Route::post('store_count_stock', 'ProductsController@store_count_stock');
 
+     //---- items----------
+     Route::get('items', 'ProductsController@items');
 
     //------------------------------- Category --------------------------\\
     //------------------------------------------------------------------\\

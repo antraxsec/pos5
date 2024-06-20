@@ -39,7 +39,7 @@
         };
       </script>
 
-      <script src="/js/login.min.js?v=4.0.15"></script>
+      <script src="/js/login.min.js?v=4.0.16"></script>
   </body>
 </html>
 

@@ -1070,7 +1070,6 @@ export default {
 			this.Get_Sales(this.serverParams.page);
 		},
 
-
 		onSearch(value) {
 			this.search = value.searchTerm;
 			this.Get_Sales(this.serverParams.page);
@@ -1923,7 +1922,6 @@ export default {
 				this.$bvModal.hide("Add_Payment");
 			}, 800);
 		});
-
 
 		Fire.$on("Update_Facture_sale", () => {
 
