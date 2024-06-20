@@ -157,6 +157,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::post("attendances/delete/by_selection", "hrm\AttendancesController@delete_by_selection");
 
 
+    //---- items----------
+     Route::get('items', 'ProductsController@items');
     
     //------------------------------- Request leave  -----------------------\\
     //----------------------------------------------------------------\\

@@ -183,6 +183,130 @@ class ProductsController extends BaseController
         ]);
     }
 
+     //------------ Get ALL items --------------\\
+
+       public function items(Request $request)
+            {
+                $this->authorizeForUser($request->user('api'), 'view', Product::class);
+
+                $query = DB::table('categories as c')
+                    ->leftJoin('products as p', 'c.id', '=', 'p.category_id')
+                    ->leftJoin('product_warehouse as pw', 'p.id', '=', 'pw.product_id')
+                    ->leftJoin('warehouses as w', 'pw.warehouse_id', '=', 'w.id')
+                    ->select(
+                        'c.id as category_id',
+                        'c.code as category_code',
+                        'c.name as category_name',
+                        'c.created_at as category_created_at',
+                        'c.updated_at as category_updated_at',
+                        'c.deleted_at as category_deleted_at',
+                        'p.id as product_id',
+                        'p.type as product_type',
+                        'p.code as product_code',
+                        'p.Type_barcode as product_barcode_type',
+                        'p.name as product_name',
+                        'p.cost as product_cost',
+                        'p.price as product_price',
+                        'p.brand_id as product_brand_id',
+                        'p.unit_id as product_unit_id',
+                        'p.unit_sale_id as product_unit_sale_id',
+                        'p.unit_purchase_id as product_unit_purchase_id',
+                        'p.TaxNet as product_tax_net',
+                        'p.tax_method as product_tax_method',
+                        'p.image as product_image',
+                        'p.note as product_note',
+                        'p.stock_alert as product_stock_alert',
+                        'p.is_variant as product_is_variant',
+                        'p.is_imei as product_is_imei',
+                        'p.not_selling as product_not_selling',
+                        'p.is_active as product_is_active',
+                        'p.created_at as product_created_at',
+                        'p.updated_at as product_updated_at',
+                        'p.deleted_at as product_deleted_at',
+                        'pw.id as product_warehouse_id',
+                        'pw.warehouse_id as product_warehouse_id',
+                        'w.name as warehouse_name',
+                        'pw.product_variant_id as product_variant_id',
+                        'pw.qte as product_warehouse_quantity',
+                        'pw.manage_stock as product_warehouse_manage_stock',
+                        'pw.created_at as product_warehouse_created_at',
+                        'pw.updated_at as product_warehouse_updated_at',
+                        'pw.deleted_at as product_warehouse_deleted_at'
+                    )
+                    ->whereNull('c.deleted_at')
+                    ->whereNull('p.deleted_at')
+                    ->whereNull('pw.deleted_at')
+                    ->whereNull('w.deleted_at');
+
+                $products = $query->get();
+
+                $data = [];
+                foreach ($products as $product) {
+                    $categoryId = $product->category_id;
+                    if (!isset($data[$categoryId])) {
+                        $data[$categoryId] = [
+                            'id' => $product->category_id,
+                            'code' => $product->category_code,
+                            'name' => $product->category_name,
+                            'created_at' => $product->category_created_at,
+                            'updated_at' => $product->category_updated_at,
+                            'deleted_at' => $product->category_deleted_at,
+                            'products' => []
+                        ];
+                    }
+                    if ($product->product_id) {
+                        $productIndex = array_search($product->product_id, array_column($data[$categoryId]['products'], 'id'));
+                        if ($productIndex === false) {
+                            $data[$categoryId]['products'][] = [
+                                'id' => $product->product_id,
+                                'type' => $product->product_type,
+                                'code' => $product->product_code,
+                                'barcode_type' => $product->product_barcode_type,
+                                'name' => $product->product_name,
+                                'cost' => $product->product_cost,
+                                'price' => $product->product_price,
+                                'brand_id' => $product->product_brand_id,
+                                'unit_id' => $product->product_unit_id,
+                                'unit_sale_id' => $product->product_unit_sale_id,
+                                'unit_purchase_id' => $product->product_unit_purchase_id,
+                                'tax_net' => $product->product_tax_net,
+                                'tax_method' => $product->product_tax_method,
+                                'image' => $product->product_image,
+                                'note' => $product->product_note,
+                                'stock_alert' => $product->product_stock_alert,
+                                'is_variant' => $product->product_is_variant,
+                                'is_imei' => $product->product_is_imei,
+                                'not_selling' => $product->product_not_selling,
+                                'is_active' => $product->product_is_active,
+                                'created_at' => $product->product_created_at,
+                                'updated_at' => $product->product_updated_at,
+                                'deleted_at' => $product->product_deleted_at,
+                                'warehouses' => []
+                            ];
+                            $productIndex = count($data[$categoryId]['products']) - 1;
+                        }
+                        $data[$categoryId]['products'][$productIndex]['warehouses'][] = [
+                            'id' => $product->product_warehouse_id,
+                            'warehouse_id' => $product->product_warehouse_id,
+                            'warehouse_name' => $product->warehouse_name,
+                            'product_variant_id' => $product->product_variant_id,
+                            'quantity' => $product->product_warehouse_quantity,
+                            'manage_stock' => $product->product_warehouse_manage_stock,
+                            'created_at' => $product->product_warehouse_created_at,
+                            'updated_at' => $product->product_warehouse_updated_at,
+                            'deleted_at' => $product->product_warehouse_deleted_at
+                        ];
+                    }
+                }
+
+                return response()->json([
+                    'categories' => array_values($data),
+                ]);
+            }
+        
+
+    
+
     public function productos_all(request $request)
     {
         $this->authorizeForUser($request->user('api'), 'view', Product::class);
