@@ -54,7 +54,7 @@
             @click="Show_import_products()"
             size="sm"
             variant="info m-1"
-            class="d-none"
+            class=""
             v-if="currentUserPermissions && currentUserPermissions.includes('product_import')"
           >
             <i class="i-Download"></i>

@@ -1,6 +1,7 @@
 # Ignorar directorios específicos
 /node_modules/
 /vendor/
+<<<<<<< HEAD
 /public/hot/
 /public/storage/
 /storage/
@@ -11,6 +12,18 @@
 /.env
 /.env.backup
 /.gitignore
+=======
+ /public/hot/
+ /public/storage/
+ /storage/
+ /storage/*.key
+ /storage/framework/sessions/s
+
+# # Ignorar archivos específicos
+/.env
+/.gitignore
+/.env.backup
+>>>>>>> b7ce05c86c1f29aba81456f6041b1eba1fb77849
 /composer.lock
 /.phpunit.result.cache
 /docker-compose.override.yml

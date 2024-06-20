@@ -50,7 +50,7 @@ export default {
   methods: {
     Get_Products() {
       // Aquí va el código para obtener los productos de la API
-      axios.get( "products?page=" +
+      axios.get( "productos_all?page=" +
             "1" +
             "&code=" +
             ""+
