@@ -377,6 +377,15 @@
               <span class="item-name">{{$t('Units')}}</span>
             </router-link>
           </li>
+          <li
+            class="nav-item"
+            v-if="currentUserPermissions && currentUserPermissions.includes('unit')"
+          >
+            <router-link tag="a" class to="/app/products/lista">
+              <i class="nav-icon i-Quotes"></i>
+              <span class="item-name">Nueva lista</span>
+            </router-link>
+          </li>
         </ul>
 
         <ul

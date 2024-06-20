@@ -1,133 +1,244 @@
 <template>
-  <div class="orders-list">
-    <h1>Lista de Pedidos</h1>
-     <div slot="table-actions" class="mt-2 mb-3">
-  <b-form-group :label="$t('warehouse')">
-    <v-select
-      @input="filterProductsByWarehouse"  v-model="warehouse_id"
-      :reduce="label => label.value"
-      :placeholder="$t('Choose_Warehouse')"
-      :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
-    />
-  </b-form-group>
-</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>codigo </th>
-          <th>Acción </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td><img :src="'/images/products/' + order.image"  height="30"
-              width="30" alt="product image"/></td>
-          <td>{{ order.name }}</td>
-          <td>{{ order.quantity }}</td>
-          <td>{{ order.price }}</td>
-          <td>{{ order.code }}</td>
-          <td>
-                <i class="i-Filter-2"></i>     
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container">
+    <b-button @click="download_PDF()" size="sm" variant="outline-success ripple m-1">
+      <i class="i-File-Copy"></i> PDF
+    </b-button>
+
+    <div class="mb-4">
+      <label for="sucursalSelector" class="form-label">Seleccione una Sucursal:</label>
+      <v-select
+        v-model="selectedWarehouse"
+        :options="warehouses"
+        label="name"
+        @input="displayProductsByWarehouse"
+        placeholder="Seleccione una Sucursal"
+      />
+    </div>
+
+    <h1 class="text-center my-4">MAG COMP</h1>
+    <div id="products-container">
+      <div v-for="category in filteredProducts" :key="category.name" class="product-category">
+        <h3 class="mt-4">{{ category.name }}</h3>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Código</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="product in category.products" :key="product.id">
+                <td><img :src="'/images/products/' + product.image" alt="product.name" width="30"></td>
+                <td>{{ product.name }}</td>
+                <td>{{ getQuantityByWarehouse(product, selectedWarehouse) }}</td>
+                <td>Bs. {{ product.price }}</td>
+                <td>{{ product.code }}</td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      <i class="bi bi-gear"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <form class="px-4 py-3" @submit.prevent="updatePrice(product.id)">
+                          <div class="mb-3">
+                            <label :for="'price' + product.id" class="form-label">Nuevo precio</label>
+                            <input type="number" class="form-control" :id="'price' + product.id" v-model="product.newPrice">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
 export default {
+  components: { vSelect },
   data() {
     return {
-      orders: [],
-      warehouses:[]
+      warehouses: [
+        { name: 'Todas', value: 'all' },
+        { name: 'Sucursal - La Paz', value: '2' },
+        { name: 'Sucursal - Santa Cruz', value: '3' }
+      ],
+      selectedWarehouse: 'all',
+      products: [],
+      filteredProducts: []
     };
   },
   methods: {
-    Get_Products() {
-      // Aquí va el código para obtener los productos de la API
-      axios.get( "products?page=" +
-            "1" +
-            "&code=" +
-            ""+
-            "&name=" +
-            "" +
-            "&category_id=" +
-            ""+
-            "&brand_id=" +
-            "" +
-            "&SortField=" +
-            "id" +
-            "&SortType=" +
-            "desc" +
-            "&search=" +
-            ""+
-            "&limit=" +
-        "50"
-      ).then(response => {
-        console.log(response)
-        // prodeuctos
-        this.orders = response.data.products;
-         this.warehouses = response.data.warehouses;
-        // this.orders = response.data.products.map(product => ({
-        //   id: product.id,
-        //   name: product.name,
-        //   quantity: product.quantity,
-        //   price: product.price,
-        //   image: product.image,
-        //   code: product.code
-        // }));
-        //Sucursal
+    async fetchProducts() {
+      try {
+        const response = await axios.get('items');
+        this.products = response.data.categories;
+        console.log(this.products = response.data.categories)
+        this.filterProducts();
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    },
+    filterProducts() {
+      if (this.selectedWarehouse.value === 'all') {
+        this.filteredProducts = this.products.filter(category =>
+          category.products.some(product =>
+            product.warehouses.some(warehouse => warehouse.quantity > 0)
+          )
+        ).map(category => ({
+          ...category,
+          products: category.products.filter(product =>
+            product.warehouses.some(warehouse => warehouse.quantity > 0)
+          )
+        }));
+      } else {
+        this.filteredProducts = this.products.filter(category =>
+          category.products.some(product =>
+            product.warehouses.some(warehouse => warehouse.id.toString() === this.selectedWarehouse.value && warehouse.quantity > 0)
+          )
+        ).map(category => ({
+          ...category,
+          products: category.products.filter(product =>
+            product.warehouses.some(warehouse => warehouse.id.toString() === this.selectedWarehouse.value && warehouse.quantity > 0)
+          )
+        }));
+      }
+    },
+    displayProductsByWarehouse() {
+      this.filterProducts();
+    },
+    getQuantityByWarehouse(product, selectedWarehouse) {
+      if (selectedWarehouse.value === 'all') {
+        return product.warehouses.reduce((total, warehouse) => total + warehouse.quantity, 0);
+      } else {
+        const warehouse = product.warehouses.find(warehouse => warehouse.id.toString() === selectedWarehouse.value);
+        return warehouse ? warehouse.quantity : 0;
+      }
+    },
+    async updatePrice(productId) {
+      const product = this.products.find(product => product.id === productId);
+      if (!product) return;
 
-      }).catch(error => {
-        console.error('Error fetching products:', error);
-      });
+      try {
+        const response = await axios.put(`https://dorback.vercel.app/api/items/${productId}/price`, {
+          price: product.newPrice
+        });
+        if (response.status === 200) {
+          alert('Precio actualizado correctamente');
+          this.fetchProducts();
+        } else {
+          alert('Error al actualizar el precio');
+        }
+      } catch (error) {
+        console.error('Error al actualizar el precio:', error);
+      }
     },
-    filterProductsByWarehouse(warehouseId) {
-      console.log(warehouseId)
-      console.log(this.orders)
-      // this.orders = this.orders.filter((product) => {
-      //   // Assuming 'warehouse' property exists in each product object
-      //   // and contains an array of warehouse objects
-      //   return product.warehouse.some(warehouse => warehouse.warehouse_id === warehouseId);
-      // });
-  },
-    editOrder(id) {
-      this.$router.push(`/app/orders/edit/${id}`);
-    },
-    deleteOrder(id) {
-      console.log('Eliminar pedido', id);
+    
+download_PDF() {
+  const self = this;
+  const pdf = new jsPDF("p", "pt", "a4");
+  const pageWidth = pdf.internal.pageSize.width;
+  const pageHeight = pdf.internal.pageSize.height;
+
+  pdf.setFontSize(18);
+  pdf.setTextColor(60);
+  pdf.text("MAG COMP", pageWidth / 2, 30, { align: "center" });
+
+  let startY = 60; // Inicio después del título
+
+  self.filteredProducts.forEach((category, index) => {
+    if (startY + 20 > pageHeight) { // Asegurar espacio para el título de la categoría
+      pdf.addPage();
+      startY = 60;
     }
-  },
-  
-  created() {
-    this.Get_Products();
-  }
+
+    pdf.setFontSize(14);
+    pdf.setTextColor(100);
+    pdf.text(category.name.toUpperCase(), 40, startY);
+    startY += 20; // Espacio después del título de la categoría
+
+    const columns = [
+      { title: "Nro", dataKey: "nro", styles: { cellWidth: 'auto', minCellWidth: 100 } },
+      { title: "Nombre", dataKey: "name", styles: { cellWidth: 'auto', minCellWidth: 100 } },
+      { title: "Cantidad", dataKey: "quantity", styles: { halign: 'center', cellWidth: 40 } },
+      { title: "Precio", dataKey: "price", styles: { halign: 'right', cellWidth: 40 } },
+      { title: "Código", dataKey: "code", styles: { cellWidth: 80 } }
+    ];
+
+    const data = category.products.map((product, i) => ({
+      nro: i+1,
+      name: product.name,
+      quantity: self.getQuantityByWarehouse(product, self.selectedWarehouse),
+      price: `Bs. ${product.price}`,
+      code: product.code
+    }));
+
+    if (startY + (20 * data.length) > pageHeight) { // Asegurar espacio para los datos
+      pdf.addPage();
+      startY = 60;
+    }
+
+    pdf.autoTable(columns, data, {
+      startY: startY,
+      theme: 'grid',
+      headStyles: { fillColor: [0, 0, 0] },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+      styles: { fontSize: 10, overflow: 'linebreak' },
+      columnStyles: {
+        nro: { cellWidth: 30 },
+        name: { cellWidth: 250 },
+        quantity: { cellWidth: 70 },
+        price: { cellWidth: 70 },
+        code: { cellWidth: 120 }
+      },
+      didDrawPage: function(data) {
+        // Incrementar startY después de dibujar la tabla
+        startY = data.cursor.y + 25; // Añade un espacio adicional de 20 puntos
+      }
+    });
+  });
+
+  pdf.save("ListaProductos.pdf");
 }
+
+
+
+  },
+  created() {
+    this.fetchProducts();
+  }
+};
 </script>
 
 <style scoped>
-.orders-list {
-  padding: 20px;
+.product-category {
+  margin-bottom: 2rem;
 }
-
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
+.table th, .table td {
   padding: 8px;
-  text-align: left;
+  font-size: 0.8rem;
 }
-
-th {
-  background-color: #f4f4f4;
+img {
+  max-width: 100px;
+  height: auto;
 }
 </style>
