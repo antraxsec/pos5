@@ -179,10 +179,11 @@ class ProductsController extends BaseController
             'brands' => $brands,
             'products' => $data,
             'totalRows' => $totalRows,
+            'hola' => 'zzz',
         ]);
     }
 
-    //------------ Get ALL items --------------\\
+     //------------ Get ALL items --------------\\
 
        public function items(Request $request)
             {
@@ -303,6 +304,158 @@ class ProductsController extends BaseController
                 ]);
             }
         
+
+    
+
+    public function productos_all(request $request)
+    {
+        $this->authorizeForUser($request->user('api'), 'view', Product::class);
+        // How many items do you want to display.
+        $perPage = $request->limit;
+        $pageStart = \Request::get('page', 1);
+        // Start displaying items from this number;
+        $offSet = ($pageStart * $perPage) - $perPage;
+        $order = $request->SortField;
+        $dir = $request->SortType;
+        $helpers = new helpers();
+        // Filter fields With Params to retrieve
+        $columns = array(0 => 'name', 1 => 'category_id', 2 => 'brand_id', 3 => 'code');
+        $param = array(0 => 'like', 1 => '=', 2 => '=', 3 => 'like');
+        $data = array();
+
+        $products = Product::with('unit', 'category', 'brand')
+            ->where('deleted_at', '=', null);
+
+        //Multiple Filter
+        $Filtred = $helpers->filter($products, $columns, $param, $request)
+        // Search With Multiple Param
+            ->where(function ($query) use ($request) {
+                return $query->when($request->filled('search'), function ($query) use ($request) {
+                    return $query->where('products.name', 'LIKE', "%{$request->search}%")
+                        ->orWhere('products.code', 'LIKE', "%{$request->search}%")
+                        ->orWhere(function ($query) use ($request) {
+                            return $query->whereHas('category', function ($q) use ($request) {
+                                $q->where('name', 'LIKE', "%{$request->search}%");
+                            });
+                        })
+                        ->orWhere(function ($query) use ($request) {
+                            return $query->whereHas('brand', function ($q) use ($request) {
+                                $q->where('name', 'LIKE', "%{$request->search}%");
+                            });
+                        });
+                });
+            });
+        $totalRows = $Filtred->count();
+        if($perPage == "-1"){
+            $perPage = $totalRows;
+        }
+        $products = $Filtred->offset($offSet)
+            ->limit($perPage)
+            ->orderBy($order, $dir)
+            ->get();
+
+        foreach ($products as $product) {
+            $item['id'] = $product->id;
+            $item['code'] = $product->code;
+            $item['id_category'] = $product['category']->id;
+            $item['category'] = $product['category']->name;
+            $item['id_brand'] = $product['brand'] ? $product['brand']->id : 'N/D';
+            $item['brand'] = $product['brand'] ? $product['brand']->name : 'N/D';
+
+            $firstimage = explode(',', $product->image);
+            $item['image'] = $firstimage[0];
+
+            if ($product->type == 'is_single') {
+                $item['type'] = 'Single';
+                $item['name'] = $product->name;
+                $item['cost'] = number_format($product->cost, 2, '.', ',');
+                $item['price'] = number_format($product->price, 2, '.', ',');
+                $item['unit'] = $product['unit']->ShortName;
+
+                $product_warehouse_total_qty = product_warehouse::where('product_id', $product->id)
+                    ->where('deleted_at', '=', null)
+                    ->sum('qte');
+
+                $item['quantity'] = $product_warehouse_total_qty . ' ' . $product['unit']->ShortName;
+                $item['cantidad'] = $product_warehouse_total_qty;
+
+                $item['sucursal_cantidad'] = [];
+                $warehouses = Warehouse::where('deleted_at', null)->get();
+                foreach ($warehouses as $warehouse) {
+                    $quantity = product_warehouse::where('product_id', $product->id)
+                        ->where('warehouse_id', $warehouse->id)
+                        ->where('deleted_at', null)
+                        ->sum('qte');
+
+                    $item['sucursal_cantidad'][] = [
+                        'warehouse_id' => $warehouse->id,
+                        'warehouse_name' => $warehouse->name,
+                        'quantity' => $quantity
+                    ];
+                }
+
+                $data[] = $item;
+            } elseif ($product->type == 'is_variant') {
+                $item['type'] = 'Variable';
+                $product_variant_data = ProductVariant::where('product_id', $product->id)
+                    ->where('deleted_at', '=', null)
+                    ->get();
+
+                $item['cost'] = '';
+                $item['price'] = '';
+                $item['name'] = '';
+                $item['unit'] = $product['unit']->ShortName;
+
+                foreach ($product_variant_data as $product_variant) {
+                    $item['cost'] .= number_format($product_variant->cost, 2, '.', ',');
+                    $item['cost'] .= '<br>';
+                    $item['price'] .= number_format($product_variant->price, 2, '.', ',');
+                    $item['price'] .= '<br>';
+                    $item['name'] .= $product_variant->name . '-' . $product->name;
+                    $item['name'] .= '<br>';
+                }
+
+                $product_warehouse_total_qty = product_warehouse::where('product_id', $product->id)
+                    ->where('deleted_at', '=', null)
+                    ->sum('qte');
+
+                $item['quantity'] = $product_warehouse_total_qty . ' ' . $product['unit']->ShortName;
+
+                $data[] = $item;
+            } else {
+                $item['type'] = 'Service';
+                $item['name'] = $product->name;
+                $item['cost'] = '----';
+                $item['quantity'] = '----';
+                $item['unit'] = '----';
+                $item['price'] = number_format($product->price, 2, '.', ',');
+
+                $data[] = $item;
+            }
+        }
+
+        //get warehouses assigned to user
+        $user_auth = auth()->user();
+        if($user_auth->is_all_warehouses){
+            $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        }else{
+            $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+            $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
+        }
+
+        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
+        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
+
+        return response()->json([
+            'warehouses' => $warehouses,
+            'categories' => $categories,
+            'brands' => $brands,
+            'products' => $data,
+            'totalRows' => $totalRows,
+            'hola' => 'zzz',
+        ]);
+    }
+
 
     //-------------- Store new  Product  ---------------\\
 

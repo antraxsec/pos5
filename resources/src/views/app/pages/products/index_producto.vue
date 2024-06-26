@@ -6,13 +6,8 @@
 
     <div class="mb-4">
       <label for="sucursalSelector" class="form-label">Seleccione una Sucursal:</label>
-      <v-select
-        v-model="selectedWarehouse"
-        :options="warehouses"
-        label="name"
-        @input="displayProductsByWarehouse"
-        placeholder="Seleccione una Sucursal"
-      />
+      <v-select v-model="selectedWarehouse" :options="warehouses" label="name" @input="displayProductsByWarehouse"
+        placeholder="Seleccione una Sucursal" />
     </div>
 
     <h1 class="text-center my-4">MAG COMP</h1>
@@ -39,7 +34,7 @@
                 <td>Bs. {{ product.price }}</td>
                 <td>{{ product.code }}</td>
                 <td>
-                  <i class="bi bi-gear"></i>ver
+                 ver
                 </td>
               </tr>
             </tbody>
@@ -137,29 +132,29 @@ export default {
         console.error('Error al actualizar el precio:', error);
       }
     },
-    
-download_PDF() {
-  const self = this;
-  const pdf = new jsPDF("p", "pt", "a4");
-  const pageWidth = pdf.internal.pageSize.width;
-  const pageHeight = pdf.internal.pageSize.height;
 
-  pdf.setFontSize(18);
-  pdf.setTextColor(60);
-  pdf.text("MAG COMP", pageWidth / 2, 30, { align: "center" });
+    download_PDF() {
+      const self = this;
+      const pdf = new jsPDF("p", "pt", "a4");
+      const pageWidth = pdf.internal.pageSize.width;
+      const pageHeight = pdf.internal.pageSize.height;
 
-  let startY = 60; // Inicio después del título
+      pdf.setFontSize(18);
+      pdf.setTextColor(60);
+      pdf.text("MAG COMP", pageWidth / 2, 30, { align: "center" });
 
-  self.filteredProducts.forEach((category, index) => {
-    if (startY + 20 > pageHeight) { // Asegurar espacio para el título de la categoría
-      pdf.addPage();
-      startY = 60;
-    }
+      let startY = 60; // Inicio después del título
 
-    pdf.setFontSize(14);
-    pdf.setTextColor(100);
-    pdf.text(category.name.toUpperCase(), 40, startY);
-    startY += 20; // Espacio después del título de la categoría
+      self.filteredProducts.forEach((category, index) => {
+        if (startY + 20 > pageHeight) { // Asegurar espacio para el título de la categoría
+          pdf.addPage();
+          startY = 60;
+        }
+
+        pdf.setFontSize(14);
+        pdf.setTextColor(100);
+        pdf.text(category.name.toUpperCase(), 40, startY);
+        startY += 20; // Espacio después del título de la categoría
 
     const columns = [
       { title: "Nro", dataKey: "nro", styles: { cellWidth: 'auto', minCellWidth: 100 } },
@@ -171,15 +166,14 @@ download_PDF() {
     const data = category.products.map((product, i) => ({
       nro: i+1,
       name: product.name,
-      
       price: `Bs. ${product.price}`,
       code: product.code
     }));
 
-    if (startY + (20 * data.length) > pageHeight) { // Asegurar espacio para los datos
-      pdf.addPage();
-      startY = 60;
-    }
+        if (startY + (20 * data.length) > pageHeight) { // Asegurar espacio para los datos
+          pdf.addPage();
+          startY = 60;
+        }
 
     pdf.autoTable(columns, data, {
       startY: startY,
@@ -200,8 +194,8 @@ download_PDF() {
     });
   });
 
-  pdf.save("ListaProductos.pdf");
-}
+      pdf.save("ListaProductos.pdf");
+    }
 
 
 
@@ -216,10 +210,13 @@ download_PDF() {
 .product-category {
   margin-bottom: 2rem;
 }
-.table th, .table td {
+
+.table th,
+.table td {
   padding: 8px;
   font-size: 0.8rem;
 }
+
 img {
   max-width: 100px;
   height: auto;
