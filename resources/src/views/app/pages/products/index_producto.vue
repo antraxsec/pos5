@@ -28,7 +28,7 @@
                 <th scope="col">Cantidad</th>
                 <th scope="col">Precio</th>
                 <th scope="col">Código</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">ver</th>
               </tr>
             </thead>
             <tbody>
@@ -39,22 +39,7 @@
                 <td>Bs. {{ product.price }}</td>
                 <td>{{ product.code }}</td>
                 <td>
-                  <div class="dropdown">
-                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                      <i class="bi bi-gear"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <form class="px-4 py-3" @submit.prevent="updatePrice(product.id)">
-                          <div class="mb-3">
-                            <label :for="'price' + product.id" class="form-label">Nuevo precio</label>
-                            <input type="number" class="form-control" :id="'price' + product.id" v-model="product.newPrice">
-                          </div>
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                        </form>
-                      </li>
-                    </ul>
-                  </div>
+                  <i class="bi bi-gear"></i>ver
                 </td>
               </tr>
             </tbody>
@@ -179,7 +164,6 @@ download_PDF() {
     const columns = [
       { title: "Nro", dataKey: "nro", styles: { cellWidth: 'auto', minCellWidth: 100 } },
       { title: "Nombre", dataKey: "name", styles: { cellWidth: 'auto', minCellWidth: 100 } },
-      { title: "Cantidad", dataKey: "quantity", styles: { halign: 'center', cellWidth: 40 } },
       { title: "Precio", dataKey: "price", styles: { halign: 'right', cellWidth: 40 } },
       { title: "Código", dataKey: "code", styles: { cellWidth: 80 } }
     ];
@@ -187,7 +171,7 @@ download_PDF() {
     const data = category.products.map((product, i) => ({
       nro: i+1,
       name: product.name,
-      quantity: self.getQuantityByWarehouse(product, self.selectedWarehouse),
+      
       price: `Bs. ${product.price}`,
       code: product.code
     }));
@@ -206,7 +190,6 @@ download_PDF() {
       columnStyles: {
         nro: { cellWidth: 30 },
         name: { cellWidth: 250 },
-        quantity: { cellWidth: 70 },
         price: { cellWidth: 70 },
         code: { cellWidth: 120 }
       },
